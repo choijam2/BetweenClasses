@@ -120,7 +120,7 @@ public class ResultFrame extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Dimension d = new Dimension(680, 722);// 오른쪽 아래 좌표 얻기위해 디멘션
+					Dimension d = new Dimension(680, 723);// 오른쪽 아래 좌표 얻기위해 디멘션
 															// 사용
 					Rectangle area = new Rectangle(scrollPane.getLocationOnScreen(), d.getSize());// getlocationonscreen은
 																									// 실시간
