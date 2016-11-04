@@ -103,13 +103,14 @@ public class ResultFrame extends JFrame {
 		contentPane.setLayout(null);
 		table_1 = new JTable(defaultTableModel1);
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
-		table_1.setBounds(37, 35, 402, 628);
+		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		table_1.setBounds(37, 35, 402, 600);
 		table_1.setRowHeight(53);
 		table_1.setIntercellSpacing(new Dimension(1, 0));// ???? 선여백처리??
 		contentPane.add(table_1);
 
 		JScrollPane scrollPane = new JScrollPane(table_1);
-		scrollPane.setBounds(52, 124, 680, 722);
+		scrollPane.setBounds(52, 124, 680, 723);
 		contentPane.add(scrollPane);
 		JButton button = new JButton("");
 		button.setBorderPainted(false);    //투명 버튼
@@ -119,7 +120,7 @@ public class ResultFrame extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Dimension d = new Dimension(504, 675);// 오른쪽 아래 좌표 얻기위해 디멘션
+					Dimension d = new Dimension(680, 722);// 오른쪽 아래 좌표 얻기위해 디멘션
 															// 사용
 					Rectangle area = new Rectangle(scrollPane.getLocationOnScreen(), d.getSize());// getlocationonscreen은
 																									// 실시간
