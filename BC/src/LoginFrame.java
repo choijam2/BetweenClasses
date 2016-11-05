@@ -40,6 +40,7 @@ public class LoginFrame extends JFrame{
 	}
 
 	public LoginFrame() {
+		
 		setResizable(false);
 		con = startMysql();
 		setTitle("Between Classes");
