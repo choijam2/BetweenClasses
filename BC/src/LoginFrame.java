@@ -1,26 +1,27 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.CardLayout;
+import javax.swing.JPasswordField;
 
-public class LoginFrame extends JFrame {
-
+public class LoginFrame extends JFrame{
+	private Connection con;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField sidField;
+	private JPasswordField passwordField;
 	private Font f1=new Font("ZESSTYPE 비가온다 PT02",Font.BOLD,35);
 	private Font f2=new Font("ZESSTYPE 비가온다 PT02",Font.PLAIN,30);
 	Color myColor = Color.decode("#383838");
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -38,11 +39,11 @@ public class LoginFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public LoginFrame() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		con = startMysql();
+		setTitle("Between Classes");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 592, 858);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -51,7 +52,7 @@ public class LoginFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel(){
-		ImageIcon mainicon=new ImageIcon("main.png");
+		ImageIcon mainicon=new ImageIcon("img/main.png");
 		
 		 public void paintComponent(Graphics g) {
 			    g.drawImage(mainicon.getImage(), 0, 0, null);
@@ -64,53 +65,87 @@ public class LoginFrame extends JFrame {
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("학번");
-
-		lblNewLabel.setBounds(87, 473, 78, 43);
+		lblNewLabel.setBounds(87, 473, 80, 40);
 		lblNewLabel.setFont(f1);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("비밀번호");
 		lblNewLabel_1.setFont(f1);
-		lblNewLabel_1.setBounds(87, 534, 78, 37);
+		lblNewLabel_1.setBounds(87, 534, 80, 40);
 		contentPane.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(203, 473, 188, 46);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		sidField = new JTextField(8);
+		sidField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		sidField.setBounds(203, 473, 188, 40);
+		contentPane.add(sidField);
+		sidField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(203, 528, 188, 43);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		passwordField = new JPasswordField(15);
+		passwordField.setFont(new Font("굴림", Font.PLAIN, 14));
+		passwordField.setBounds(203, 534, 188, 40);
+		contentPane.add(passwordField);
 		
-		JPanel panel_1 = new JPanel(){
-			ImageIcon mainicon=new ImageIcon("loginnext.png");
-			 public void paintComponent(Graphics g) {
-				    g.drawImage(mainicon.getImage(), 0, 0, null);
-				    setOpaque(false);
-				    super.paintComponent(g);
-				   }
-			};
-		panel_1.setBounds(408, 473, 139, 86);
-		contentPane.add(panel_1);
-		panel_1.setLayout(new CardLayout(0, 0));
+		JButton btn_Login = new JButton(new ImageIcon("img/loginnext.png"));
+		btn_Login.setBounds(408, 473, 106, 95);
+		btn_Login.setBorderPainted(false);
+		btn_Login.setFocusPainted(false);
+		btn_Login.setContentAreaFilled(false);
+		contentPane.add(btn_Login);
 		
-		JLabel lblNewLabel_2 = new JLabel("회원가입");
-		lblNewLabel_2.setFont(f1);
-		lblNewLabel_2.setBounds(417, 606, 123, 29);
-		lblNewLabel_2.setForeground(Color.decode("#ED3E75"));
-		contentPane.add(lblNewLabel_2);
+		LoginBtnHandler loginBtnHandler = new LoginBtnHandler(this, con);
+		btn_Login.addActionListener(loginBtnHandler);
 		
-		JLabel lblNewLabel_3 = new JLabel("비밀번호 찾기");
-		lblNewLabel_3.setFont(f1);
-		lblNewLabel_3.setBounds(268, 602, 132, 37);
-		lblNewLabel_3.setForeground(Color.decode("#ED3E75"));
-		contentPane.add(lblNewLabel_3);
+		JButton btn_Register = new JButton("회원가입");
+		btn_Register.setFont(f1);
+		btn_Register.setBounds(417, 602, 106, 40);
+		btn_Register.setForeground(Color.decode("#ED3E75"));
+		btn_Register.setBorderPainted(false);
+		btn_Register.setFocusPainted(false);
+		btn_Register.setContentAreaFilled(false);
+		contentPane.add(btn_Register);
 		
-		JLabel lblNewLabel_4 = new JLabel("비회원으로 이용하기 GoGo");
-		lblNewLabel_4.setFont(f2);
-		lblNewLabel_4.setBounds(87, 678, 392, 51);
-		contentPane.add(lblNewLabel_4);
+		RegisterBtnHandler registerbtnhandler = new RegisterBtnHandler(con);
+		btn_Register.addActionListener(registerbtnhandler);
+		
+		JButton btn_PassFind = new JButton("비밀번호 찾기");
+		btn_PassFind.setFont(f1);
+		btn_PassFind.setBounds(253, 602, 150, 40);
+		btn_PassFind.setForeground(Color.decode("#ED3E75"));
+		btn_PassFind.setBorderPainted(false);
+		btn_PassFind.setFocusPainted(false);
+		btn_PassFind.setContentAreaFilled(false);
+		contentPane.add(btn_PassFind);
+		
+		PassFindBtnHandler passFindBtnHandler = new PassFindBtnHandler(con);
+		btn_PassFind.addActionListener(passFindBtnHandler);
+		
+		JButton btn_Nonmember = new JButton("비회원으로 이용하기 GoGo");
+		btn_Nonmember.setBackground(Color.WHITE);
+		btn_Nonmember.setFont(f2);
+		btn_Nonmember.setBounds(87, 678, 209, 51);
+		btn_Nonmember.setBorderPainted(false);
+		btn_Nonmember.setFocusPainted(false);
+		btn_Nonmember.setContentAreaFilled(false);
+		contentPane.add(btn_Nonmember);
+		
+		NonmemberBtnHandler nonmemberBtnHandler = new NonmemberBtnHandler();
+		btn_Nonmember.addActionListener(nonmemberBtnHandler);
+	}
+
+	public JTextField getSidField() {
+		return sidField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+	public Connection startMysql(){
+		MysqlConnect mysql = null;
+		try {
+			mysql = new MysqlConnect();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return mysql.getCon();
 	}
 }
