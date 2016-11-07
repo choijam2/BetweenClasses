@@ -307,6 +307,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 public class AddClassFrame extends JFrame {
 
@@ -690,7 +691,62 @@ public class AddClassFrame extends JFrame {
 		//scrollPane_1.setSize(40, 410);
 		panel_2.setLayout(gl_panel_2);
 		
+		//------------------------------
+		JPanel Pfpanel = new JPanel();
+		Pfpanel.setBounds(1067, 59, 182, 109);
+		Pfpanel.setBackground(new Color(255, 0, 0, 0));
+		TitledBorder pfborder = new TitledBorder("교수");
+		Pfpanel.setBorder(pfborder);
+		panel_2.add(Pfpanel);
 		
+		JPanel STpanel = new JPanel();
+		STpanel.setBounds(1067, 244, 182, 109);
+		STpanel.setBackground(new Color(255, 0, 0, 0));
+		TitledBorder STborder = new TitledBorder("학생");
+		STpanel.setBorder(STborder);
+		panel_2.add(STpanel);
+		
+		
+		JButton PfaddButton = new JButton("추가하기");
+		PfaddButton.setBounds(1095, 134, 57, 23);
+		panel_2.add(PfaddButton);
+		
+		JButton PfdelButton = new JButton("삭제하기");
+		PfdelButton.setBounds(1180, 134, 57, 23);
+		panel_2.add(PfdelButton);
+		
+		JButton STaddButton = new JButton("추가하기");
+		STaddButton.setBounds(1095, 316, 57, 23);
+		panel_2.add(STaddButton);
+		
+		JButton STdelButton = new JButton("삭제하기");
+		STdelButton.setBounds(1164, 316, 70, 23);
+		panel_2.add(STdelButton);
+		
+		JButton FindButton = new JButton("공강찾기");
+		FindButton.setBounds(1100, 550, 97, 23);
+		panel_2.add(FindButton);
+		
+		
+		JLabel INPfNewLabel = new JLabel("성함   :");
+		INPfNewLabel.setBounds(1080, 94, 57, 15);
+		panel_2.add(INPfNewLabel);
+				
+		JTextField PftextField = new JTextField();
+		PftextField.setBounds(1140, 91, 100, 21);
+		panel_2.add(PftextField);
+		PftextField.setColumns(10);
+		
+		
+		JLabel INSTNewLabel = new JLabel("학번  :");
+		INSTNewLabel.setBounds(1080, 277, 57, 15);
+		panel_2.add(INSTNewLabel);
+		
+		JTextField STtextField = new JTextField();
+		STtextField.setBounds(1140, 274, 100, 21);
+		panel_2.add(STtextField);
+		STtextField.setColumns(10);
+		//------------------------------
 		
 		JButton btnNewButton = new JButton();
 		btnNewButton.setBorderPainted(false);    //투명 버튼
