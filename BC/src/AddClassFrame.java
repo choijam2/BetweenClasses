@@ -159,6 +159,8 @@ public class AddClassFrame extends JFrame {
 		table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
 		table.setBounds(37, 35, 402, 600);
 		table.setRowHeight(53);
+		table.getTableHeader().setReorderingAllowed(false);//column 헤더수정불가
+		table.getTableHeader().setResizingAllowed(false);//column 헤더길이조절불가
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"9:00", null, null, null, null, null, null},
@@ -178,7 +180,14 @@ public class AddClassFrame extends JFrame {
 			new String[] {
 				"Time", "월", "화", "수", "목", "금", "토"
 			}
-		));
+		){				
+			private static final long serialVersionUID = 1L;
+
+				public boolean isCellEditable(int row, int column) {// cell 수정 불가 설정
+					return false;
+				}
+			
+		});
 		
 		//가운데 정렬
 		table.getColumn("Time").setCellRenderer(celAlignCenter);
@@ -195,7 +204,7 @@ public class AddClassFrame extends JFrame {
 		
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.ORANGE);
+		panel_2.setBackground(Color.orange);
 		ParentPanel.add(panel_2, "name_798285310498133");
 		
 		
