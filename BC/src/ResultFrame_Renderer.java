@@ -11,9 +11,7 @@ import javax.swing.plaf.basic.BasicLabelUI;
 import javax.swing.table.DefaultTableCellRenderer;
 
 class ResultFrame_Renderer extends DefaultTableCellRenderer {// 배열 색 채우기
-	/**
-	 * 
-	 */
+	
 	ResultFrame_Renderer() {
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	};
