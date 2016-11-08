@@ -693,34 +693,34 @@ public class AddClassFrame extends JFrame {
 		
 		//------------------------------
 		JPanel Pfpanel = new JPanel();
-		Pfpanel.setBounds(1067, 59, 182, 109);
+		Pfpanel.setBounds(1055, 59, 182, 180);
 		Pfpanel.setBackground(new Color(255, 0, 0, 0));
 		TitledBorder pfborder = new TitledBorder("교수");
 		Pfpanel.setBorder(pfborder);
 		panel_2.add(Pfpanel);
 		
 		JPanel STpanel = new JPanel();
-		STpanel.setBounds(1067, 244, 182, 109);
+		STpanel.setBounds(1055, 300, 182, 180);
 		STpanel.setBackground(new Color(255, 0, 0, 0));
 		TitledBorder STborder = new TitledBorder("학생");
 		STpanel.setBorder(STborder);
 		panel_2.add(STpanel);
 		
 		
-		JButton PfaddButton = new JButton("추가하기");
-		PfaddButton.setBounds(1095, 134, 57, 23);
+		JButton PfaddButton = new JButton("추가");
+		PfaddButton.setBounds(1070, 190, 70, 23);
 		panel_2.add(PfaddButton);
 		
-		JButton PfdelButton = new JButton("삭제하기");
-		PfdelButton.setBounds(1180, 134, 57, 23);
+		JButton PfdelButton = new JButton("삭제");
+		PfdelButton.setBounds(1155, 190, 70, 23);
 		panel_2.add(PfdelButton);
 		
-		JButton STaddButton = new JButton("추가하기");
-		STaddButton.setBounds(1095, 316, 57, 23);
+		JButton STaddButton = new JButton("추가");
+		STaddButton.setBounds(1070, 430, 70, 23);
 		panel_2.add(STaddButton);
 		
-		JButton STdelButton = new JButton("삭제하기");
-		STdelButton.setBounds(1164, 316, 70, 23);
+		JButton STdelButton = new JButton("삭제");
+		STdelButton.setBounds(1155, 430, 70, 23);
 		panel_2.add(STdelButton);
 		
 		JButton FindButton = new JButton("공강찾기");
@@ -729,23 +729,24 @@ public class AddClassFrame extends JFrame {
 		
 		
 		JLabel INPfNewLabel = new JLabel("성함   :");
-		INPfNewLabel.setBounds(1080, 94, 57, 15);
+		INPfNewLabel.setBounds(1075, 94, 57, 15);
 		panel_2.add(INPfNewLabel);
 				
 		JTextField PftextField = new JTextField();
-		PftextField.setBounds(1140, 91, 100, 21);
+		PftextField.setBounds(1135, 91, 80, 21);
 		panel_2.add(PftextField);
 		PftextField.setColumns(10);
 		
 		
 		JLabel INSTNewLabel = new JLabel("학번  :");
-		INSTNewLabel.setBounds(1080, 277, 57, 15);
+		INSTNewLabel.setBounds(1075, 344, 57, 15);
 		panel_2.add(INSTNewLabel);
 		
 		JTextField STtextField = new JTextField();
-		STtextField.setBounds(1140, 274, 100, 21);
+		STtextField.setBounds(1135, 340, 80, 21);
 		panel_2.add(STtextField);
 		STtextField.setColumns(10);
+		//------------------------------
 		//------------------------------
 		
 		JButton btnNewButton = new JButton();
