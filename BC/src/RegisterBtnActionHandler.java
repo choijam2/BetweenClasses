@@ -34,8 +34,8 @@ public class RegisterBtnActionHandler implements ActionListener{
 						.prepareStatement("insert into student values(?,?,?,?,?,?)");
 				
 				query.setString(1, sid);
-				query.setString(2, password);
-				query.setString(3, name);
+				query.setString(2, name);
+				query.setString(3, password);
 				query.setString(4, college);
 				query.setString(5, dept);
 				query.setString(6, quest);

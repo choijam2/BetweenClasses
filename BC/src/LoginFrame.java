@@ -192,7 +192,6 @@ public class LoginFrame extends JFrame{
 	}
 
 	public LoginFrame() {
-		
 		setResizable(false);
 		con = startMysql();
 		setTitle("Between Classes");
@@ -266,6 +265,7 @@ public class LoginFrame extends JFrame{
 		btn_PassFind.setForeground(Color.decode("#ED3E75"));
 		btn_PassFind.setBorderPainted(false);
 		btn_PassFind.setFocusPainted(false);
+		
 		btn_PassFind.setContentAreaFilled(false);
 		contentPane.add(btn_PassFind);
 		
@@ -281,7 +281,7 @@ public class LoginFrame extends JFrame{
 		btn_Nonmember.setContentAreaFilled(false);
 		contentPane.add(btn_Nonmember);
 		
-		NonmemberBtnHandler nonmemberBtnHandler = new NonmemberBtnHandler();
+		NonmemberBtnHandler nonmemberBtnHandler = new NonmemberBtnHandler(con);
 		btn_Nonmember.addActionListener(nonmemberBtnHandler);
 	}
 
