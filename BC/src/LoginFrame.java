@@ -217,15 +217,15 @@ public class LoginFrame extends JFrame{
 		panel.setBounds(68, 71, 472, 387);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel = new JLabel("학번");
-		lblNewLabel.setBounds(87, 473, 80, 40);
-		lblNewLabel.setFont(f1);
-		contentPane.add(lblNewLabel);
+		JLabel lbl_studentID = new JLabel("학번");
+		lbl_studentID.setBounds(87, 473, 80, 40);
+		lbl_studentID.setFont(f1);
+		contentPane.add(lbl_studentID);
 		
-		JLabel lblNewLabel_1 = new JLabel("비밀번호");
-		lblNewLabel_1.setFont(f1);
-		lblNewLabel_1.setBounds(87, 534, 80, 40);
-		contentPane.add(lblNewLabel_1);
+		JLabel lbl_studentPW = new JLabel("비밀번호");
+		lbl_studentPW.setFont(f1);
+		lbl_studentPW.setBounds(87, 534, 80, 40);
+		contentPane.add(lbl_studentPW);
 		
 		sidField = new JTextField(8);
 		sidField.setFont(new Font("맑은 고딕", Font.BOLD, 15));
