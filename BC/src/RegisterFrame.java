@@ -99,7 +99,7 @@ public class RegisterFrame extends JFrame {
 		btn_Register.setContentAreaFilled(false);
 		contentPane.add(btn_Register);
 		
-		RegisterBtnActionHandler registerBtnHandler = new RegisterBtnActionHandler(this, con);
+		RegisterFunc registerBtnHandler = new RegisterFunc(this, con);
 		btn_Register.addActionListener(registerBtnHandler);
 		
 	}
