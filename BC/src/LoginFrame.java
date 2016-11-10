@@ -423,7 +423,7 @@ public class LoginFrame extends JFrame{
 		btn_PassFind.setContentAreaFilled(false);
 		contentPane.add(btn_PassFind);
 		
-		PassFindBtnHandler passFindBtnHandler = new PassFindBtnHandler(con);
+		PassFindBtnFunc passFindBtnHandler = new PassFindBtnFunc(con);
 		btn_PassFind.addActionListener(passFindBtnHandler);
 		
 		JButton btn_Nonmember = new JButton("비회원으로 이용하기 GoGo");
@@ -435,7 +435,7 @@ public class LoginFrame extends JFrame{
 		btn_Nonmember.setContentAreaFilled(false);
 		contentPane.add(btn_Nonmember);
 		
-		NonmemberBtnHandler nonmemberBtnHandler = new NonmemberBtnHandler(con);
+		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, true);
 		btn_Nonmember.addActionListener(nonmemberBtnHandler);
 	}
 

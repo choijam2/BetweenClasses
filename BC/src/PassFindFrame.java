@@ -67,7 +67,7 @@ public class PassFindFrame extends JFrame {
 		contentPane.add(btnFind);
 		
 		
-		PassFindActionHandler passFindActionHandler = new PassFindActionHandler(this, con);
+		PassFindFunc passFindActionHandler = new PassFindFunc(this, con);
 		btnFind.addActionListener(passFindActionHandler);
 	}
 

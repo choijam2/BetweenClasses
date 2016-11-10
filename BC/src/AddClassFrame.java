@@ -131,7 +131,7 @@ public class AddClassFrame extends JFrame {
 		btn_Del.setContentAreaFilled(false);
 		btn_Del.setBounds(884, 360, 81, 42);
 		panel_MockTable.add(btn_Del);
-		MockDelFunc mockDelBtn = new MockDelFunc(txt_ClassNum);
+		MockDelFunc mockDelBtn = new MockDelFunc(txt_ClassNum, mockTable, con);
 		btn_Del.addActionListener(mockDelBtn);
 
 		// 모의시간표 저장버튼

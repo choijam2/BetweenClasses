@@ -2,9 +2,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class PassFindBtnHandler implements ActionListener{
+public class PassFindBtnFunc implements ActionListener{
 	Connection con;
-	PassFindBtnHandler(Connection con){
+	PassFindBtnFunc(Connection con){
 		this.con = con;
 	}
 	@Override

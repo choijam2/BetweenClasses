@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-public class PassFindActionHandler implements ActionListener {
+public class PassFindFunc implements ActionListener {
 	Connection con;
 	PassFindFrame pframe;
 
-	PassFindActionHandler(PassFindFrame pframe, Connection con) {
+	PassFindFunc(PassFindFrame pframe, Connection con) {
 		this.pframe = pframe;
 		this.con = con;
 	}
