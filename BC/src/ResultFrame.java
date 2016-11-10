@@ -36,7 +36,7 @@ public class ResultFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	int[][] ex;
-	private static JTable table_1;
+	private static JTable BCTimeTable;
 
 	/**
 	 * Launch the application.
@@ -64,7 +64,7 @@ public class ResultFrame extends JFrame {
 
 					TableCellRenderer renderer = new TableCellRenderer();
 					renderer.getinfo(a);// 배열을 render의 배열안에 입력
-					table_1.setDefaultRenderer(Class.forName("java.lang.Object"), renderer);
+					BCTimeTable.setDefaultRenderer(Class.forName("java.lang.Object"), renderer);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -100,16 +100,16 @@ public class ResultFrame extends JFrame {
 		};
 
 		contentPane.setLayout(null);
-		table_1 = new JTable(defaultTableModel1);
-		table_1.setEnabled(false);
-		table_1.setRowSelectionAllowed(false);
-		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
-		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
-		table_1.setBounds(37, 35, 402, 600);
-		table_1.setRowHeight(53);
-		table_1.setIntercellSpacing(new Dimension(1, 0));// ???? 선여백처리??
+		BCTimeTable = new JTable(defaultTableModel1);
+		BCTimeTable.setEnabled(false);
+		BCTimeTable.setRowSelectionAllowed(false);
+		BCTimeTable.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		BCTimeTable.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		BCTimeTable.setBounds(37, 35, 402, 600);
+		BCTimeTable.setRowHeight(53);
+		BCTimeTable.setIntercellSpacing(new Dimension(1, 0));// ???? 선여백처리??
 		
-		JScrollPane scrollPane = new JScrollPane(table_1);
+		JScrollPane scrollPane = new JScrollPane(BCTimeTable);
 		scrollPane.setBounds(52, 124, 680, 723);
 		contentPane.add(scrollPane);
 		JButton btn_Save = new JButton(new ImageIcon("result_save.png"));
