@@ -65,7 +65,6 @@ public class ResultFrame extends JFrame {
 					TableCellRenderer renderer = new TableCellRenderer();
 					renderer.getinfo(a);// 배열을 render의 배열안에 입력
 					table_1.setDefaultRenderer(Class.forName("java.lang.Object"), renderer);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -102,53 +101,23 @@ public class ResultFrame extends JFrame {
 
 		contentPane.setLayout(null);
 		table_1 = new JTable(defaultTableModel1);
+		table_1.setEnabled(false);
+		table_1.setRowSelectionAllowed(false);
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
 		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
 		table_1.setBounds(37, 35, 402, 600);
 		table_1.setRowHeight(53);
 		table_1.setIntercellSpacing(new Dimension(1, 0));// ???? 선여백처리??
-		contentPane.add(table_1);
-
+		
 		JScrollPane scrollPane = new JScrollPane(table_1);
 		scrollPane.setBounds(52, 124, 680, 723);
 		contentPane.add(scrollPane);
-		JButton button = new JButton("");
-		button.setBorderPainted(false);    //투명 버튼
-		button.setFocusPainted(false);      //투명 버튼
-		button.setContentAreaFilled(false); //투명 버튼
-		button.setBounds(789, 713, 124, 52);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Dimension d = new Dimension(680, 723);// 오른쪽 아래 좌표 얻기위해 디멘션
-															// 사용
-					Rectangle area = new Rectangle(scrollPane.getLocationOnScreen(), d.getSize());// getlocationonscreen은
-																									// 실시간
-																									// 어플리케이션
-																									// scrollPane
-																									// 위치의
-																									// 왼쪽
-																									// 위
-																									// 지점을
-																									// 포인트로
-																									// 얻어옴||
-
-					Robot robot = new Robot();
-					BufferedImage bufferedImage = robot.createScreenCapture(area);
-					// 전체 스크린 샷 가져오기
-					// Capture the whole screen
-					// area = new
-					// Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-					// bufferedImage = robot.createScreenCapture(area);
-					ImageIO.write(bufferedImage, "jpg", new File("C:/Users/HBC/Desktop/screenshot.jpg"));
-
-				} catch (AWTException e) {
-				} catch (IOException e) {
-				}
-			}
-		});
-		contentPane.add(button);
-
+		JButton btn_Save = new JButton(new ImageIcon("result_save.png"));
+		btn_Save.setBorderPainted(false); // 투명 버튼
+		btn_Save.setFocusPainted(false); // 투명 버튼
+		btn_Save.setContentAreaFilled(false); // 투명 버튼
+		btn_Save.setBounds(789, 713, 124, 52);
+		contentPane.add(btn_Save);
 		JPanel panel = new JPanel() {
 			ImageIcon mainicon = new ImageIcon("result.png");
 
@@ -160,20 +129,7 @@ public class ResultFrame extends JFrame {
 		};
 		panel.setBounds(52, 28, 368, 94);
 		contentPane.add(panel);
-		
-		
-		//저장 버튼용 판넬
-		JPanel panel_1 = new JPanel(){
-			ImageIcon mainicon = new ImageIcon("result_save.png");
 
-			public void paintComponent(Graphics g) {
-				g.drawImage(mainicon.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		panel_1.setBounds(784, 713, 129, 52);
-		contentPane.add(panel_1);
 	}
 }
 
@@ -188,6 +144,7 @@ class TableCellRenderer extends DefaultTableCellRenderer {// 배열 색 채우기
 	int[][] array;
 	int row_ = 0;
 	int col = 0;
+	
 	int check = 0, first1 = 0, first2 = 0, end1 = 0, end2 = 0;
 	private static final long serialVersionUID = 1L;// 느낌표 표시 없애기 위해 작성 신경쓸 필요
 													// 없음

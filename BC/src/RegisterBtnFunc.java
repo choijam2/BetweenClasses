@@ -2,14 +2,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class PassFindBtnHandler implements ActionListener{
+public class RegisterBtnFunc implements ActionListener{
 	Connection con;
-	PassFindBtnHandler(Connection con){
+	RegisterBtnFunc(Connection con) {
 		this.con = con;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PassFindFrame pFrame = new PassFindFrame(con);
+		RegisterFrame rFrame = new RegisterFrame(con);
 	}
-	
 }
