@@ -8,14 +8,17 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 public class TimeTableSearchClassesFunc implements ActionListener{
-    JFrame frame;
+    String grade,college,dept,lname;
 	Connection con;
    JTable table;
    
-   TimeTableSearchClassesFunc(Connection con,JTable table,JFrame frame){
+   TimeTableSearchClassesFunc(String grade,String college,String dept,String lname,Connection con,JTable table,JFrame frame){
 	   this.con = con;
 	   this.table = table;
-	   this.frame = frame;
+	   this.college = college;
+	   this.dept = dept;
+	   this.lname = lname;
+	   this.grade = grade;
    }
    @Override
    public void actionPerformed(ActionEvent e) {
