@@ -133,7 +133,7 @@ public class AddClassFrame extends JFrame {
 		btn_Search.setContentAreaFilled(false);
 		btn_Search.setBounds(884, 477, 81, 42);
 		panel_TimeTable.add(btn_Search);
-		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(txt_ClassNum, mockTable, con);
+		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con);
 	    btn_Search.addActionListener(mockSearchBtn);
 
 		// 모의시간표 삭제버튼

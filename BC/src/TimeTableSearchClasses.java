@@ -7,17 +7,14 @@ import javax.swing.JTextField;
 
 public class TimeTableSearchClasses implements ActionListener{
 	
-	JTable table;
 	Connection con;
-	JTextField lid;
-	public TimeTableSearchClasses(JTextField lid, JTable table, Connection con) {
-		this.lid = lid;
-		this.table = table;
+	
+	public TimeTableSearchClasses(Connection con) {
 		this.con = con;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		TimeTableSearchClassesFrame SFrame = new TimeTableSearchClassesFrame(con);
 		
 	}
 	
