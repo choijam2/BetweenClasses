@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
-public class SearchClassesFrame extends JFrame {
+public class TimeTableSearchClassesFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField lectureTextField;
@@ -27,7 +27,7 @@ public class SearchClassesFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SearchClassesFrame frame = new SearchClassesFrame();
+					TimeTableSearchClassesFrame frame = new TimeTableSearchClassesFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class SearchClassesFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SearchClassesFrame() {
+	public TimeTableSearchClassesFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 301);
 		contentPane = new JPanel();
