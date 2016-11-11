@@ -70,9 +70,9 @@ public class SearchClassesFrame extends JFrame {
 		label.setBounds(395, 16, 57, 15);
 		contentPane.add(label);
 		
-		JButton btnNewButton = new JButton("\uC218\uAC15\uACFC\uBAA9 \uCC3E\uAE30");
-		btnNewButton.setBounds(637, 10, 135, 26);
-		contentPane.add(btnNewButton);
+		JButton btn_FindClass = new JButton("\uC218\uAC15\uACFC\uBAA9 \uCC3E\uAE30");
+		btn_FindClass.setBounds(637, 10, 135, 26);
+		contentPane.add(btn_FindClass);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 46, 813, 206);
