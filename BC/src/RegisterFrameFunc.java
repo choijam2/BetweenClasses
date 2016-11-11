@@ -2,9 +2,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class RegisterBtnFunc implements ActionListener{
+public class RegisterFrameFunc implements ActionListener{
 	Connection con;
-	RegisterBtnFunc(Connection con) {
+	RegisterFrameFunc(Connection con) {
 		this.con = con;
 	}
 	@Override

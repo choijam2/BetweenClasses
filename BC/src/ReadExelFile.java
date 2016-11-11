@@ -9,7 +9,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
-public class bc {
+public class ReadExelFile {
 	private static Connection con = null;
 
 	public static void main(String[] args) {

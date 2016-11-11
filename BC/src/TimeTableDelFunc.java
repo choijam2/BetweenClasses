@@ -5,11 +5,11 @@ import java.sql.Connection;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class MockDelFunc implements ActionListener{
+public class TimeTableDelFunc implements ActionListener{
 	JTable table;
 	Connection con;
 	JTextField lid;
-	public MockDelFunc(JTextField lid, JTable table, Connection con) {
+	public TimeTableDelFunc(JTextField lid, JTable table, Connection con) {
 		this.lid = lid;
 		this.table = table;
 		this.con = con;

@@ -3,9 +3,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTable;
 
-public class BetweenAllClearFunc implements ActionListener{
+public class BCAllClearFunc implements ActionListener{
 	JTable table1, table2, table3, table4;
-	public BetweenAllClearFunc(JTable table1, JTable table2, JTable table3, JTable table4) {
+	public BCAllClearFunc(JTable table1, JTable table2, JTable table3, JTable table4) {
 		// TODO Auto-generated constructor stub
 		this.table1 = table1;
 		this.table2 = table2;

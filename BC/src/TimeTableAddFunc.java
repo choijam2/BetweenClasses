@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class MockAddFunc implements ActionListener{
+public class TimeTableAddFunc implements ActionListener{
 	JTextField lid;
 	Connection con;
-	public MockAddFunc(JTextField lid, Connection con) {
+	public TimeTableAddFunc(JTextField lid, Connection con) {
 		this.lid = lid;
 		this.con = con;
 	}

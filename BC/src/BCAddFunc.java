@@ -4,11 +4,11 @@ import java.sql.Connection;
 
 import javax.swing.JTextField;
 
-public class BetweenAddFunc implements ActionListener{
+public class BCAddFunc implements ActionListener{
 	Connection con;
 	JTextField field;
 	boolean who;
-	public BetweenAddFunc(Connection con, JTextField field, boolean who) {
+	public BCAddFunc(Connection con, JTextField field, boolean who) {
 		// TODO Auto-generated constructor stub
 		this.con = con;
 		this.field = field;
