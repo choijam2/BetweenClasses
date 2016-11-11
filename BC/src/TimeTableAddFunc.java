@@ -6,14 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class TimeTableAddFunc implements ActionListener{
 	JTextField lid;
 	Connection con;
-	public TimeTableAddFunc(JTextField lid, Connection con) {
+	JTable table;
+	public TimeTableAddFunc(JTextField lid, Connection con, JTable table) {
 		this.lid = lid;
 		this.con = con;
+		this.table = table;
 	}
 	@Override
 	public void actionPerformed(ActionEvent a) {

@@ -121,7 +121,7 @@ public class AddClassFrame extends JFrame {
 		btn_Add.setContentAreaFilled(false);
 		btn_Add.setBounds(884, 300, 81, 42);
 		panel_TimeTable.add(btn_Add);
-		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con);
+		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con,mockTable);
 		btn_Add.addActionListener(mockAddBtn);
 		
 		//모의시간표 조회버튼
