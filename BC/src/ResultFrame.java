@@ -129,6 +129,10 @@ public class ResultFrame extends JFrame {
 		};
 		panel.setBounds(52, 28, 368, 94);
 		contentPane.add(panel);
+		
+		JButton btn_Random = new JButton("New button");
+		btn_Random.setBounds(789, 780, 125, 29);
+		contentPane.add(btn_Random);
 
 	}
 }

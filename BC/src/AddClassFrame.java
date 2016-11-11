@@ -200,8 +200,6 @@ public class AddClassFrame extends JFrame {
 		JScrollPane scrollTime5 = new JScrollPane();
 
 		JScrollPane scrollTimr6 = new JScrollPane();
-		
-		JButton btn_Random = new JButton("New button");
 		GroupLayout gl_panel_BCTable = new GroupLayout(panel_BCTable);
 		gl_panel_BCTable.setHorizontalGroup(
 			gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
@@ -213,10 +211,7 @@ public class AddClassFrame extends JFrame {
 							.addGap(18)
 							.addComponent(scrollTime5, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-							.addComponent(btn_Random)
-							.addGap(35))
+							.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_BCTable.createSequentialGroup()
 							.addComponent(scrollTime1, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
@@ -229,22 +224,17 @@ public class AddClassFrame extends JFrame {
 			gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_BCTable.createSequentialGroup()
 					.addContainerGap(59, Short.MAX_VALUE)
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollTime1, 0, 0, Short.MAX_VALUE)
+						.addComponent(scrollTime2, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+						.addComponent(scrollTime3, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+					.addGap(49)
 					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_BCTable.createSequentialGroup()
-							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(scrollTime1, 0, 0, Short.MAX_VALUE)
-								.addComponent(scrollTime2, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-								.addComponent(scrollTime3, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-							.addGap(49)
-							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
-									.addComponent(scrollTime5, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
-									.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_panel_BCTable.createSequentialGroup()
-							.addComponent(btn_Random)
-							.addGap(161))))
+						.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
+							.addComponent(scrollTime5, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
+							.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 
 		table_6 = new JTable();

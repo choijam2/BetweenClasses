@@ -401,6 +401,8 @@ public class LoginFrame extends JFrame{
 		LoginBtnFunc loginBtnHandler = new LoginBtnFunc(this, con);
 		btn_Login.addActionListener(loginBtnHandler);
 		
+		
+		//회원가입
 		JButton btn_Register = new JButton("회원가입");
 		btn_Register.setFont(f1);
 		btn_Register.setBounds(417, 602, 106, 40);
@@ -413,6 +415,7 @@ public class LoginFrame extends JFrame{
 		RegisterFrameFunc registerbtnhandler = new RegisterFrameFunc(con);
 		btn_Register.addActionListener(registerbtnhandler);
 		
+		//비밀번호찾기
 		JButton btn_PassFind = new JButton("비밀번호 찾기");
 		btn_PassFind.setFont(f1);
 		btn_PassFind.setBounds(253, 602, 150, 40);
