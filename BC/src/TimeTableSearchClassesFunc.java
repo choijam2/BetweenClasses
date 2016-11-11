@@ -7,9 +7,13 @@ import java.sql.ResultSet;
 import javax.swing.JTable;
 
 public class TimeTableSearchClassesFunc implements ActionListener{
-   String grade,college,dept,lname;
    Connection con;
    JTable table;
+   
+   TimeTableSearchClassesFunc(Connection con,JTable table){
+	   this.con = con;
+	   this.table = table;
+   }
    @Override
    public void actionPerformed(ActionEvent e) {
       // TODO Auto-generated method stub
