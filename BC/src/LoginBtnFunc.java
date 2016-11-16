@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class LoginBtnFunc implements ActionListener {
-
+	AddClassFrame ACFrame;
 	LoginFrame frame;
 	Connection con;
 
@@ -35,7 +35,7 @@ public class LoginBtnFunc implements ActionListener {
 					String str = rs.getString("sid");
 					String str2 = rs.getString("password");
 					if (str.equals(sid) && str2.equals(password))
-						JOptionPane.showMessageDialog(null, "로그인 성공!!");
+						ACFrame = new AddClassFrame(con, true, sid);
 					else
 						JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다!!");
 				} else

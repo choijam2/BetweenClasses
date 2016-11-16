@@ -36,6 +36,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
 
 public class AddClassFrame extends JFrame {
+	private Student student;
 	private Connection con;
 	private JPanel contentPane;
 	private JTable mockTable;
@@ -44,10 +45,10 @@ public class AddClassFrame extends JFrame {
 	private JTable table_2;
 	private JTable table_3;
 	private JTable table_4;
-	private JTable table_5;
-	private JTable table_6;
 
-	AddClassFrame(Connection con, boolean check) {
+	AddClassFrame(Connection con, boolean check, String sid) {
+		student = new Student(sid);
+		setResizable(false);
 		Object[][] defTableTime = new Object[][] { { "9:00 ~ 9:30", null, null, null, null, null, null },
 				{ "9:30 ~ 10:00", null, null, null, null, null, null },
 				{ "10:00 ~ 10:30", null, null, null, null, null, null },
@@ -60,8 +61,8 @@ public class AddClassFrame extends JFrame {
 				{ "13:30 ~ 14:00", null, null, null, null, null, null },
 				{ "14:00 ~ 14:30", null, null, null, null, null, null },
 				{ "14:30 ~ 15:00", null, null, null, null, null, null },
-				{ "15:00 ~ 15:30", null, null, null, null, null, null }, 
-				{ "15:30 ~ 16:00", null, null, null, null, null, null }, 
+				{ "15:00 ~ 15:30", null, null, null, null, null, null },
+				{ "15:30 ~ 16:00", null, null, null, null, null, null },
 				{ "16:00 ~ 16:30", null, null, null, null, null, null },
 				{ "16:30 ~ 17:00", null, null, null, null, null, null },
 				{ "17:00 ~ 17:30", null, null, null, null, null, null },
@@ -72,7 +73,7 @@ public class AddClassFrame extends JFrame {
 				{ "19:30 ~ 20:00", null, null, null, null, null, null },
 				{ "20:00 ~ 20:30", null, null, null, null, null, null },
 				{ "20:30 ~ 21:00", null, null, null, null, null, null },
-				{ "21:00 ~", null, null, null, null, null, null }};
+				{ "21:00 ~", null, null, null, null, null, null } };
 		String[] defDays = new String[] { "Time", "월", "화", "수", "목", "금", "토" };
 		this.con = con;
 		setTitle("BetweenClasses");
@@ -114,46 +115,6 @@ public class AddClassFrame extends JFrame {
 		txt_ClassNum.setBounds(860, 206, 164, 40);
 		txt_ClassNum.setColumns(10);
 
-		// 모의시간표 추가버튼
-		JButton btn_Add = new JButton(new ImageIcon("img/add.png"));
-		btn_Add.setBorderPainted(false); // 투명 버튼
-		btn_Add.setFocusPainted(false); // 투명 버튼
-		btn_Add.setContentAreaFilled(false);
-		btn_Add.setBounds(884, 300, 81, 42);
-		panel_TimeTable.add(btn_Add);
-		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con,mockTable);
-		btn_Add.addActionListener(mockAddBtn);
-		
-		//모의시간표 조회버튼
-		JButton btn_Search = new JButton(new ImageIcon("img/search.png"));
-		//JButton btn_Search = new JButton("gg");
-		//System.out.println("Ggfffffffff");
-		btn_Search.setBorderPainted(false);
-		btn_Search.setFocusPainted(false);
-		btn_Search.setContentAreaFilled(false);
-		btn_Search.setBounds(884, 477, 81, 42);
-		panel_TimeTable.add(btn_Search);
-		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con);
-	    btn_Search.addActionListener(mockSearchBtn);
-
-		// 모의시간표 삭제버튼
-		JButton btn_Del = new JButton(new ImageIcon("img/del.png"));
-		btn_Del.setBorderPainted(false); // 투명 버튼
-		btn_Del.setFocusPainted(false); // 투명 버튼
-		btn_Del.setContentAreaFilled(false);
-		btn_Del.setBounds(884, 365, 81, 42);
-		panel_TimeTable.add(btn_Del);
-		TimeTableDelFunc mockDelBtn = new TimeTableDelFunc(txt_ClassNum, mockTable, con);
-		btn_Del.addActionListener(mockDelBtn);
-
-		// 모의시간표 저장버튼
-		JButton btn_Save = new JButton(new ImageIcon("img/save.png"));
-		btn_Save.setBorderPainted(false); // 투명 버튼
-		btn_Save.setFocusPainted(false); // 투명 버튼
-		btn_Save.setContentAreaFilled(false);
-		btn_Save.setBounds(884, 420, 81, 42);
-		panel_TimeTable.add(btn_Save);
-
 		// 셀 글자 정렬
 		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
 		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
@@ -161,24 +122,21 @@ public class AddClassFrame extends JFrame {
 		mockTable = new JTable();
 		mockTable.setEnabled(false);
 		mockTable.setRowSelectionAllowed(false);
-		
+
 		mockTable.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 25));
 		mockTable.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));
 		mockTable.setBounds(37, 35, 400, 600);
 		mockTable.setRowHeight(28);
 		mockTable.setModel(new DefaultTableModel(defTableTime, defDays));
-		
-		mockTable.setValueAt("데이터베이스", 2, 2);
-		mockTable.setValueAt("IT관 117호", 3, 2);
-		mockTable.setValueAt("컴퓨터구조", 5, 4);
-		mockTable.setValueAt("IT관 115호", 6, 4);
-		mockTable.setDefaultRenderer(Object.class,  new MyRenderer());
-		mockTable.setIntercellSpacing(new Dimension(1,0));
-		
+
+		mockTable.setDefaultRenderer(Object.class, new MyRenderer());
+		mockTable.setIntercellSpacing(new Dimension(1, 0));
+
 		// 가운데 정렬
 		mockTable.getColumn("Time").setCellRenderer(celAlignCenter);
+		mockTable.getColumn("Time").setPreferredWidth(20);
 		panel_TimeTable.setLayout(null);
-		
+
 		scrollPane.setViewportView(mockTable);
 		panel_TimeTable.add(scrollPane);
 		panel_TimeTable.add(txt_ClassNum);
@@ -197,72 +155,36 @@ public class AddClassFrame extends JFrame {
 
 		JScrollPane scrollTime4 = new JScrollPane();
 
-		JScrollPane scrollTime5 = new JScrollPane();
-
-		JScrollPane scrollTimr6 = new JScrollPane();
 		GroupLayout gl_panel_BCTable = new GroupLayout(panel_BCTable);
-		gl_panel_BCTable.setHorizontalGroup(
-			gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_BCTable.createSequentialGroup()
-					.addGap(27)
-					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_BCTable.createSequentialGroup()
-							.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(scrollTime5, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_BCTable.createSequentialGroup()
-							.addComponent(scrollTime1, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(scrollTime2, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(scrollTime3, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(234, Short.MAX_VALUE))))
-		);
-		gl_panel_BCTable.setVerticalGroup(
-			gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_BCTable.createSequentialGroup()
-					.addContainerGap(59, Short.MAX_VALUE)
-					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(scrollTime1, 0, 0, Short.MAX_VALUE)
-						.addComponent(scrollTime2, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-						.addComponent(scrollTime3, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-					.addGap(49)
-					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
+		gl_panel_BCTable.setHorizontalGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_BCTable.createSequentialGroup().addContainerGap()
+						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
+								.addComponent(scrollTime3, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE).addComponent(
+										scrollTime1, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
+						.addGap(18)
+						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(scrollTime2).addComponent(scrollTime4, GroupLayout.DEFAULT_SIZE, 501,
+										Short.MAX_VALUE))
+						.addGap(234)));
+		gl_panel_BCTable.setVerticalGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_BCTable.createSequentialGroup().addGap(30)
 						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
-							.addComponent(scrollTime5, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
-							.addComponent(scrollTimr6, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-
-		table_6 = new JTable();
-		table_6.setEnabled(false);
-		table_6.setRowSelectionAllowed(false);
-		table_6.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
-		table_6.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
-		table_6.setRowHeight(19);
-		table_6.setModel(new DefaultTableModel(defTableTime, defDays));
-		scrollTimr6.setViewportView(table_6);
-
-		table_5 = new JTable();
-		table_5.setRowSelectionAllowed(false);
-		table_5.setEnabled(false);
-		table_5.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
-		table_5.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
-		table_5.setRowHeight(19);
-		table_5.setModel(new DefaultTableModel(defTableTime, defDays));
-		scrollTime5.setViewportView(table_5);
+								.addComponent(scrollTime1, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollTime2, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
+								.addComponent(scrollTime3, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
+						.addGap(20)));
 
 		table_4 = new JTable();
+		scrollTime4.setViewportView(table_4);
 		table_4.setEnabled(false);
 		table_4.setRowSelectionAllowed(false);
 		table_4.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_4.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_4.setRowHeight(19);
 		table_4.setModel(new DefaultTableModel(defTableTime, defDays));
-		scrollTime4.setViewportView(table_4);
 
 		table_3 = new JTable();
 		table_3.setRowSelectionAllowed(false);
@@ -291,6 +213,43 @@ public class AddClassFrame extends JFrame {
 		table_1.setModel(new DefaultTableModel(defTableTime, defDays));
 		scrollTime1.setViewportView(table_1);
 		panel_BCTable.setLayout(gl_panel_BCTable);
+		// 모의시간표 추가버튼
+		JButton btn_Add = new JButton(new ImageIcon("img/add.png"));
+		btn_Add.setBorderPainted(false); // 투명 버튼
+		btn_Add.setFocusPainted(false); // 투명 버튼
+		btn_Add.setContentAreaFilled(false);
+		btn_Add.setBounds(884, 300, 81, 42);
+		panel_TimeTable.add(btn_Add);
+		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con, mockTable, student);
+		btn_Add.addActionListener(mockAddBtn);
+
+		// 모의시간표 조회버튼
+		JButton btn_Search = new JButton(new ImageIcon("img/search.png"));
+		btn_Search.setBorderPainted(false);
+		btn_Search.setFocusPainted(false);
+		btn_Search.setContentAreaFilled(false);
+		btn_Search.setBounds(884, 477, 81, 42);
+		panel_TimeTable.add(btn_Search);
+		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con);
+		btn_Search.addActionListener(mockSearchBtn);
+
+		// 모의시간표 삭제버튼
+		JButton btn_Del = new JButton(new ImageIcon("img/del.png"));
+		btn_Del.setBorderPainted(false); // 투명 버튼
+		btn_Del.setFocusPainted(false); // 투명 버튼
+		btn_Del.setContentAreaFilled(false);
+		btn_Del.setBounds(884, 365, 81, 42);
+		panel_TimeTable.add(btn_Del);
+		TimeTableDelFunc mockDelBtn = new TimeTableDelFunc(txt_ClassNum, mockTable, con, student);
+		btn_Del.addActionListener(mockDelBtn);
+
+		// 모의시간표 저장버튼
+		JButton btn_Save = new JButton(new ImageIcon("img/save.png"));
+		btn_Save.setBorderPainted(false); // 투명 버튼
+		btn_Save.setFocusPainted(false); // 투명 버튼
+		btn_Save.setContentAreaFilled(false);
+		btn_Save.setBounds(884, 420, 81, 42);
+		panel_TimeTable.add(btn_Save);
 
 		// ------------------------------
 		JPanel Pfpanel = new JPanel();
@@ -385,41 +344,25 @@ public class AddClassFrame extends JFrame {
 				ParentPanel.revalidate();
 			}
 		});
-		
-		JLabel panel12 = new JLabel();
-		panel12.setBounds(100,100,100,100);
-		panel12.setBackground(Color.GREEN);
-		panel12.setLayout(null);
-		
-		
-	}
-	/*class MyRenderer implements TableCellRenderer{
-		public Component getTableCellRendererComponent(JTable table, Object value, 
-				boolean isSelected, boolean hasFocus, int row, int column){
-		JTextField editor = new JTextField();
-		editor.setHorizontalAlignment(SwingConstants.CENTER);
-		if(value != null)
-			editor.setText(value.toString());
-		if(row == 2 && column == 2)
-			editor.setBackground(Color.GREEN);
-		if(row == 3 && column == 2)
-			editor.setBackground(Color.GREEN);
-		if(row == 5 && column == 4)
-			editor.setBackground(Color.CYAN);
-		if(row == 6 && column == 4)
-			editor.setBackground(Color.CYAN);
-		editor.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, new Color(183, 183, 183)));
-		return editor;
+
+		if (!check) {
+			txt_ClassNum.setEnabled(false);
+			btn_Add.setEnabled(false);
+			btn_Del.setEnabled(false);
+			btn_Save.setEnabled(false);
+			btnBCTable.setEnabled(false);
 		}
-	}*/
-	class MyRenderer extends DefaultTableCellRenderer{
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
-				boolean hasFocus, int row, int column){
-			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			
-			if(table.getValueAt(row, column) != null){
+	}
+
+	class MyRenderer extends DefaultTableCellRenderer {
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+					column);
+
+			if (table.getValueAt(row, column) != null) {
 				cellComponent.setBackground(Color.YELLOW);
-			}else
+			} else
 				cellComponent.setBackground(Color.WHITE);
 			return cellComponent;
 		}

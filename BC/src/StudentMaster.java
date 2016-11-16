@@ -1,5 +1,9 @@
 
 public class StudentMaster extends Student{
+	StudentMaster(String sid) {
+		super(sid);
+	}
+
 	private boolean isMaster;
 
 	public boolean isMaster() {

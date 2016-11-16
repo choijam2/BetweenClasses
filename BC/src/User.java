@@ -1,13 +1,13 @@
 
 public class User {
-	private int sid;
-	User(){
-		
+	private String sid;
+	User(String sid){
+		this.sid = sid;
 	}
-	public int getSid() {
+	public String getSid() {
 		return sid;
 	}
-	public void setSid(int sid) {
+	public void setSid(String sid) {
 		this.sid = sid;
 	}
 }

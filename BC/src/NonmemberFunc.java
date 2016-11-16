@@ -11,7 +11,7 @@ public class NonmemberFunc implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		AddClassFrame ACFrame = new AddClassFrame(con, true);
+		AddClassFrame ACFrame = new AddClassFrame(con, memCheck, null);
 	}
 	
 }

@@ -4,44 +4,131 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class TimeTableAddFunc implements ActionListener{
+public class TimeTableAddFunc implements ActionListener {
+	Student student;
 	JTextField lid;
 	Connection con;
 	JTable table;
-	public TimeTableAddFunc(JTextField lid, Connection con, JTable table) {
+
+	public TimeTableAddFunc(JTextField lid, Connection con, JTable table, Student student) {
 		this.lid = lid;
 		this.con = con;
 		this.table = table;
+		this.student = student;
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String lectureId = lid.getText();
-		
-		if(lectureId.equals(""))
+
+		if (lectureId.equals(""))
 			JOptionPane.showMessageDialog(null, "수강번호를 입력하세요.");
-		else{
-			try{
+		else {
+			try {
 				ResultSet rs;
-				PreparedStatement query = con.prepareStatement("select ltime from lecture where lid = ?");
-				
+				PreparedStatement query = con.prepareStatement("select lname, ltime, place from lecture where lid = ?");
+
 				query.setString(1, lectureId);
 				rs = query.executeQuery();
-				
-				if(rs.next()){
+
+				if (rs.next()) {
 					String lecTime = rs.getString("ltime");
-					
-					System.out.println(lecTime);
-				}
-				
-			}catch(SQLException sqex){
-				System.out.println(sqex.getMessage());
-				System.out.println(sqex.getSQLState());
+					String lecName = rs.getString("lname");
+					String lecPlace = rs.getString("place");
+
+					boolean ck = stringToken(lecTime, lecName, lecPlace);
+					if (ck == true) {
+						query = con.prepareStatement("insert into course values(?,?)");
+
+						query.setString(1, student.getSid());
+						query.setString(2, lectureId);
+						int cnt = query.executeUpdate();
+
+						student.addLid(lectureId);
+					}
+				} else
+					rs.getBoolean(1);
+
+			} catch (SQLException sqex) {
+				JOptionPane.showMessageDialog(null, "과목이 존재하지 않습니다.");
 			}
 		}
+	}
+
+	public boolean stringToken(String lecTime, String lecName, String lecPlace) {
+		StringTokenizer tk = new StringTokenizer(lecTime);
+		ArrayList<Integer> rowcol = new ArrayList<Integer>();
+
+		while (tk.hasMoreTokens()) {
+			String temp = tk.nextToken();
+			char day = temp.charAt(0);
+
+			switch (day) { // 요일 지정
+			case '월': rowcol.add(1); break;
+			case '화': rowcol.add(2); break;
+			case '수': rowcol.add(3); break;
+			case '목': rowcol.add(4); break;
+			case '금': rowcol.add(5); break;
+			case '토': rowcol.add(6);
+			}
+
+			// 시작 시간
+			int sHour = Integer.parseInt(temp.substring(1, 3));
+			int sMin = Integer.parseInt(temp.substring(4, 6));
+			int sTime = sHour * 100 + sMin;
+
+			int fHour = Integer.parseInt(temp.substring(7, 9));
+			int fMin = Integer.parseInt(temp.substring(10));
+			int fTime = fHour * 100 + fMin;
+			// 시간 해당되는 행, 열 위치
+			int t = 900;
+			for (int i = 0; i < 26; i++) {
+				if (sTime >= t && sTime < t + 30) rowcol.add(i);
+				if (fTime >= t && fTime < t + 30) rowcol.add(i);
+				if (i % 2 == 0) t += 30;
+				else t += 70;
+			}
+		}
+		// 시간 겹치는지 확인
+		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
+			if (table.getValueAt(i, rowcol.get(0)) != null) {
+				JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
+				return false;
+			}
+		}
+		if (rowcol.size() > 5) {
+			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
+				if (table.getValueAt(i, rowcol.get(3)) != null) {
+					JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
+					return false;
+				}
+			}
+		}
+		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
+			if (i == rowcol.get(1))
+				table.setValueAt(lecName, i, rowcol.get(0));
+			else if (i == rowcol.get(1) + 1)
+				table.setValueAt(lecPlace, i, rowcol.get(0));
+			else
+				table.setValueAt("", i, rowcol.get(0));
+		}
+		if (rowcol.size() > 5) {
+			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
+				if (i == rowcol.get(4))
+					table.setValueAt(lecName, i, rowcol.get(3));
+				else if (i == rowcol.get(4) + 1)
+					table.setValueAt(lecPlace, i, rowcol.get(3));
+				else
+					table.setValueAt("", i, rowcol.get(3));
+			}
+		}
+		return true;
 	}
 }

@@ -438,7 +438,7 @@ public class LoginFrame extends JFrame{
 		btn_Nonmember.setContentAreaFilled(false);
 		contentPane.add(btn_Nonmember);
 		
-		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, true);
+		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, false);
 		btn_Nonmember.addActionListener(nonmemberBtnHandler);
 	}
 
