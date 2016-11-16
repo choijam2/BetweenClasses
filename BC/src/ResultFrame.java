@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 public class ResultFrame extends JFrame {
 
@@ -80,7 +81,7 @@ public class ResultFrame extends JFrame {
 	public ResultFrame() throws ClassNotFoundException {
 		setTitle("\uBAA8\uB450\uC758 \uACF5\uAC15");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 972, 934);
+		setBounds(100, 100, 1099, 934);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -118,21 +119,31 @@ public class ResultFrame extends JFrame {
 		btn_Save.setContentAreaFilled(false); // 투명 버튼
 		btn_Save.setBounds(789, 713, 124, 52);
 		contentPane.add(btn_Save);
-		JPanel panel = new JPanel() {
-			ImageIcon mainicon = new ImageIcon("result.png");
-
-			public void paintComponent(Graphics g) {
-				g.drawImage(mainicon.getImage(), 0, 0, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		panel.setBounds(52, 28, 368, 94);
-		contentPane.add(panel);
+//		JPanel panel = new JPanel() {
+//			ImageIcon mainicon = new ImageIcon("result.png");
+//
+//			public void paintComponent(Graphics g) {
+//				g.drawImage(mainicon.getImage(), 0, 0, null);
+//				setOpaque(false);
+//				super.paintComponent(g);
+//			}
+//		};
+//		panel.setBounds(52, 28, 368, 94);
+//		contentPane.add(panel);
 		
-		JButton btn_Random = new JButton("New button");
-		btn_Random.setBounds(789, 780, 125, 29);
+		JButton btn_Random = new JButton(new ImageIcon("img/ramdom_img.png"));
+		btn_Random.setBounds(789, 781, 176, 46);
+		btn_Random.setBorderPainted(false);
+		btn_Random.setFocusPainted(false);
+		btn_Random.setContentAreaFilled(false);
 		contentPane.add(btn_Random);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(749, 124, 311, 559);
+		contentPane.add(panel_1);
+		
+		JTextArea textArea = new JTextArea();
+		panel_1.add(textArea);
 
 	}
 }
