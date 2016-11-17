@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -12,6 +13,11 @@ import javax.swing.JComponent;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -46,7 +52,8 @@ public class AddClassFrame extends JFrame {
 	private JTable table_3;
 	private JTable table_4;
 
-	AddClassFrame(Connection con, boolean check, String sid) {
+	AddClassFrame(Connection con, boolean check, String sid, JFrame frame) {
+		frame.dispose();
 		student = new Student(sid);
 		setResizable(false);
 		Object[][] defTableTime = new Object[][] { { "9:00 ~ 9:30", null, null, null, null, null, null },
@@ -97,7 +104,7 @@ public class AddClassFrame extends JFrame {
 		ParentPanel.add(panel_TimeTable, "name_798298334667093");
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 28, 746, 735);
+		scrollPane.setBounds(40, 28, 1033, 735);
 
 		JPanel Pnl_ClassNum = new JPanel() {
 			// 판넬에 이미지 추가
@@ -109,10 +116,10 @@ public class AddClassFrame extends JFrame {
 				super.paintComponent(g);
 			}
 		};
-		Pnl_ClassNum.setBounds(860, 123, 164, 80);
+		Pnl_ClassNum.setBounds(1085, 103, 164, 80);
 
 		txt_ClassNum = new JTextField();
-		txt_ClassNum.setBounds(860, 206, 164, 40);
+		txt_ClassNum.setBounds(1085, 207, 164, 40);
 		txt_ClassNum.setColumns(10);
 
 		// 셀 글자 정렬
@@ -232,7 +239,7 @@ public class AddClassFrame extends JFrame {
 		btn_Add.setBorderPainted(false); // 투명 버튼
 		btn_Add.setFocusPainted(false); // 투명 버튼
 		btn_Add.setContentAreaFilled(false);
-		btn_Add.setBounds(884, 300, 81, 42);
+		btn_Add.setBounds(1129, 272, 81, 42);
 		panel_TimeTable.add(btn_Add);
 		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con, mockTable, student);
 		btn_Add.addActionListener(mockAddBtn);
@@ -242,7 +249,7 @@ public class AddClassFrame extends JFrame {
 		btn_Search.setBorderPainted(false);
 		btn_Search.setFocusPainted(false);
 		btn_Search.setContentAreaFilled(false);
-		btn_Search.setBounds(884, 477, 81, 42);
+		btn_Search.setBounds(1129, 428, 81, 42);
 		panel_TimeTable.add(btn_Search);
 		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con);
 		btn_Search.addActionListener(mockSearchBtn);
@@ -252,7 +259,7 @@ public class AddClassFrame extends JFrame {
 		btn_Del.setBorderPainted(false); // 투명 버튼
 		btn_Del.setFocusPainted(false); // 투명 버튼
 		btn_Del.setContentAreaFilled(false);
-		btn_Del.setBounds(884, 365, 81, 42);
+		btn_Del.setBounds(1129, 324, 81, 42);
 		panel_TimeTable.add(btn_Del);
 		TimeTableDelFunc mockDelBtn = new TimeTableDelFunc(txt_ClassNum, mockTable, con, student);
 		btn_Del.addActionListener(mockDelBtn);
@@ -262,9 +269,29 @@ public class AddClassFrame extends JFrame {
 		btn_Save.setBorderPainted(false); // 투명 버튼
 		btn_Save.setFocusPainted(false); // 투명 버튼
 		btn_Save.setContentAreaFilled(false);
-		btn_Save.setBounds(884, 420, 81, 42);
+		btn_Save.setBounds(1129, 376, 81, 42);
 		panel_TimeTable.add(btn_Save);
-
+				
+		// 모의시간표 전체삭제
+		JButton btn_AllClear = new JButton(new ImageIcon("img/AllClear.png"));
+		btn_AllClear.setBorderPainted(false); // 투명 버튼
+		btn_AllClear.setFocusPainted(false); // 투명 버튼
+		btn_AllClear.setContentAreaFilled(false);
+		btn_AllClear.setBounds(1129, 480, 81, 42);
+		panel_TimeTable.add(btn_AllClear);
+		TimeTableAllClearFunc allClear = new TimeTableAllClearFunc(mockTable, con, student);
+		btn_AllClear.addActionListener(allClear);
+		
+		// 로그아웃 버튼
+		JButton btn_Logout = new JButton(new ImageIcon("img/Logout.png"));
+		btn_Logout.setBorderPainted(false); // 투명 버튼
+		btn_Logout.setFocusPainted(false); // 투명 버튼
+		btn_Logout.setContentAreaFilled(false); // 투명 버튼
+		btn_Logout.setBounds(1098, 10, 141, 45);
+		contentPane.add(btn_Logout);
+		LogoutFunc logout = new LogoutFunc(this);
+		btn_Logout.addActionListener(logout);
+		
 		// ------------------------------
 		JPanel Pfpanel = new JPanel();
 		Pfpanel.setBounds(1055, 59, 182, 180);
@@ -340,10 +367,11 @@ public class AddClassFrame extends JFrame {
 		contentPane.add(btnBCTable);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 146, 1055, 765);
+		panel.setBounds(0, 115, 1261, 796);
 		contentPane.add(panel);
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
+		2121
 
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -368,9 +396,89 @@ public class AddClassFrame extends JFrame {
 			btn_Del.setEnabled(false);
 			btn_Save.setEnabled(false);
 			btnBCTable.setEnabled(false);
+		} else
+			loadTimeTable(sid);
+	}
+
+	public void loadTimeTable(String sid) {
+		try {
+			ResultSet rs;
+			PreparedStatement query = con
+					.prepareStatement("select ltime, lname, place from lecture where lid in (select lid from course where sid = ?)");
+
+			query.setString(1, sid);
+			rs = query.executeQuery();
+
+			while (rs.next()) {
+				String lecTime = rs.getString("ltime");
+				String lecName = rs.getString("lname");
+				String lecPlace = rs.getString("place");
+
+				stringToken(lecTime, lecName, lecPlace);
+			}
+
+		} catch (SQLException sqex) {
+			JOptionPane.showMessageDialog(null, "과목이 존재하지 않습니다.");
 		}
 	}
 
+	public void stringToken(String lecTime, String lecName, String lecPlace) {
+		StringTokenizer tk = new StringTokenizer(lecTime);
+		ArrayList<Integer> rowcol = new ArrayList<Integer>();
+
+		while (tk.hasMoreTokens()) {
+			String temp = tk.nextToken();
+			char day = temp.charAt(0);
+
+			switch (day) { // 요일 지정
+			case '월': rowcol.add(1); break;
+			case '화': rowcol.add(2); break;
+			case '수': rowcol.add(3); break;
+			case '목': rowcol.add(4); break;
+			case '금': rowcol.add(5); break;
+			case '토': rowcol.add(6);
+			}
+
+			// 시작 시간
+			int sHour = Integer.parseInt(temp.substring(1, 3));
+			int sMin = Integer.parseInt(temp.substring(4, 6));
+			int sTime = sHour * 100 + sMin;
+
+			int fHour = Integer.parseInt(temp.substring(7, 9));
+			int fMin = Integer.parseInt(temp.substring(10));
+			int fTime = fHour * 100 + fMin;
+			// 시간 해당되는 행, 열 위치
+			int t = 900;
+			for (int i = 0; i < 26; i++) {
+				if (sTime >= t && sTime < t + 30)
+					rowcol.add(i);
+				if (fTime >= t && fTime < t + 30)
+					rowcol.add(i);
+				if (i % 2 == 0)
+					t += 30;
+				else
+					t += 70;
+			}
+		}
+		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
+			if (i == rowcol.get(1))
+				mockTable.setValueAt(lecName, i, rowcol.get(0));
+			else if (i == rowcol.get(1) + 1)
+				mockTable.setValueAt(lecPlace, i, rowcol.get(0));
+			else
+				mockTable.setValueAt("", i, rowcol.get(0));
+		}
+		if (rowcol.size() > 5) {
+			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
+				if (i == rowcol.get(4))
+					mockTable.setValueAt(lecName, i, rowcol.get(3));
+				else if (i == rowcol.get(4) + 1)
+					mockTable.setValueAt(lecPlace, i, rowcol.get(3));
+				else
+					mockTable.setValueAt("", i, rowcol.get(3));
+			}
+		}
+	}
 	class MyRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {

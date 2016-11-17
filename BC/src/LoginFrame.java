@@ -320,6 +320,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 public class LoginFrame extends JFrame{
+	
 	private Connection con;
 	private JPanel contentPane;
 	private JTextField sidField;
@@ -346,6 +347,7 @@ public class LoginFrame extends JFrame{
 	}
 
 	public LoginFrame() {
+		setVisible(true);
 		setResizable(false);
 		con = startMysql();
 		setTitle("Between Classes");
@@ -438,7 +440,7 @@ public class LoginFrame extends JFrame{
 		btn_Nonmember.setContentAreaFilled(false);
 		contentPane.add(btn_Nonmember);
 		
-		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, false);
+		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, false, this);
 		btn_Nonmember.addActionListener(nonmemberBtnHandler);
 	}
 
