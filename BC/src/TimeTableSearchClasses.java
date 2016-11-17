@@ -15,7 +15,5 @@ public class TimeTableSearchClasses implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		TimeTableSearchClassesFrame SFrame = new TimeTableSearchClassesFrame(con);
-		
 	}
-	
 }
