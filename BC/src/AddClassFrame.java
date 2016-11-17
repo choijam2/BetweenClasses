@@ -176,7 +176,9 @@ public class AddClassFrame extends JFrame {
 								.addComponent(scrollTime3, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
 								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
 						.addGap(20)));
-
+		
+		int[] CheckIsTable = new int[4];
+		
 		table_4 = new JTable();
 		scrollTime4.setViewportView(table_4);
 		table_4.setEnabled(false);
@@ -185,6 +187,9 @@ public class AddClassFrame extends JFrame {
 		table_4.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_4.setRowHeight(19);
 		table_4.setModel(new DefaultTableModel(defTableTime, defDays));
+		table_4.setDefaultRenderer(Object.class, new MyRenderer());
+		table_4.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_4.getColumn("Time").setPreferredWidth(20);
 
 		table_3 = new JTable();
 		table_3.setRowSelectionAllowed(false);
@@ -193,6 +198,9 @@ public class AddClassFrame extends JFrame {
 		table_3.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_3.setRowHeight(19);
 		table_3.setModel(new DefaultTableModel(defTableTime, defDays));
+		table_3.setDefaultRenderer(Object.class, new MyRenderer());
+		table_3.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_3.getColumn("Time").setPreferredWidth(20);
 		scrollTime3.setViewportView(table_3);
 
 		table_2 = new JTable();
@@ -202,6 +210,9 @@ public class AddClassFrame extends JFrame {
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_2.setRowHeight(19);
 		table_2.setModel(new DefaultTableModel(defTableTime, defDays));
+		table_2.setDefaultRenderer(Object.class, new MyRenderer());
+		table_2.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_2.getColumn("Time").setPreferredWidth(20);
 		scrollTime2.setViewportView(table_2);
 
 		table_1 = new JTable();
@@ -211,6 +222,9 @@ public class AddClassFrame extends JFrame {
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_1.setRowHeight(19);
 		table_1.setModel(new DefaultTableModel(defTableTime, defDays));
+		table_1.setDefaultRenderer(Object.class, new MyRenderer());
+		table_1.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_1.getColumn("Time").setPreferredWidth(20);
 		scrollTime1.setViewportView(table_1);
 		panel_BCTable.setLayout(gl_panel_BCTable);
 		// 모의시간표 추가버튼
@@ -266,6 +280,11 @@ public class AddClassFrame extends JFrame {
 		STpanel.setBorder(STborder);
 		panel_BCTable.add(STpanel);
 
+		JTextField STtextField = new JTextField();
+		STtextField.setBounds(1135, 340, 80, 21);
+		panel_BCTable.add(STtextField);
+		STtextField.setColumns(10);
+		
 		JButton PfaddButton = new JButton("추가");
 		PfaddButton.setBounds(1070, 190, 70, 23);
 		panel_BCTable.add(PfaddButton);
@@ -277,7 +296,9 @@ public class AddClassFrame extends JFrame {
 		JButton STaddButton = new JButton("추가");
 		STaddButton.setBounds(1070, 430, 70, 23);
 		panel_BCTable.add(STaddButton);
-
+		BCAddFunc BCSTDelbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,STtextField,false,CheckIsTable);
+		STaddButton.addActionListener(BCSTDelbtn);
+		
 		JButton STdelButton = new JButton("삭제");
 		STdelButton.setBounds(1155, 430, 70, 23);
 		panel_BCTable.add(STdelButton);
@@ -299,10 +320,6 @@ public class AddClassFrame extends JFrame {
 		INSTNewLabel.setBounds(1075, 344, 57, 15);
 		panel_BCTable.add(INSTNewLabel);
 
-		JTextField STtextField = new JTextField();
-		STtextField.setBounds(1135, 340, 80, 21);
-		panel_BCTable.add(STtextField);
-		STtextField.setColumns(10);
 		// ------------------------------
 		// ------------------------------
 
