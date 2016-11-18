@@ -184,7 +184,11 @@ public class AddClassFrame extends JFrame {
 								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
 						.addGap(20)));
 		
-		int[] CheckIsTable = new int[4];
+		ArrayList<String> CheckIsTable = new ArrayList<String>(); //공강시간표에서 시간표를 추가하는것에 대한 구분을 하기 위한 배열리스트
+		CheckIsTable.add("-1");//초기값은 모두 -1
+		CheckIsTable.add("-1");//교수 이름 또는 학번이 들어올경우 해당하는 자리에 텍스트 입력
+		CheckIsTable.add("-1");
+		CheckIsTable.add("-1");
 		
 		table_4 = new JTable();
 		scrollTime4.setViewportView(table_4);
@@ -312,36 +316,43 @@ public class AddClassFrame extends JFrame {
 		panel_BCTable.add(STtextField);
 		STtextField.setColumns(10);
 		
-		JButton PfaddButton = new JButton("추가");
-		PfaddButton.setBounds(1070, 190, 70, 23);
-		panel_BCTable.add(PfaddButton);
-
-		JButton PfdelButton = new JButton("삭제");
-		PfdelButton.setBounds(1155, 190, 70, 23);
-		panel_BCTable.add(PfdelButton);
-
-		JButton STaddButton = new JButton("추가");
-		STaddButton.setBounds(1070, 430, 70, 23);
-		panel_BCTable.add(STaddButton);
-		BCAddFunc BCSTDelbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,STtextField,false,CheckIsTable);
-		STaddButton.addActionListener(BCSTDelbtn);
-		
-		JButton STdelButton = new JButton("삭제");
-		STdelButton.setBounds(1155, 430, 70, 23);
-		panel_BCTable.add(STdelButton);
-
-		JButton FindButton = new JButton("공강찾기");
-		FindButton.setBounds(1100, 550, 97, 23);
-		panel_BCTable.add(FindButton);
-
-		JLabel INPfNewLabel = new JLabel("성함   :");
-		INPfNewLabel.setBounds(1075, 94, 57, 15);
-		panel_BCTable.add(INPfNewLabel);
-
 		JTextField PftextField = new JTextField();
 		PftextField.setBounds(1135, 91, 80, 21);
 		panel_BCTable.add(PftextField);
 		PftextField.setColumns(10);
+		
+		JButton PfaddButton = new JButton("\uAD50\uC218\uCD94\uAC00");
+		PfaddButton.setBounds(1070, 190, 70, 23);
+		panel_BCTable.add(PfaddButton);
+		BCAddFunc BCAddbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
+		PfaddButton.addActionListener(BCAddbtn);
+
+		JButton PfdelButton = new JButton("\uAD50\uC218\uC0AD\uC81C");
+		PfdelButton.setBounds(1155, 190, 70, 23);
+		panel_BCTable.add(PfdelButton);
+		BCDelFunc BCDelbtn = new BCDelFunc(table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
+		PfdelButton.addActionListener(BCDelbtn);
+
+		JButton STaddButton = new JButton("\uD559\uC0DD\uCD94\uAC00");
+		STaddButton.setBounds(1070, 430, 70, 23);
+		panel_BCTable.add(STaddButton);
+		STaddButton.addActionListener(BCAddbtn);
+		
+		JButton STdelButton = new JButton("\uD559\uC0DD\uC0AD\uC81C");
+		STdelButton.setBounds(1155, 430, 70, 23);
+		panel_BCTable.add(STdelButton);		
+		STdelButton.addActionListener(BCDelbtn);
+
+		JButton FindButton = new JButton("공강찾기");//임시로 allclear로 연결함
+		FindButton.setBounds(1100, 550, 97, 23);
+		panel_BCTable.add(FindButton);
+		BCAllClearFunc BCAllClearbtn = new BCAllClearFunc(table_1,table_2,table_3,table_4,CheckIsTable);
+		FindButton.addActionListener(BCAllClearbtn);
+
+
+		JLabel INPfNewLabel = new JLabel("성함   :");
+		INPfNewLabel.setBounds(1075, 94, 57, 15);
+		panel_BCTable.add(INPfNewLabel);
 
 		JLabel INSTNewLabel = new JLabel("학번  :");
 		INSTNewLabel.setBounds(1075, 344, 57, 15);
@@ -371,7 +382,7 @@ public class AddClassFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
-		2121
+		
 
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

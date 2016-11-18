@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,93 +9,187 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class BCAddFunc implements ActionListener{
+public class BCAddFunc implements ActionListener {
 	Connection con;
-	JTextField field;
-	JTable table1,table2,table3,table4;
-	int[] CheckIsTable; 
-	boolean who;
+	JTextField PftextField, STtextField;
+	JTable table1, table2, table3, table4;
+	ArrayList<String> CheckIsTable;
 	String lid;
-	public BCAddFunc(Connection con,JTable table1,JTable table2,JTable table3,JTable table4, JTextField field, boolean who, int[] CheckIsTable) {
+	JButton button;
+
+	public BCAddFunc(Connection con, JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
+			JTextField STtextField, ArrayList<String> CheckIsTable) {
 		// TODO Auto-generated constructor stub
 		this.con = con;
-		this.field = field;
-		this.who = who;
+		this.PftextField = PftextField;
+		this.STtextField = STtextField;
 		this.table1 = table1;
 		this.table2 = table2;
 		this.table3 = table3;
 		this.table4 = table4;
 		this.CheckIsTable = CheckIsTable;
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		button = (JButton) e.getSource();//어떤 버튼이 눌렸는지에 따라 학생 또는 교수를 선택
+		if (button.getText().equals("교수추가")) {
+
+			PFadd(PftextField);//교수 추가함수
+
+		} else {
+
+			STadd(STtextField);//학생 추가 함수
+
+		}
 		// TODO Auto-generated method stub
+	}
+
+	void PFadd(JTextField field) {
 		String ID = field.getText();
-		ArrayList<String> lidlist = new ArrayList<String>(); 
+		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
-			JOptionPane.showMessageDialog(null, "학번 또는 성함을 입력하세요");
-		else if(ID.length()!=8)
-			JOptionPane.showMessageDialog(null, "학번을 다시 입력하세요");
-		else if(CheckIsTable[3]!=0)
+			JOptionPane.showMessageDialog(null, "성함을 입력하세요");
+		else if (CheckFull(CheckIsTable))
 			JOptionPane.showMessageDialog(null, "시간표를 추가할 수 없습니다");
+		else if (CheckSame(CheckIsTable, ID))
+			JOptionPane.showMessageDialog(null, "동일한 시간표가 있습니다");
 		else {
 			try {
-				ResultSet rs;
-				PreparedStatement query = con.prepareStatement("select lid from course where sid = ?");
+				PreparedStatement query = con.prepareStatement("select lid from lecture where pname = ?");
 
 				query.setString(1, ID);
-				rs = query.executeQuery();
-							
-				if(rs.next()==false)
+				 ResultSet rs = query.executeQuery();
+
+				if (rs.next() == false) {
 					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
-			
-				for(int i=0;rs.next();i++){					
-					lidlist.add(i,lid = rs.getString("lid"));
-				}			
-				//=================수강번호 가져오기
-				for(int i=0;i<4;i++)
-				{
-					if(CheckIsTable[i]==0){
-						CheckIsTable[i] = Integer.parseInt(ID);
-						switch (i) { // 요일 지정
-							case 0: AddTable(lidlist,rs,query,table1); break;
-							case 1: AddTable(lidlist,rs,query,table2); break;
-							case 2: AddTable(lidlist,rs,query,table3); break;
-							case 3: AddTable(lidlist,rs,query,table4); break;
-						}
-						break;
-					}
+				} else {
+					Getlib(rs, lidlist, query, ID);//입력받은 값에 대한 수강번호를 가져오고 시간표를 뿌려주는 함수
 				}
-					
 			} catch (SQLException sqex) {
 				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
 			}
 		}
 	}
-	///////////////////////////////////////////////////////////////////////////////////
-	void AddTable(ArrayList<String> lidlist,ResultSet rs,PreparedStatement query,JTable table){
-		try{
-		for(int i=0; i < lidlist.size();i++){
-			query = con.prepareStatement("select lname, ltime, place from lecture where lid = ?");
-			query.setString(1, lidlist.get(i));
-			rs = query.executeQuery();
-			if(rs.next()){
-				String lecTime = rs.getString("ltime");
-				String lecName = rs.getString("lname");
-				String lecPlace = rs.getString("place");
-				boolean ck = stringToken(lecTime,lecName,lecPlace,table);
+
+	/////////////////////////////////////////////
+	void STadd(JTextField field) {//학생추가함수
+		String ID = field.getText();
+		ArrayList<String> lidlist = new ArrayList<String>();
+		if (ID.equals(""))
+			JOptionPane.showMessageDialog(null, "학번을 입력하세요");
+		else if (ID.length() != 8)
+			JOptionPane.showMessageDialog(null, "학번을 다시 입력하세요");
+		else if (CheckFull(CheckIsTable))
+			JOptionPane.showMessageDialog(null, "시간표를 추가할 수 없습니다");
+		else if (CheckSame(CheckIsTable, ID))
+			JOptionPane.showMessageDialog(null, "동일한 시간표가 있습니다");
+		else {
+			try {
+				PreparedStatement query = con.prepareStatement("select lid from course where sid = ?");
+
+				query.setString(1, ID);
+				ResultSet rs = query.executeQuery();
+
+				if (CheckGetEmptyResult(rs,lidlist)) {
+					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+				}
+				else {
+					Getlib(rs, lidlist, query, ID);//입력받은 값에 대한 수강번호를 가져오고 시간표를 뿌려주는 함수
+				}
+			} catch (SQLException sqex) {
+				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
 			}
 		}
+	}
+
+	///////////////////////
+	boolean CheckFull(ArrayList<String> CheckIsTable) {// 리스트가 풀인지 체크 초기값은 모두 -1
+		for (int i = 0; i < 4; i++) {
+			if (CheckIsTable.contains("-1"))
+				return false;
+		}
+		return true;
+	}
+
+	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {//입력받은 값과 같은 시간표가 있는지 확인
+		for (int i = 0; i < 4; i++) {
+			if (CheckIsTable.contains(ID))
+				return true;
+		}
+		return false;
+	}
+	
+	boolean CheckGetEmptyResult(ResultSet rs,ArrayList<String> lidlist) {//쿼리실행은 정상적으로 작동했지만 결과값이 비었을때 체크하는 함수
+		try {
+			if(rs.next() == false){			
+				return true;
+			}
+			lidlist.add(rs.getString("lid"));;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	////////////////////////////////////////////////////////////////////////////////////
+	void Getlib(ResultSet rs, ArrayList<String> lidlist, PreparedStatement query, String ID) {//
+		try {
+			for (int i = 0; rs.next(); i++) {//받아온 수강번호를 배열리스트에 입력!
+				lidlist.add(rs.getString("lid"));
+			}
+			for (int i = 0; i < 4; i++) {
+				if (CheckIsTable.get(i).equals("-1")) {//빈 시간표를 찾아서
+					CheckIsTable.set(i, ID);//해당 번지의 배열에 해당 아이디를 입력
+					switch (i) {//해당 번지의 시간표에 시간표 출력
+					case 0:
+						AddTable(lidlist, rs, query, table1);
+						break;
+					case 1:
+						AddTable(lidlist, rs, query, table2);
+						break;
+					case 2:
+						AddTable(lidlist, rs, query, table3);
+						break;
+					case 3:
+						AddTable(lidlist, rs, query, table4);
+						break;
+					}
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+	void AddTable(ArrayList<String> lidlist, ResultSet rs, PreparedStatement query, JTable table) {//수강번호를 시간표에 뿌려주는과정
+		try {
+			for (int i = 0; i < lidlist.size(); i++) {
+				query = con.prepareStatement("select lname, ltime, place from lecture where lid = ?");
+				query.setString(1, lidlist.get(i));
+				rs = query.executeQuery();
+				if (rs.next()) {
+					String lecTime = rs.getString("ltime");
+					String lecName = rs.getString("lname");
+					String lecPlace = rs.getString("place");
+					boolean ck = stringToken(lecTime, lecName, lecPlace, table);
+				}
+			}
 		} catch (SQLException sqex) {
 			JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
 		}
 	}
-///////////////////////////////////////////////////////////////////////////////////
-	public boolean stringToken(String lecTime, String lecName, String lecPlace,JTable table) {
+
+	///////////////////////////////////////////////////////////////////////////////////
+	public boolean stringToken(String lecTime, String lecName, String lecPlace, JTable table) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
 
@@ -102,12 +198,23 @@ public class BCAddFunc implements ActionListener{
 			char day = temp.charAt(0);
 
 			switch (day) { // 요일 지정
-			case '월': rowcol.add(1); break;
-			case '화': rowcol.add(2); break;
-			case '수': rowcol.add(3); break;
-			case '목': rowcol.add(4); break;
-			case '금': rowcol.add(5); break;
-			case '토': rowcol.add(6);
+			case '월':
+				rowcol.add(1);
+				break;
+			case '화':
+				rowcol.add(2);
+				break;
+			case '수':
+				rowcol.add(3);
+				break;
+			case '목':
+				rowcol.add(4);
+				break;
+			case '금':
+				rowcol.add(5);
+				break;
+			case '토':
+				rowcol.add(6);
 			}
 
 			// 시작 시간
@@ -121,25 +228,14 @@ public class BCAddFunc implements ActionListener{
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
 			for (int i = 0; i < 26; i++) {
-				if (sTime >= t && sTime < t + 30) rowcol.add(i);
-				if (fTime >= t && fTime < t + 30) rowcol.add(i);
-				if (i % 2 == 0) t += 30;
-				else t += 70;
-			}
-		}
-		// 시간 겹치는지 확인
-		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
-			if (table.getValueAt(i, rowcol.get(0)) != null) {
-				JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
-				return false;
-			}
-		}
-		if (rowcol.size() > 5) {
-			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
-				if (table.getValueAt(i, rowcol.get(3)) != null) {
-					JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
-					return false;
-				}
+				if (sTime >= t && sTime < t + 30)
+					rowcol.add(i);
+				if (fTime >= t && fTime < t + 30)
+					rowcol.add(i);
+				if (i % 2 == 0)
+					t += 30;
+				else
+					t += 70;
 			}
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
@@ -160,7 +256,7 @@ public class BCAddFunc implements ActionListener{
 					table.setValueAt("", i, rowcol.get(3));
 			}
 		}
-	return true;
+		return true;
 	}
-	
+
 }
