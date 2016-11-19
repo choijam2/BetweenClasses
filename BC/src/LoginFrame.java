@@ -350,6 +350,7 @@ public class LoginFrame extends JFrame{
 		setVisible(true);
 		setResizable(false);
 		con = startMysql();
+		User user = new User("");
 		setTitle("Between Classes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 592, 858);
@@ -400,7 +401,7 @@ public class LoginFrame extends JFrame{
 		btn_Login.setContentAreaFilled(false);
 		contentPane.add(btn_Login);
 		
-		LoginBtnFunc loginBtnHandler = new LoginBtnFunc(this, con);
+		LoginBtnFunc loginBtnHandler = new LoginBtnFunc(this, con, user);
 		btn_Login.addActionListener(loginBtnHandler);
 		
 		
@@ -440,7 +441,7 @@ public class LoginFrame extends JFrame{
 		btn_Nonmember.setContentAreaFilled(false);
 		contentPane.add(btn_Nonmember);
 		
-		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con, false, this);
+		NonmemberFunc nonmemberBtnHandler = new NonmemberFunc(con,user, this);
 		btn_Nonmember.addActionListener(nonmemberBtnHandler);
 	}
 

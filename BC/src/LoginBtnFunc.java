@@ -13,10 +13,12 @@ public class LoginBtnFunc implements ActionListener {
 	AddClassFrame ACFrame;
 	LoginFrame frame;
 	Connection con;
+	User user;
 	
-	LoginBtnFunc(LoginFrame frame, Connection con) {
+	LoginBtnFunc(LoginFrame frame, Connection con ,User user) {
 		this.frame = frame;
 		this.con = con;
+		this.user = user; 
 	}
 
 	@Override
@@ -38,7 +40,8 @@ public class LoginBtnFunc implements ActionListener {
 					String str = rs.getString("sid");
 					String str2 = rs.getString("password");
 					if (str.equals(sid) && str2.equals(password)){
-						ACFrame = new AddClassFrame(con, true, sid, frame);
+						user.setSid(sid);
+						ACFrame = new AddClassFrame(con, user , frame);
 					}
 					else
 						JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다!!");

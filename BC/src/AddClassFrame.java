@@ -52,9 +52,9 @@ public class AddClassFrame extends JFrame {
 	private JTable table_3;
 	private JTable table_4;
 
-	AddClassFrame(Connection con, boolean check, String sid, JFrame frame) {
+	AddClassFrame(Connection con,User user, JFrame frame) {
 		frame.dispose();
-		student = new Student(sid);
+		student = new Student(user.getSid());
 		setResizable(false);
 		Object[][] defTableTime = new Object[][] { { "9:00 ~ 9:30", null, null, null, null, null, null },
 				{ "9:30 ~ 10:00", null, null, null, null, null, null },
@@ -346,7 +346,7 @@ public class AddClassFrame extends JFrame {
 		JButton FindButton = new JButton("공강찾기");
 		FindButton.setBounds(1100, 550, 97, 23);
 		panel_BCTable.add(FindButton);	
-		BCSearchFunc bsSearchBtn = new BCSearchFunc(con,"21111811","21111827","-1","-1","-1");
+		BCSearchFunc bsSearchBtn = new BCSearchFunc(mockTable,table_1,table_2,table_3,table_4);
 		FindButton.addActionListener(bsSearchBtn);
 
 		JLabel INPfNewLabel = new JLabel("성함   :");
@@ -400,14 +400,14 @@ public class AddClassFrame extends JFrame {
 			}
 		});
 
-		if (!check) {
+		if (user.getSid()=="") {
 			txt_ClassNum.setEnabled(false);
 			btn_Add.setEnabled(false);
 			btn_Del.setEnabled(false);
 			btn_Save.setEnabled(false);
 			btnBCTable.setEnabled(false);
 		} else
-			loadTimeTable(sid);
+			loadTimeTable(user.getSid());
 	}
 
 	public void loadTimeTable(String sid) {
