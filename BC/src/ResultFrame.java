@@ -236,6 +236,7 @@
 //}
 
 
+
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.Connection;
@@ -252,10 +253,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import java.awt.Font;
+import java.awt.Graphics;
+import javax.swing.JButton;
 
 public class ResultFrame extends JFrame {
 
@@ -284,23 +292,21 @@ public class ResultFrame extends JFrame {
 		this.con = con;
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 862, 625);
+		setBounds(100, 100, 911, 973);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(261, Short.MAX_VALUE)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 560, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		scrollPane.setBounds(29, 104, 569, 788);
 
 		table = new JTable();
+		table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
+		table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		table.setRowHeight(30);
+		
 		table.setModel(new DefaultTableModel(
 				new Object[][] { { "9:00 ~ 9:30", null, null, null, null, null, null },
 						{ "9:30 ~ 10:00", null, null, null, null, null, null },
@@ -330,7 +336,35 @@ public class ResultFrame extends JFrame {
 				new String[] { "Time", "월", "화", "수", "목", "금", "토" }));
 
 		scrollPane.setViewportView(table);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.add(scrollPane);
+		
+		//셀 내용 가운데 정렬하기
+		DefaultTableCellRenderer dtcr=new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcm=table.getColumnModel();
+		for(int i=0;i<tcm.getColumnCount();i++){
+			tcm.getColumn(i).setCellRenderer(dtcr);
+		}
+		
+		JPanel pnl_title = new JPanel(){
+				ImageIcon mainicon = new ImageIcon("result.png");
+							public void paintComponent(Graphics g) {
+								g.drawImage(mainicon.getImage(), 0, 0, null);
+								setOpaque(false);
+								super.paintComponent(g);
+							}
+						};		
+		pnl_title.setBounds(29, 15, 580, 74);
+		contentPane.add(pnl_title);
+		
+		JButton btn_save = new JButton(new ImageIcon("result_save.png"));
+		btn_save.setBorderPainted(false); // 투명 버튼
+		btn_save.setFocusPainted(false); // 투명 버튼
+		btn_save.setContentAreaFilled(false); // 투명 버튼
+		btn_save.setBounds(685, 777, 139, 49);
+		contentPane.add(btn_save);
+
+
 		FindBC();
 	}
 
@@ -451,7 +485,6 @@ public class ResultFrame extends JFrame {
 //				{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 //				{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
 	}
-
 }
 
 class CustomTableCellRenderer extends DefaultTableCellRenderer {
