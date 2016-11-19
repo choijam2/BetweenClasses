@@ -343,12 +343,9 @@ public class AddClassFrame extends JFrame {
 		panel_BCTable.add(STdelButton);		
 		STdelButton.addActionListener(BCDelbtn);
 
-		JButton FindButton = new JButton("공강찾기");//임시로 allclear로 연결함
+		JButton FindButton = new JButton("공강찾기");
 		FindButton.setBounds(1100, 550, 97, 23);
-		panel_BCTable.add(FindButton);
-		BCAllClearFunc BCAllClearbtn = new BCAllClearFunc(table_1,table_2,table_3,table_4,CheckIsTable);
-		FindButton.addActionListener(BCAllClearbtn);
-
+		panel_BCTable.add(FindButton);		
 
 		JLabel INPfNewLabel = new JLabel("성함   :");
 		INPfNewLabel.setBounds(1075, 94, 57, 15);
