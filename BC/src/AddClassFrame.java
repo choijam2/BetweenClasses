@@ -345,7 +345,9 @@ public class AddClassFrame extends JFrame {
 
 		JButton FindButton = new JButton("공강찾기");
 		FindButton.setBounds(1100, 550, 97, 23);
-		panel_BCTable.add(FindButton);		
+		panel_BCTable.add(FindButton);	
+		BCSearchFunc bsSearchBtn = new BCSearchFunc(con,"21111811","21111827","-1","-1","-1");
+		FindButton.addActionListener(bsSearchBtn);
 
 		JLabel INPfNewLabel = new JLabel("성함   :");
 		INPfNewLabel.setBounds(1075, 94, 57, 15);
