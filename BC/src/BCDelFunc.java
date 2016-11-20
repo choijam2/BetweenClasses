@@ -31,15 +31,17 @@ public class BCDelFunc implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		button = (JButton) e.getSource();//어떤 버튼이 눌렸는지에 따라 학생 또는 교수 선택
+		button = (JButton) e.getSource();// 어떤 버튼이 눌렸는지에 따라 학생 또는 교수 선택
 		if (button.getText().equals("교수삭제")) {
 
-			Del(PftextField.getText());//삭제함수
+			Del(PftextField.getText());// 삭제함수
 
 		} else {
-
-			Del(STtextField.getText());
-
+			if (CheckIsTable.get(0).equals(STtextField.getText())) {
+				JOptionPane.showMessageDialog(null, "자신의 시간표는 삭제할 수 없습니다");
+			} else {
+				Del(STtextField.getText());
+			}
 		}
 
 		// TODO Auto-generated method stub
@@ -48,26 +50,27 @@ public class BCDelFunc implements ActionListener {
 		// }
 	}
 
-	void Del(String ID) {//삭제함수
+	void Del(String ID) {// 삭제함수
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "다시 입력하세요");
 		else if (!CheckSame(CheckIsTable, ID))
 			JOptionPane.showMessageDialog(null, "삭제할  시간표가 없습니다");
 		else {
-			for (int i = 0; i < 4; i++) {
-				if (CheckIsTable.get(i).equals(ID)) {//입력받은 텍스트와 같은 아이디가 배열리스트에 있는지 확인
-					switch (i) {//있다면 해당 테이블 클리어
-					case 0:
-						Cleartable(table1, CheckIsTable, 0);
-						break;
+			for (int i = 1; i < 5; i++) {
+				if (CheckIsTable.get(i).equals(ID)) {// 입력받은 텍스트와 같은 아이디가 배열리스트에
+														// 있는지 확인
+					switch (i) {// 있다면 해당 테이블 클리어
 					case 1:
-						Cleartable(table2, CheckIsTable, 1);
+						Cleartable(table1, CheckIsTable, 1);
 						break;
 					case 2:
-						Cleartable(table3, CheckIsTable, 2);
+						Cleartable(table2, CheckIsTable, 2);
 						break;
 					case 3:
-						Cleartable(table4, CheckIsTable, 3);
+						Cleartable(table3, CheckIsTable, 3);
+						break;
+					case 4:
+						Cleartable(table4, CheckIsTable, 4);
 						break;
 					}
 					break;
@@ -76,19 +79,22 @@ public class BCDelFunc implements ActionListener {
 		}
 	}
 
-	void Cleartable(JTable table, ArrayList<String> CheckIsTable, int num) {//테이블 초기화 함수
+	void Cleartable(JTable table, ArrayList<String> CheckIsTable, int num) {// 테이블
+																			// 초기화
+																			// 함수
 		for (int i = 0; i < table.getRowCount(); i++) {
 			for (int j = 1; j < table.getColumnCount(); j++) {
-				table.setValueAt(null, i, j);//해당 테이블의 값을 모두 NULL로 바꿈
+				table.setValueAt(null, i, j);// 해당 테이블의 값을 모두 NULL로 바꿈
 			}
 		}
-		CheckIsTable.set(num, "-1");//해당 배열리스트의 값을 -1로 초기화
+		CheckIsTable.set(num, "-1");// 해당 배열리스트의 값을 -1로 초기화
 	}
 
-	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {//해당 시간표가 있는지 확인
-		for (int i = 0; i < 4; i++) {
-			if (CheckIsTable.contains(ID))
-				return true;
+	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {// 해당 시간표가 있는지
+																	// 확인
+
+		if (CheckIsTable.contains(ID)) {
+			return true;
 		}
 		return false;
 	}

@@ -185,6 +185,7 @@ public class AddClassFrame extends JFrame {
 						.addGap(20)));
 		
 		ArrayList<String> CheckIsTable = new ArrayList<String>(); //공강시간표에서 시간표를 추가하는것에 대한 구분을 하기 위한 배열리스트
+		CheckIsTable.add(user.getSid());
 		CheckIsTable.add("-1");//초기값은 모두 -1
 		CheckIsTable.add("-1");//교수 이름 또는 학번이 들어올경우 해당하는 자리에 텍스트 입력
 		CheckIsTable.add("-1");

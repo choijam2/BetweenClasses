@@ -37,15 +37,17 @@ public class BCAddFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		button = (JButton) e.getSource();//어떤 버튼이 눌렸는지에 따라 학생 또는 교수를 선택
+		button = (JButton) e.getSource();// 어떤 버튼이 눌렸는지에 따라 학생 또는 교수를 선택
 		if (button.getText().equals("교수추가")) {
 
-			PFadd(PftextField);//교수 추가함수
+			PFadd(PftextField);// 교수 추가함수
 
 		} else {
-
-			STadd(STtextField);//학생 추가 함수
-
+			if (CheckIsTable.get(0).equals(STtextField.getText())) {
+				JOptionPane.showMessageDialog(null, "자신의 시간표는 추가할 수 없습니다");
+			} else {
+				STadd(STtextField);// 학생 추가 함수
+			}
 		}
 		// TODO Auto-generated method stub
 	}
@@ -64,12 +66,13 @@ public class BCAddFunc implements ActionListener {
 				PreparedStatement query = con.prepareStatement("select lid from lecture where pname = ?");
 
 				query.setString(1, ID);
-				 ResultSet rs = query.executeQuery();
+				ResultSet rs = query.executeQuery();
 
 				if (rs.next() == false) {
 					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
 				} else {
-					Getlib(rs, lidlist, query, ID);//입력받은 값에 대한 수강번호를 가져오고 시간표를 뿌려주는 함수
+					Getlib(rs, lidlist, query, ID);// 입력받은 값에 대한 수강번호를 가져오고 시간표를
+													// 뿌려주는 함수
 				}
 			} catch (SQLException sqex) {
 				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
@@ -78,7 +81,7 @@ public class BCAddFunc implements ActionListener {
 	}
 
 	/////////////////////////////////////////////
-	void STadd(JTextField field) {//학생추가함수
+	void STadd(JTextField field) {// 학생추가함수
 		String ID = field.getText();
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
@@ -96,11 +99,11 @@ public class BCAddFunc implements ActionListener {
 				query.setString(1, ID);
 				ResultSet rs = query.executeQuery();
 
-				if (CheckGetEmptyResult(rs,lidlist)) {
+				if (CheckGetEmptyResult(rs, lidlist)) {
 					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
-				}
-				else {
-					Getlib(rs, lidlist, query, ID);//입력받은 값에 대한 수강번호를 가져오고 시간표를 뿌려주는 함수
+				} else {
+					Getlib(rs, lidlist, query, ID);// 입력받은 값에 대한 수강번호를 가져오고 시간표를
+													// 뿌려주는 함수
 				}
 			} catch (SQLException sqex) {
 				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
@@ -110,53 +113,62 @@ public class BCAddFunc implements ActionListener {
 
 	///////////////////////
 	boolean CheckFull(ArrayList<String> CheckIsTable) {// 리스트가 풀인지 체크 초기값은 모두 -1
-		for (int i = 0; i < 4; i++) {
+		for (int i = 1; i < 5; i++) {
 			if (CheckIsTable.contains("-1"))
 				return false;
 		}
 		return true;
 	}
 
-	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {//입력받은 값과 같은 시간표가 있는지 확인
-		for (int i = 0; i < 4; i++) {
-			if (CheckIsTable.contains(ID))
-				return true;
+	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {// 입력받은 값과 같은
+																	// 시간표가 있는지
+																	// 확인
+		if (CheckIsTable.contains(ID)) {
+			return true;
 		}
 		return false;
 	}
-	
-	boolean CheckGetEmptyResult(ResultSet rs,ArrayList<String> lidlist) {//쿼리실행은 정상적으로 작동했지만 결과값이 비었을때 체크하는 함수
+
+	boolean CheckGetEmptyResult(ResultSet rs, ArrayList<String> lidlist) {// 쿼리실행은
+																			// 정상적으로
+																			// 작동했지만
+																			// 결과값이
+																			// 비었을때
+																			// 체크하는
+																			// 함수
 		try {
-			if(rs.next() == false){			
+			if (rs.next() == false) {
 				return true;
 			}
-			lidlist.add(rs.getString("lid"));;
+			lidlist.add(rs.getString("lid"));
+			;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
+
 	////////////////////////////////////////////////////////////////////////////////////
 	void Getlib(ResultSet rs, ArrayList<String> lidlist, PreparedStatement query, String ID) {//
 		try {
-			for (int i = 0; rs.next(); i++) {//받아온 수강번호를 배열리스트에 입력!
+			for (int i = 0; rs.next(); i++) {// 받아온 수강번호를 배열리스트에 입력!
 				lidlist.add(rs.getString("lid"));
 			}
-			for (int i = 0; i < 4; i++) {
-				if (CheckIsTable.get(i).equals("-1")) {//빈 시간표를 찾아서
-					CheckIsTable.set(i, ID);//해당 번지의 배열에 해당 아이디를 입력
-					switch (i) {//해당 번지의 시간표에 시간표 출력
-					case 0:
+			for (int i = 1; i < 5; i++) {
+				if (CheckIsTable.get(i).equals("-1")) {// 빈 시간표를 찾아서
+					CheckIsTable.set(i, ID);// 해당 번지의 배열에 해당 아이디를 입력
+					switch (i) {// 해당 번지의 시간표에 시간표 출력
+					case 1:
 						AddTable(lidlist, rs, query, table1);
 						break;
-					case 1:
+					case 2:
 						AddTable(lidlist, rs, query, table2);
 						break;
-					case 2:
+					case 3:
 						AddTable(lidlist, rs, query, table3);
 						break;
-					case 3:
+					case 4:
 						AddTable(lidlist, rs, query, table4);
 						break;
 					}
@@ -170,7 +182,9 @@ public class BCAddFunc implements ActionListener {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
-	void AddTable(ArrayList<String> lidlist, ResultSet rs, PreparedStatement query, JTable table) {//수강번호를 시간표에 뿌려주는과정
+	void AddTable(ArrayList<String> lidlist, ResultSet rs, PreparedStatement query, JTable table) {// 수강번호를
+																									// 시간표에
+																									// 뿌려주는과정
 		try {
 			for (int i = 0; i < lidlist.size(); i++) {
 				query = con.prepareStatement("select lname, ltime, place from lecture where lid = ?");
