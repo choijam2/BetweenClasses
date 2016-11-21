@@ -128,6 +128,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JTable;
 
@@ -135,16 +136,20 @@ import javax.swing.JTable;
 
 public class BCSearchFunc implements ActionListener{
 	Connection con;
-	public BCSearchFunc(Connection con, String s1, String s2, String s3, String s4, String s5) {
+	ArrayList<String> CheckIsTable;
+	public BCSearchFunc(Connection con,	ArrayList<String> CheckIsTable) {
 		this.con=con;
+		this.CheckIsTable = CheckIsTable;
 	}
 	
 	
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		try {
-			new ResultFrame(con,"21111811","21111827","-1","-1","-1");
+			new ResultFrame(con,CheckIsTable.get(0),CheckIsTable.get(1),CheckIsTable.get(2),CheckIsTable.get(3),CheckIsTable.get(4));
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
