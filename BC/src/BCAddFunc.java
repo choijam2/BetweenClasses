@@ -20,7 +20,7 @@ public class BCAddFunc implements ActionListener {
 	JTable table1, table2, table3, table4;
 	ArrayList<String> CheckIsTable;
 	String lid;
-	JButton button;
+	//JButton button;
 
 	public BCAddFunc(Connection con, JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
 			JTextField STtextField, ArrayList<String> CheckIsTable) {
@@ -37,8 +37,9 @@ public class BCAddFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		button = (JButton) e.getSource();// 어떤 버튼이 눌렸는지에 따라 학생 또는 교수를 선택
-		if (button.getText().equals("교수추가")) {
+		
+		System.out.println("====="+e.getActionCommand()+"=====0101010\n");
+		if (e.getActionCommand().equals("Pfadd")) {
 
 			PFadd(PftextField);// 교수 추가함수
 
@@ -54,6 +55,7 @@ public class BCAddFunc implements ActionListener {
 
 	void PFadd(JTextField field) {
 		String ID = field.getText();
+		System.out.println("====="+ID+"=====\n");
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "성함을 입력하세요");
@@ -83,6 +85,7 @@ public class BCAddFunc implements ActionListener {
 	/////////////////////////////////////////////
 	void STadd(JTextField field) {// 학생추가함수
 		String ID = field.getText();
+		System.out.println("====="+ID+"=====\n");
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "학번을 입력하세요");

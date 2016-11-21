@@ -14,7 +14,6 @@ public class BCDelFunc implements ActionListener {
 	JTextField PftextField, STtextField;
 	JTable table1, table2, table3, table4;
 	ArrayList<String> CheckIsTable;
-	JButton button;
 
 	public BCDelFunc(JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
 			JTextField STtextField, ArrayList<String> CheckIsTable) {
@@ -30,12 +29,11 @@ public class BCDelFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		button = (JButton) e.getSource();// 어떤 버튼이 눌렸는지에 따라 학생 또는 교수 선택
-		if (button.getText().equals("교수삭제")) {
-
+		
+		if (e.getActionCommand().equals("Pfdel")) {
+			
 			Del(PftextField.getText());// 삭제함수
-
+			
 		} else {
 			if (CheckIsTable.get(0).equals(STtextField.getText())) {
 				JOptionPane.showMessageDialog(null, "자신의 시간표는 삭제할 수 없습니다");
@@ -51,6 +49,7 @@ public class BCDelFunc implements ActionListener {
 	}
 
 	void Del(String ID) {// 삭제함수
+		System.out.println("====="+ID+"=====\n");
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "다시 입력하세요");
 		else if (!CheckSame(CheckIsTable, ID))

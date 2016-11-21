@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +36,7 @@ import java.awt.Graphics;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -245,9 +247,12 @@ public class AddClassFrame extends JFrame {
 		btn_Add.setFocusPainted(false); // 투명 버튼
 		btn_Add.setContentAreaFilled(false);
 		btn_Add.setBounds(1129, 272, 81, 42);
+		btn_Add.setActionCommand("TimeTableAdd");//모의시간표 추가하기에 대한 액션 이름 추가
 		panel_TimeTable.add(btn_Add);
 		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con, mockTable, student);
 		btn_Add.addActionListener(mockAddBtn);
+		txt_ClassNum.registerKeyboardAction(mockAddBtn, "TimeTableAdd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		//수강번호 입력후 엔터칠 경우 추가하기 버튼으로 이어줌
 
 		// 모의시간표 조회버튼
 		JButton btn_Search = new JButton(new ImageIcon("img/search.png"));
@@ -324,20 +329,27 @@ public class AddClassFrame extends JFrame {
 		
 		JButton PfaddButton = new JButton("\uAD50\uC218\uCD94\uAC00");
 		PfaddButton.setBounds(1070, 190, 70, 23);
-		panel_BCTable.add(PfaddButton);
+		PfaddButton.setActionCommand("Pfadd");//버튼에 대한 액션함수 이름추가
+		panel_BCTable.add(PfaddButton);		
 		BCAddFunc BCAddbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
 		PfaddButton.addActionListener(BCAddbtn);
+		PftextField.registerKeyboardAction(BCAddbtn, "Pfadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		//PftextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
 
 		JButton PfdelButton = new JButton("\uAD50\uC218\uC0AD\uC81C");
 		PfdelButton.setBounds(1155, 190, 70, 23);
+		PfdelButton.setActionCommand("Pfdel");//버튼에 대한 액션함수 이름추가
 		panel_BCTable.add(PfdelButton);
 		BCDelFunc BCDelbtn = new BCDelFunc(table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
 		PfdelButton.addActionListener(BCDelbtn);
 
 		JButton STaddButton = new JButton("\uD559\uC0DD\uCD94\uAC00");
 		STaddButton.setBounds(1070, 430, 70, 23);
-		panel_BCTable.add(STaddButton);
+		STaddButton.setActionCommand("STadd");//버튼에 대한 액션함수 이름추가
+		panel_BCTable.add(STaddButton);		
 		STaddButton.addActionListener(BCAddbtn);
+		STtextField.registerKeyboardAction(BCAddbtn, "STadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		//STtextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
 		
 		JButton STdelButton = new JButton("\uD559\uC0DD\uC0AD\uC81C");
 		STdelButton.setBounds(1155, 430, 70, 23);

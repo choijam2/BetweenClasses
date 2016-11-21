@@ -307,16 +307,19 @@
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.JPasswordField;
 
 public class LoginFrame extends JFrame{
@@ -399,10 +402,13 @@ public class LoginFrame extends JFrame{
 		btn_Login.setBorderPainted(false);
 		btn_Login.setFocusPainted(false);
 		btn_Login.setContentAreaFilled(false);
+		btn_Login.setActionCommand("Login");//버튼에 대한 액션이름 추가
 		contentPane.add(btn_Login);
 		
 		LoginBtnFunc loginBtnHandler = new LoginBtnFunc(this, con, user);
 		btn_Login.addActionListener(loginBtnHandler);
+		passwordField.registerKeyboardAction(loginBtnHandler, "Login", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		//비밀번호 텍스트에서 엔터치면 로그인버튼으로 이어줌
 		
 		
 		//회원가입
