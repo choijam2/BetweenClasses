@@ -1,7 +1,9 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Component;
@@ -13,6 +15,8 @@ import javax.swing.JComponent;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,7 +57,8 @@ public class AddClassFrame extends JFrame {
 	private JTable table_2;
 	private JTable table_3;
 	private JTable table_4;
-
+	private JPopupMenu popupM;
+	private JMenuItem menu1;
 	AddClassFrame(Connection con,User user, JFrame frame) {
 		frame.dispose();
 		student = new Student(user.getSid());
@@ -193,8 +198,13 @@ public class AddClassFrame extends JFrame {
 		CheckIsTable.add("-1");
 		CheckIsTable.add("-1");
 		
+		popupM = new JPopupMenu();
+		menu1 = new JMenuItem("삭제");
+		popupM.add(menu1);
+		
 		table_4 = new JTable();
 		scrollTime4.setViewportView(table_4);
+		table_4.addMouseListener(new TableClick(popupM,table_4));
 		table_4.setEnabled(false);
 		table_4.setRowSelectionAllowed(false);
 		table_4.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -206,6 +216,7 @@ public class AddClassFrame extends JFrame {
 		table_4.getColumn("Time").setPreferredWidth(20);
 
 		table_3 = new JTable();
+		table_3.addMouseListener(new TableClick(popupM,table_3));	
 		table_3.setRowSelectionAllowed(false);
 		table_3.setEnabled(false);
 		table_3.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -219,6 +230,7 @@ public class AddClassFrame extends JFrame {
 
 		table_2 = new JTable();
 		table_2.setRowSelectionAllowed(false);
+		table_2.addMouseListener(new TableClick(popupM,table_2));
 		table_2.setEnabled(false);
 		table_2.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
@@ -230,6 +242,7 @@ public class AddClassFrame extends JFrame {
 		scrollTime2.setViewportView(table_2);
 
 		table_1 = new JTable();
+		table_1.addMouseListener(new TableClick(popupM,table_1));
 		table_1.setRowSelectionAllowed(false);
 		table_1.setEnabled(false);
 		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -502,7 +515,7 @@ public class AddClassFrame extends JFrame {
 			}
 		}
 	}
-	class MyRenderer extends DefaultTableCellRenderer {
+	/*class MyRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
 			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
@@ -514,5 +527,41 @@ public class AddClassFrame extends JFrame {
 				cellComponent.setBackground(Color.WHITE);
 			return cellComponent;
 		}
+	}*/
+}
+class MyRenderer extends DefaultTableCellRenderer {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
+		Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+				column);
+		setHorizontalAlignment(JLabel.CENTER);//
+		if(column==0)
+			cellComponent.setBackground(Color.WHITE);
+		else if ((table.getValueAt(row, column) != null)) {
+			cellComponent.setBackground(Color.YELLOW);
+		} else
+			cellComponent.setBackground(Color.WHITE);
+		return cellComponent;
 	}
+}
+class TableClick extends MouseAdapter{
+	private JPopupMenu popupM;
+	private JTable table;	;
+	TableClick(JPopupMenu popupM,JTable table){
+		this.popupM = popupM;
+		this.table = table;			
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if((e.getClickCount()==2)&&(e.getModifiers()==MouseEvent.BUTTON1_MASK)){
+			AddClassDetailViewFrame frame = new AddClassDetailViewFrame(table.getModel());
+		}
+	}
+	/*@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.getModifiers()==MouseEvent.BUTTON3_MASK){
+			popupM.show((Component)e.getSource(), e.getX(), e.getY());
+			
+		}
+	}*/
 }
