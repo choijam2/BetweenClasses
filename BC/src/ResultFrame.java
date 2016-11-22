@@ -157,6 +157,12 @@ public class ResultFrame extends JFrame {
 		btn_save.setContentAreaFilled(false); // 투명 버튼
 		btn_save.setBounds(685, 777, 139, 49);
 		contentPane.add(btn_save);
+		try {
+			btn_save.addActionListener(new BtnSaveFunc(table));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		JButton btn_Random = new JButton(new ImageIcon("ramdom_img.png"));
 		btn_Random.setFocusPainted(false);
