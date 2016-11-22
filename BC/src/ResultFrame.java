@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.Vector;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -93,7 +95,7 @@ public class ResultFrame extends JFrame {
 	
 			for (int i = 0; i < 25; i++) {
 				for (int j = 0; j < 6; j++) {
-					if (BetweenClasses[i][j] !=0){
+					if (BetweenClasses[i][j] ==0){
 						defTableTime[i][j+1] =" ";
 					}
 					else{
@@ -169,100 +171,136 @@ public class ResultFrame extends JFrame {
 
 	}
 
-	void token(String ltime) {
-		StringTokenizer tk = new StringTokenizer(ltime);
+void token(Vector<String> time) {
+		
+		StringTokenizer tk;
 		String temp;
 		char day = '\0';
-		int between, sHour, sMin, sTime, fHour, fMin, fTime, startIndex = 0, lastIndex = 0, col = 0;
-
-		while (tk.hasMoreTokens()) {
-			temp = tk.nextToken();
-			day = temp.charAt(0);
-
-			switch (day) {
-			case '월':
-				col = 1;
-				break;
-			case '화':
-				col = 2;
-				break;
-			case '수':
-				col = 3;
-				break;
-			case '목':
-				col = 4;
-				break;
-			case '금':
-				col = 5;
-				break;
-			case '토':
-				col = 6;
-				break;
-			default:
-				break;
+		int sHour, sMin, sTime, fHour, fMin, fTime, startIndex = 0, lastIndex = 0, col = 0;
+		int capa=time.capacity();
+		System.out.println("capacity "+capa);
+		
+		for(int i=0;i<time.size();i++){
+			//String time2=
+			tk = new StringTokenizer(time.get(i));
+		
+			while (tk.hasMoreTokens()) {
+				temp = tk.nextToken();
+				day = temp.charAt(0);
+	
+				switch (day) {
+				case '월':
+					col = 1;
+					break;
+				case '화':
+					col = 2;
+					break;
+				case '수':
+					col = 3;
+					break;
+				case '목':
+					col = 4;
+					break;
+				case '금':
+					col = 5;
+					break;
+				case '토':
+					col = 6;
+					break;
+				default:
+					break;
+				}
+	
+				sHour = Integer.parseInt(temp.substring(1, 3));
+				sMin = Integer.parseInt(temp.substring(4, 6));
+				sTime = sHour * 100 + sMin; // 1630이 저장됨
+	
+				fHour = Integer.parseInt(temp.substring(7, 9));
+				fMin = Integer.parseInt(temp.substring(10));
+				fTime = fHour * 100 + fMin; // 1745가 저장됨.
+	
+				// 해당되는 시간의 index를 찾는다.
+				startIndex = (sHour - 9) * 2;
+				if (sMin > 0) {
+					startIndex++;
+				}
+	
+				lastIndex = (fHour - 9) * 2;
+				if (fMin > 30) {
+					lastIndex++;
+				}
+	
+				for (int j = startIndex; j <= lastIndex; j++) {
+					BetweenClasses[j][col - 1]++;
+				}
+	
+				System.out.println((col - 1) + " " + sTime + " " + fTime + " " + startIndex + " " + lastIndex);
 			}
-
-			sHour = Integer.parseInt(temp.substring(1, 3));
-			sMin = Integer.parseInt(temp.substring(4, 6));
-			sTime = sHour * 100 + sMin; // 1630이 저장됨
-
-			fHour = Integer.parseInt(temp.substring(7, 9));
-			fMin = Integer.parseInt(temp.substring(10));
-			fTime = fHour * 100 + fMin; // 1745가 저장됨.
-
-			// 해당되는 시간의 index를 찾는다.
-			startIndex = (sHour - 9) * 2;
-			if (sMin > 0) {
-				startIndex++;
-			}
-
-			lastIndex = (fHour - 9) * 2;
-			if (fMin > 30) {
-				lastIndex++;
-			}
-
-			for (int i = startIndex; i <= lastIndex; i++) {
-				BetweenClasses[i][col - 1]++;
-			}
-
-			System.out.println((col - 1) + " " + sTime + " " + fTime + " " + startIndex + " " + lastIndex);
 		}
 
 	}
 
-	void FindBC() throws SQLException {
+void FindBC() throws SQLException {
 
-		// 학생의 아이디를 저장한다.
-		String[] student = new String[5];
-		student[0] = s1;
-		student[1] = s2;
-		student[2] = s3;
-		student[3] = s4;
-		student[4] = s5;
+	// 학생의 아이디를 저장한다.
+	String[] People = new String[5];
+	String[] time= new String[5];
+	Vector<String> mytime = new Vector<String>();
+	People[0] = s1;
+	People[1] = s2;
+	People[2] = s3;
+	People[3] = s4;
+	People[4] = s5;
+	
 
-		// 공강 찾기 버튼에서 몇명의 학생 시간표를 비교하기 원하는지 찾는다.
-		for (int i = 0; student[i] != "-1"; studentNumber++, i++)
-			;
+	// 공강 찾기 버튼에서 몇명의 학생 시간표를 비교하기 원하는지 찾는다.
+	for (int i = 0; People[i] != "-1"; studentNumber++, i++)
+		;
 
-		if (studentNumber == 0)
-			JOptionPane.showMessageDialog(null, "학생 또는 교수 이름을 입력해주세요.");
+	if (studentNumber == 0)
+		JOptionPane.showMessageDialog(null, "학생 또는 교수 이름을 입력해주세요.");
 
-		ResultSet rs;
-		PreparedStatement query;
 
-		for (int i = 0; i < studentNumber; i++) {
+
+	for (int i = 0; i < studentNumber; i++) {
+		if( (int)People[i].charAt(0)>=48&& (int)People[i].charAt(0)<=57){
+			ResultSet rs;
+			PreparedStatement query;
 			query = con.prepareStatement("select l.ltime from lecture l, course c where l.lid=c.lid AND sid = ?");
-
-			query.setString(1, student[i]);
+			
+			query.setString(1, People[i]);
 			rs = query.executeQuery();
-
-			while (rs.next()) {
-				System.out.println(student[i] + " " + rs.getString("l.ltime"));
-				token(rs.getString("l.ltime"));
-			}
-
+				while(rs.next()){
+					//time[i]=rs.getString("l.ltime");
+					mytime.add(rs.getString("l.ltime"));
+				}
+				System.out.println("ResultFrame내 학생 이름 : "+People[i]+"강의시간 : "+time[i]);
+			continue;
 		}
+		
+		else{
+			ResultSet rs;
+			PreparedStatement query;
+			query = con.prepareStatement("select ltime from lecture where pname = ?");
+			System.out.println("ResultFrame내 교수님 성함 : "+People[i]);
+			query.setString(1, People[i]);
+			rs = query.executeQuery();
+				while(rs.next()){
+					//time[i]=rs.getString("ltime");
+					mytime.add(rs.getString("ltime"));
+				}
+			continue;
+		}
+//		while (rs.next()) {
+//			//System.out.println(student[i] + " " + rs.getString("l.ltime"));
+//			token(rs.getString("l.ltime"));
+//		}
+
 	}
+	
+	//token(time);
+	token(mytime);
+}
 
 	class MyRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
