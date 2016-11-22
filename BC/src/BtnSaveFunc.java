@@ -45,7 +45,7 @@ public class BtnSaveFunc implements ActionListener {
 		try {
 				File saveFile;
 				String savePath;
-				FileNameExtensionFilter exfilter = new FileNameExtensionFilter("JPEG&PNG","jpg","png");
+				FileNameExtensionFilter exfilter = new FileNameExtensionFilter("JPEG","jpg");
 				// JfileChooser에 파일 필터 설정
 				ExFilechooser.setFileFilter(exfilter);
 				int intRet = ExFilechooser.showSaveDialog(null);

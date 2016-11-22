@@ -294,6 +294,12 @@ public class AddClassFrame extends JFrame {
 		btn_Save.setContentAreaFilled(false);
 		btn_Save.setBounds(1129, 376, 81, 42);
 		panel_TimeTable.add(btn_Save);
+		try {
+			btn_Save.addActionListener(new BtnSaveFunc(mockTable));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 				
 		// 모의시간표 전체삭제
 		JButton btn_AllClear = new JButton(new ImageIcon("img/AllClear.png"));
