@@ -20,7 +20,6 @@ public class BCAddFunc implements ActionListener {
 	JTable table1, table2, table3, table4;
 	ArrayList<String> CheckIsTable;
 	String lid;
-	//JButton button;
 
 	public BCAddFunc(Connection con, JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
 			JTextField STtextField, ArrayList<String> CheckIsTable) {
@@ -37,8 +36,7 @@ public class BCAddFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println("====="+e.getActionCommand()+"=====0101010\n");
+
 		if (e.getActionCommand().equals("Pfadd")) {
 
 			PFadd(PftextField);// 교수 추가함수
@@ -55,7 +53,6 @@ public class BCAddFunc implements ActionListener {
 
 	void PFadd(JTextField field) {
 		String ID = field.getText();
-		System.out.println("====="+ID+"=====\n");
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "성함을 입력하세요");
@@ -69,8 +66,7 @@ public class BCAddFunc implements ActionListener {
 
 				query.setString(1, ID);
 				ResultSet rs = query.executeQuery();
-
-				if (rs.next() == false) {
+				if (CheckGetEmptyResult(rs, lidlist)) {					
 					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
 				} else {
 					Getlib(rs, lidlist, query, ID);// 입력받은 값에 대한 수강번호를 가져오고 시간표를
@@ -85,7 +81,6 @@ public class BCAddFunc implements ActionListener {
 	/////////////////////////////////////////////
 	void STadd(JTextField field) {// 학생추가함수
 		String ID = field.getText();
-		System.out.println("====="+ID+"=====\n");
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "학번을 입력하세요");
@@ -141,10 +136,10 @@ public class BCAddFunc implements ActionListener {
 																			// 함수
 		try {
 			if (rs.next() == false) {
+				rs.previous();
 				return true;
-			}
-			lidlist.add(rs.getString("lid"));
-			;
+			}	
+			rs.previous();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
