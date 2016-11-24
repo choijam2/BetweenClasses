@@ -141,7 +141,7 @@ public class ResultFrame extends JFrame {
 		// }
 
 		JPanel pnl_title = new JPanel() {
-			ImageIcon mainicon = new ImageIcon("result.png");
+			ImageIcon mainicon = new ImageIcon("img/result.png");
 
 			public void paintComponent(Graphics g) {
 				g.drawImage(mainicon.getImage(), 0, 0, null);
@@ -152,7 +152,7 @@ public class ResultFrame extends JFrame {
 		pnl_title.setBounds(29, 15, 580, 74);
 		contentPane.add(pnl_title);
 
-		btn_save = new JButton(new ImageIcon("result_save.png"));
+		btn_save = new JButton(new ImageIcon("img/result_save.png"));
 		btn_save.setBorderPainted(false); // 투명 버튼
 		btn_save.setFocusPainted(false); // 투명 버튼
 		btn_save.setContentAreaFilled(false); // 투명 버튼
@@ -165,7 +165,7 @@ public class ResultFrame extends JFrame {
 			e1.printStackTrace();
 		}
 
-		JButton btn_Random = new JButton(new ImageIcon("ramdom_img.png"));
+		JButton btn_Random = new JButton(new ImageIcon("img/ramdom_img.png"));
 		btn_Random.setFocusPainted(false);
 		btn_Random.setContentAreaFilled(false);
 		btn_Random.setBorderPainted(false);
