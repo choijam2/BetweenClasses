@@ -30,6 +30,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -203,7 +206,6 @@ public class AddClassFrame extends JFrame {
 		popupM.add(menu1);
 		
 		table_4 = new JTable();
-		scrollTime4.setViewportView(table_4);
 		table_4.addMouseListener(new TableClick(popupM,table_4));
 		table_4.setEnabled(false);
 		table_4.setRowSelectionAllowed(false);
@@ -212,9 +214,10 @@ public class AddClassFrame extends JFrame {
 		table_4.setRowHeight(19);
 		table_4.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_4.setDefaultRenderer(Object.class, new MyRenderer());
+		table_4.setIntercellSpacing(new Dimension(1, 0));
 		table_4.getColumn("Time").setCellRenderer(celAlignCenter);
-		table_4.getColumn("Time").setPreferredWidth(20);
-
+		scrollTime4.setViewportView(table_4);
+		
 		table_3 = new JTable();
 		table_3.addMouseListener(new TableClick(popupM,table_3));	
 		table_3.setRowSelectionAllowed(false);
@@ -224,8 +227,8 @@ public class AddClassFrame extends JFrame {
 		table_3.setRowHeight(19);
 		table_3.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_3.setDefaultRenderer(Object.class, new MyRenderer());
+		table_3.setIntercellSpacing(new Dimension(1, 0));
 		table_3.getColumn("Time").setCellRenderer(celAlignCenter);
-		table_3.getColumn("Time").setPreferredWidth(20);
 		scrollTime3.setViewportView(table_3);
 
 		table_2 = new JTable();
@@ -237,8 +240,8 @@ public class AddClassFrame extends JFrame {
 		table_2.setRowHeight(19);
 		table_2.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_2.setDefaultRenderer(Object.class, new MyRenderer());
+		table_2.setIntercellSpacing(new Dimension(1, 0));
 		table_2.getColumn("Time").setCellRenderer(celAlignCenter);
-		table_2.getColumn("Time").setPreferredWidth(20);
 		scrollTime2.setViewportView(table_2);
 
 		table_1 = new JTable();
@@ -250,9 +253,10 @@ public class AddClassFrame extends JFrame {
 		table_1.setRowHeight(19);
 		table_1.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_1.setDefaultRenderer(Object.class, new MyRenderer());
+		table_1.setIntercellSpacing(new Dimension(1, 0));
 		table_1.getColumn("Time").setCellRenderer(celAlignCenter);
-		table_1.getColumn("Time").setPreferredWidth(20);
 		scrollTime1.setViewportView(table_1);
+		
 		panel_BCTable.setLayout(gl_panel_BCTable);
 		// 모의시간표 추가버튼
 		JButton btn_Add = new JButton(new ImageIcon("img/add.png"));
@@ -336,17 +340,18 @@ public class AddClassFrame extends JFrame {
 		STpanel.setBorder(STborder);
 		panel_BCTable.add(STpanel);
 
-		JTextField STtextField = new JTextField();
+		JTextField STtextField = new JTextField(8);
 		STtextField.setBounds(1135, 340, 80, 21);
 		panel_BCTable.add(STtextField);
 		STtextField.setColumns(10);
+		STtextField.setDocument(new TextLimit(8));
 		
 		JTextField PftextField = new JTextField();
 		PftextField.setBounds(1135, 91, 80, 21);
 		panel_BCTable.add(PftextField);
 		PftextField.setColumns(10);
 		
-		JButton PfaddButton = new JButton("\uAD50\uC218\uCD94\uAC00");
+		JButton PfaddButton = new JButton("교수 추가");
 		PfaddButton.setBounds(1070, 190, 70, 23);
 		PfaddButton.setActionCommand("Pfadd");//버튼에 대한 액션함수 이름추가
 		panel_BCTable.add(PfaddButton);		
@@ -355,14 +360,14 @@ public class AddClassFrame extends JFrame {
 		PftextField.registerKeyboardAction(BCAddbtn, "Pfadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
 		//PftextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
 
-		JButton PfdelButton = new JButton("\uAD50\uC218\uC0AD\uC81C");
+		JButton PfdelButton = new JButton("교수 삭제");
 		PfdelButton.setBounds(1155, 190, 70, 23);
 		PfdelButton.setActionCommand("Pfdel");//버튼에 대한 액션함수 이름추가
 		panel_BCTable.add(PfdelButton);
 		BCDelFunc BCDelbtn = new BCDelFunc(table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
 		PfdelButton.addActionListener(BCDelbtn);
 
-		JButton STaddButton = new JButton("\uD559\uC0DD\uCD94\uAC00");
+		JButton STaddButton = new JButton("학생 추가");
 		STaddButton.setBounds(1070, 430, 70, 23);
 		STaddButton.setActionCommand("STadd");//버튼에 대한 액션함수 이름추가
 		panel_BCTable.add(STaddButton);		
@@ -370,7 +375,7 @@ public class AddClassFrame extends JFrame {
 		STtextField.registerKeyboardAction(BCAddbtn, "STadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
 		//STtextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
 		
-		JButton STdelButton = new JButton("\uD559\uC0DD\uC0AD\uC81C");
+		JButton STdelButton = new JButton("학생 삭제");
 		STdelButton.setBounds(1155, 430, 70, 23);
 		panel_BCTable.add(STdelButton);		
 		STdelButton.addActionListener(BCDelbtn);
@@ -446,17 +451,18 @@ public class AddClassFrame extends JFrame {
 		try {
 			ResultSet rs;
 			PreparedStatement query = con
-					.prepareStatement("select ltime, lname, place from lecture where lid in (select lid from course where sid = ?)");
+					.prepareStatement("select lid, ltime, lname, place from lecture where lid in (select lid from course where sid = ?)");
 
 			query.setString(1, sid);
 			rs = query.executeQuery();
 
 			while (rs.next()) {
+				String lecId = rs.getString("lid");
 				String lecTime = rs.getString("ltime");
 				String lecName = rs.getString("lname");
 				String lecPlace = rs.getString("place");
 
-				stringToken(lecTime, lecName, lecPlace);
+				stringToken(lecId, lecTime, lecName, lecPlace);
 			}
 
 		} catch (SQLException sqex) {
@@ -464,12 +470,15 @@ public class AddClassFrame extends JFrame {
 		}
 	}
 
-	public void stringToken(String lecTime, String lecName, String lecPlace) {
+	public void stringToken(String lecId, String lecTime, String lecName, String lecPlace) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
+		StringTokenizer tk2 = new StringTokenizer(lecPlace);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
-
-		while (tk.hasMoreTokens()) {
+		String ptemp = null;
+		
+		while (tk.hasMoreTokens() && tk2.hasMoreTokens()) {
 			String temp = tk.nextToken();
+			ptemp = tk2.nextToken();
 			char day = temp.charAt(0);
 
 			switch (day) { // 요일 지정
@@ -504,36 +513,34 @@ public class AddClassFrame extends JFrame {
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				mockTable.setValueAt(lecName, i, rowcol.get(0));
+				mockTable.setValueAt(lecName + " " + lecId, i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				mockTable.setValueAt(lecPlace, i, rowcol.get(0));
+				mockTable.setValueAt(ptemp, i, rowcol.get(0));
 			else
 				mockTable.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					mockTable.setValueAt(lecName, i, rowcol.get(3));
+					mockTable.setValueAt(lecName + " " + lecId, i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					mockTable.setValueAt(lecPlace, i, rowcol.get(3));
+					mockTable.setValueAt(ptemp, i, rowcol.get(3));
 				else
 					mockTable.setValueAt("", i, rowcol.get(3));
 			}
 		}
 	}
-	/*class MyRenderer extends DefaultTableCellRenderer {
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-					column);
-
-			if (table.getValueAt(row, column) != null) {
-				cellComponent.setBackground(Color.YELLOW);
-			} else
-				cellComponent.setBackground(Color.WHITE);
-			return cellComponent;
+	public class TextLimit extends PlainDocument{
+		private int limit;
+		public TextLimit(int limit){
+			super();
+			this.limit = limit;
 		}
-	}*/
+		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException{
+			if(str == null) return;
+			if(getLength() + str.length() <= limit) super.insertString(offset, str, attr);
+		}
+	}
 }
 class MyRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -563,11 +570,4 @@ class TableClick extends MouseAdapter{
 			AddClassDetailViewFrame frame = new AddClassDetailViewFrame(table.getModel());
 		}
 	}
-	/*@Override
-	public void mousePressed(MouseEvent e) {
-		if(e.getModifiers()==MouseEvent.BUTTON3_MASK){
-			popupM.show((Component)e.getSource(), e.getX(), e.getY());
-			
-		}
-	}*/
 }

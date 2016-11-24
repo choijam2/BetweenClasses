@@ -20,14 +20,16 @@ public class RegisterFunc implements ActionListener{
 		char[] pass = rFrame.getPasswordField().getPassword();
 		String password = new String(pass);
 		String name = rFrame.getNameField().getText();
-		String college = rFrame.getCollegeField().getText();
-		String dept = rFrame.getDetpField().getText();
+		String college = (String)rFrame.getCollegeComboBox().getSelectedItem();
+		String dept = (String)rFrame.getDetpComboBox().getSelectedItem();
 		String quest = rFrame.getQuestField().getText();
 
 		if (sid.equals("") || password.equals("") || name.equals("") || college.equals("") || dept.equals("") || quest.equals(""))
 			JOptionPane.showMessageDialog(null, "빈칸을 모두 입력하세요.");
-		else if(sid.length() < 8)
+		else if(sid.length() != 8)
 			JOptionPane.showMessageDialog(null, "학번을 확인하세요(8자리)");
+		else if(password.length() > 50)
+			JOptionPane.showMessageDialog(null, "비밀번호가 너무 깁니다.");
 		else {
 			try {
 				PreparedStatement query = con

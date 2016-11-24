@@ -64,10 +64,12 @@ public class TimeTableAddFunc implements ActionListener {
 
 	public boolean stringToken(String lecTime, String lecName, String lecPlace) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
+		StringTokenizer tk2 = new StringTokenizer(lecPlace);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
-
-		while (tk.hasMoreTokens()) {
+		String ptemp = null;
+		while (tk.hasMoreTokens() && tk2.hasMoreTokens()) {
 			String temp = tk.nextToken();
+			ptemp = tk2.nextToken();
 			char day = temp.charAt(0);
 
 			switch (day) { // 요일 지정
@@ -113,18 +115,18 @@ public class TimeTableAddFunc implements ActionListener {
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				table.setValueAt(lecName, i, rowcol.get(0));
+				table.setValueAt(lecName + " " + lid.getText(), i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				table.setValueAt(lecPlace, i, rowcol.get(0));
+				table.setValueAt(ptemp, i, rowcol.get(0));
 			else
 				table.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					table.setValueAt(lecName, i, rowcol.get(3));
+					table.setValueAt(lecName + " " + lid.getText(), i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					table.setValueAt(lecPlace, i, rowcol.get(3));
+					table.setValueAt(ptemp, i, rowcol.get(3));
 				else
 					table.setValueAt("", i, rowcol.get(3));
 			}
