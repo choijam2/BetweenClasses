@@ -253,7 +253,7 @@ public class BCAddFunc implements ActionListener {
 					t += 70;
 			}
 		}
-		if(rowcol.size()==2){
+		if(rowcol.size()==2){///¼öÁ¤
 			table.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
 			table.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
 			for(int i=rowcol.get(1)+2;i<25;i++){
