@@ -91,13 +91,26 @@ public class TimeTableAddFunc implements ActionListener {
 			int fTime = fHour * 100 + fMin;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
-			for (int i = 0; i < 26; i++) {
+			for (int i = 0; i < 25; i++) {
 				if (sTime >= t && sTime < t + 30) rowcol.add(i);
 				if (fTime >= t && fTime < t + 30) rowcol.add(i);
 				if (i % 2 == 0) t += 30;
 				else t += 70;
 			}
 		}
+		if(rowcol.size()==2){
+			if (table.getValueAt(rowcol.get(1), rowcol.get(0)) != null) {
+				JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
+				return false;
+			}
+			table.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
+			table.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
+			for(int i=rowcol.get(1)+2;i<25;i++){
+				table.setValueAt("", i, rowcol.get(0));
+			}
+			return true;
+		}
+		
 		// 시간 겹치는지 확인
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (table.getValueAt(i, rowcol.get(0)) != null) {

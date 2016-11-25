@@ -192,7 +192,7 @@ public class BCAddFunc implements ActionListener {
 					String lecTime = rs.getString("ltime");
 					String lecName = rs.getString("lname");
 					String lecPlace = rs.getString("place");
-					boolean ck = stringToken(lecTime, lecName, lecPlace, table);
+					stringToken(lecTime, lecName, lecPlace, table);
 				}
 			}
 		} catch (SQLException sqex) {
@@ -242,7 +242,7 @@ public class BCAddFunc implements ActionListener {
 			int fTime = fHour * 100 + fMin;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
-			for (int i = 0; i < 26; i++) {
+			for (int i = 0; i < 25; i++) {
 				if (sTime >= t && sTime < t + 30)
 					rowcol.add(i);
 				if (fTime >= t && fTime < t + 30)
@@ -253,6 +253,15 @@ public class BCAddFunc implements ActionListener {
 					t += 70;
 			}
 		}
+		if(rowcol.size()==2){
+			table.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
+			table.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
+			for(int i=rowcol.get(1)+2;i<25;i++){
+				table.setValueAt("", i, rowcol.get(0));
+			}
+			return true;
+		}
+		
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
 				table.setValueAt(lecName, i, rowcol.get(0));

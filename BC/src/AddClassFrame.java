@@ -470,7 +470,7 @@ public class AddClassFrame extends JFrame {
 		}
 	}
 
-	public void stringToken(String lecId, String lecTime, String lecName, String lecPlace) {
+	public boolean stringToken(String lecId, String lecTime, String lecName, String lecPlace) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
 		StringTokenizer tk2 = new StringTokenizer(lecPlace);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
@@ -511,6 +511,14 @@ public class AddClassFrame extends JFrame {
 					t += 70;
 			}
 		}
+		if(rowcol.size()==2){
+			mockTable.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
+			mockTable.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
+			for(int i=rowcol.get(1)+2;i<25;i++){
+				mockTable.setValueAt("", i, rowcol.get(0));
+			}	
+			return true;
+		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
 				mockTable.setValueAt(lecName + " " + lecId, i, rowcol.get(0));
@@ -529,6 +537,7 @@ public class AddClassFrame extends JFrame {
 					mockTable.setValueAt("", i, rowcol.get(3));
 			}
 		}
+		return true;
 	}
 	public class TextLimit extends PlainDocument{
 		private int limit;
