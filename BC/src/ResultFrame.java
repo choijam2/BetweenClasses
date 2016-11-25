@@ -248,7 +248,7 @@ public class ResultFrame extends JFrame {
 	void FindBC() throws SQLException {
 
 		// 학생의 아이디를 저장한다.
-		String[] People = new String[5];
+		String[] People = new String[6];
 		String[] time = new String[5];
 		Vector<String> mytime = new Vector<String>();
 		People[0] = s1;
@@ -256,9 +256,10 @@ public class ResultFrame extends JFrame {
 		People[2] = s3;
 		People[3] = s4;
 		People[4] = s5;
+		People[5]="-1";
 
 		// 공강 찾기 버튼에서 몇명의 학생 시간표를 비교하기 원하는지 찾는다.
-		for (int i = 0; People[i] != "-1"; studentNumber++, i++)
+		for (int i = 0; People[i] != "-1";studentNumber++, i++)
 			;
 
 		if (studentNumber == 0)
