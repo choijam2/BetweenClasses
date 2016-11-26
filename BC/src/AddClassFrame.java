@@ -179,7 +179,7 @@ public class AddClassFrame extends JFrame {
 		FindButton.setBorderPainted(false); // 투명 버튼
 		FindButton.setFocusPainted(false); // 투명 버튼
 		FindButton.setContentAreaFilled(false);
-		
+			
 		JPanel STpanel = new JPanel();
 		TitledBorder STborder = new TitledBorder("학생");
 		STborder.setTitleFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 27));
@@ -195,8 +195,7 @@ public class AddClassFrame extends JFrame {
 		JButton AllClearButton = new JButton(new ImageIcon("img/allclear_s.png"));
 		AllClearButton.setBorderPainted(false); // 투명 버튼
 		AllClearButton.setFocusPainted(false); // 투명 버튼
-		AllClearButton.setContentAreaFilled(false);
-		
+		AllClearButton.setContentAreaFilled(false);		
 
 		GroupLayout gl_panel_BCTable = new GroupLayout(panel_BCTable);
 		gl_panel_BCTable.setHorizontalGroup(
@@ -255,7 +254,10 @@ public class AddClassFrame extends JFrame {
 		Pfpanel.add(PftextField);
 		PftextField.setColumns(10);
 		
-
+		STtextField = new JTextField();
+		STtextField.setBounds(80, 31, 113, 27);
+		STpanel.add(STtextField);
+		STtextField.setColumns(10);
 		
 		
 		JLabel INSNewLabel = new JLabel("\uD559\uBC88  :");
@@ -429,6 +431,9 @@ public class AddClassFrame extends JFrame {
 		PfaddButton.setBorderPainted(false); // 투명 버튼
 		PfaddButton.setFocusPainted(false); // 투명 버튼
 		PfaddButton.setContentAreaFilled(false);
+		PfaddButton.setActionCommand("Pfadd");//버튼에 대한 액션함수 이름추가
+		PfaddButton.addActionListener(BCAddbtn);
+		PftextField.registerKeyboardAction(BCAddbtn, "Pfadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
 		PfaddButton.setBounds(17, 105, 78, 29);
 		Pfpanel.add(PfaddButton);
 		
@@ -436,6 +441,9 @@ public class AddClassFrame extends JFrame {
 		PfdelButton.setBorderPainted(false); // 투명 버튼
 		PfdelButton.setFocusPainted(false); // 투명 버튼
 		PfdelButton.setContentAreaFilled(false);
+		PfdelButton.setActionCommand("Pfdel");//버튼에 대한 액션함수 이름추가
+		BCDelFunc BCDelbtn = new BCDelFunc(table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
+		PfdelButton.addActionListener(BCDelbtn);
 		PfdelButton.setBounds(123, 105, 64, 29);
 		Pfpanel.add(PfdelButton);
 		
@@ -443,33 +451,34 @@ public class AddClassFrame extends JFrame {
 		INPfNewLabel.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
 		INPfNewLabel.setBounds(17, 44, 78, 21);
 		Pfpanel.add(INPfNewLabel);
-		STpanel.setLayout(null);
+		STpanel.setLayout(null);		
 		
-		STtextField = new JTextField();
-		STtextField.setBounds(80, 31, 113, 27);
-		STpanel.add(STtextField);
-		STtextField.setColumns(10);
-		
-		JButton STdelButton = new JButton(new ImageIcon("img/small_add.png"));
+		JButton STdelButton = new JButton(new ImageIcon("img/small_del.png"));
 		STdelButton.setBorderPainted(false); // 투명 버튼
 		STdelButton.setFocusPainted(false); // 투명 버튼
 		STdelButton.setContentAreaFilled(false);
-		STdelButton.setBounds(17, 94, 78, 29);
+		STdelButton.setBounds(112, 94, 86, 29);
+		STdelButton.addActionListener(BCDelbtn);
 		STpanel.add(STdelButton);
 		
 				
-		JButton STaddButton = new JButton(new ImageIcon("img/small_del.png"));
+		JButton STaddButton = new JButton(new ImageIcon("img/small_add.png"));
 		STaddButton.setBorderPainted(false); // 투명 버튼
 		STaddButton.setFocusPainted(false); // 투명 버튼
 		STaddButton.setContentAreaFilled(false);
-		STaddButton.setBounds(112, 94, 86, 29);
-		STpanel.add(STaddButton);
+		STaddButton.setBounds(17, 94, 78, 29);
 		STaddButton.setActionCommand("STadd");//버튼에 대한 액션함수 이름추가
 		STaddButton.addActionListener(BCAddbtn);
 		STtextField.registerKeyboardAction(BCAddbtn, "STadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		STpanel.add(STaddButton);
 		
-
+		///공강시간표 AllClearButton 리스너 추가
+		BCAllClearFunc AllClearbtn = new BCAllClearFunc(table_1,table_2,table_3,table_4,CheckIsTable);
+		AllClearButton.addActionListener(AllClearbtn);
 		
+		//공강찾기 버튼 리스너 추가
+		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
+		FindButton.addActionListener(BCSearchbtn);
 
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

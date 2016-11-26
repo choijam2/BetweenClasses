@@ -41,7 +41,7 @@ public class BCAddFunc implements ActionListener {
 
 			PFadd(PftextField);// 교수 추가함수
 
-		} else {
+		} else {			
 			if (CheckIsTable.get(0).equals(STtextField.getText())) {
 				JOptionPane.showMessageDialog(null, "자신의 시간표는 추가할 수 없습니다");
 			} else {
@@ -51,7 +51,7 @@ public class BCAddFunc implements ActionListener {
 		// TODO Auto-generated method stub
 	}
 
-	void PFadd(JTextField field) {
+	void PFadd(JTextField field) {		
 		String ID = field.getText();
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
@@ -80,7 +80,7 @@ public class BCAddFunc implements ActionListener {
 
 	/////////////////////////////////////////////
 	void STadd(JTextField field) {// 학생추가함수
-		String ID = field.getText();
+		String ID = field.getText();		
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "학번을 입력하세요");
