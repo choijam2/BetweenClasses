@@ -49,6 +49,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
+import javax.swing.JDesktopPane;
 
 public class AddClassFrame extends JFrame {
 	private Student student;
@@ -62,6 +63,8 @@ public class AddClassFrame extends JFrame {
 	private JTable table_4;
 	private JPopupMenu popupM;
 	private JMenuItem menu1;
+	private JTextField STtextField;
+	private JTextField PftextField;
 	AddClassFrame(Connection con,User user, JFrame frame) {
 		frame.dispose();
 		student = new Student(user.getSid());
@@ -93,10 +96,10 @@ public class AddClassFrame extends JFrame {
 				{ "21:00 ~", null, null, null, null, null, null } };
 		String[] defDays = new String[] { "Time", "월", "화", "수", "목", "금", "토" };
 		this.con = con;
-		setTitle("BetweenClasses");
+		setTitle("Between Classes");
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1283, 976);
+		setBounds(100, 100, 1301, 952);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -104,7 +107,7 @@ public class AddClassFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel ParentPanel = new JPanel();
-		ParentPanel.setBounds(0, 115, 1261, 796);
+		ParentPanel.setBounds(0, 115, 1295, 796);
 		contentPane.add(ParentPanel);
 		ParentPanel.setLayout(new CardLayout(0, 0));
 
@@ -114,7 +117,7 @@ public class AddClassFrame extends JFrame {
 		ParentPanel.add(panel_TimeTable, "name_798298334667093");
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 28, 1033, 735);
+		scrollPane.setBounds(40, 40, 1033, 735);
 
 		JPanel Pnl_ClassNum = new JPanel() {
 			// 판넬에 이미지 추가
@@ -171,28 +174,94 @@ public class AddClassFrame extends JFrame {
 		JScrollPane scrollTime3 = new JScrollPane();
 
 		JScrollPane scrollTime4 = new JScrollPane();
+		
+		JButton FindButton = new JButton(new ImageIcon("img/find.png"));
+		FindButton.setBorderPainted(false); // 투명 버튼
+		FindButton.setFocusPainted(false); // 투명 버튼
+		FindButton.setContentAreaFilled(false);
+		
+		JPanel STpanel = new JPanel();
+		TitledBorder STborder = new TitledBorder("학생");
+		STborder.setTitleFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 27));
+		STpanel.setBorder(STborder);
+		STpanel.setBackground(Color.WHITE);
+		
+		JPanel Pfpanel = new JPanel();
+		TitledBorder Pfborder = new TitledBorder("교수");
+		Pfborder.setTitleFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 27));
+		Pfpanel.setBorder(Pfborder);
+		Pfpanel.setBackground(Color.WHITE);
+		
+		JButton AllClearButton = new JButton(new ImageIcon("img/allclear_s.png"));
+		AllClearButton.setBorderPainted(false); // 투명 버튼
+		AllClearButton.setFocusPainted(false); // 투명 버튼
+		AllClearButton.setContentAreaFilled(false);
+		
 
 		GroupLayout gl_panel_BCTable = new GroupLayout(panel_BCTable);
-		gl_panel_BCTable.setHorizontalGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_BCTable.createSequentialGroup().addContainerGap()
-						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
-								.addComponent(scrollTime3, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE).addComponent(
-										scrollTime1, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
-						.addGap(18)
-						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(scrollTime2).addComponent(scrollTime4, GroupLayout.DEFAULT_SIZE, 501,
-										Short.MAX_VALUE))
-						.addGap(234)));
-		gl_panel_BCTable.setVerticalGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_BCTable.createSequentialGroup().addGap(30)
-						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
+		gl_panel_BCTable.setHorizontalGroup(
+			gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_BCTable.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollTime1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollTime3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollTime2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_BCTable.createSequentialGroup()
+							.addGap(26)
+							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(STpanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(Pfpanel, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+							.addContainerGap(25, Short.MAX_VALUE))
+						.addGroup(gl_panel_BCTable.createSequentialGroup()
+							.addGap(102)
+							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+								.addComponent(FindButton)
+								.addComponent(AllClearButton))
+							.addGap(134))))
+		);
+		gl_panel_BCTable.setVerticalGroup(
+			gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel_BCTable.createSequentialGroup()
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_BCTable.createSequentialGroup()
+							.addGap(50)
+							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
 								.addComponent(scrollTime1, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)
 								.addComponent(scrollTime2, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
+							.addGap(26)
+							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.BASELINE)
 								.addComponent(scrollTime3, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
-								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE))
-						.addGap(20)));
+								.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel_BCTable.createSequentialGroup()
+							.addGap(79)
+							.addComponent(Pfpanel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+							.addGap(88)
+							.addComponent(STpanel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+							.addGap(50)
+							.addComponent(AllClearButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addGap(39)
+							.addComponent(FindButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(136, Short.MAX_VALUE))
+		);
+		Pfpanel.setLayout(null);
+		
+		PftextField = new JTextField();
+		PftextField.setBounds(88, 41, 99, 27);
+		Pfpanel.add(PftextField);
+		PftextField.setColumns(10);
+		
+
+		
+		
+		JLabel INSNewLabel = new JLabel("\uD559\uBC88  :");
+		INSNewLabel.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		INSNewLabel.setBounds(17, 34, 61, 21);
+		STpanel.add(INSNewLabel);
 		
 		ArrayList<String> CheckIsTable = new ArrayList<String>(); //공강시간표에서 시간표를 추가하는것에 대한 구분을 하기 위한 배열리스트
 		CheckIsTable.add(user.getSid());
@@ -324,75 +393,7 @@ public class AddClassFrame extends JFrame {
 		contentPane.add(btn_Logout);
 		LogoutFunc logout = new LogoutFunc(this);
 		btn_Logout.addActionListener(logout);
-		
-		// ------------------------------
-		JPanel Pfpanel = new JPanel();
-		Pfpanel.setBounds(1055, 59, 182, 180);
-		Pfpanel.setBackground(new Color(255, 0, 0, 0));
 		TitledBorder pfborder = new TitledBorder("교수");
-		Pfpanel.setBorder(pfborder);
-		panel_BCTable.add(Pfpanel);
-
-		JPanel STpanel = new JPanel();
-		STpanel.setBounds(1055, 300, 182, 180);
-		STpanel.setBackground(new Color(255, 0, 0, 0));
-		TitledBorder STborder = new TitledBorder("학생");
-		STpanel.setBorder(STborder);
-		panel_BCTable.add(STpanel);
-
-		JTextField STtextField = new JTextField(8);
-		STtextField.setBounds(1135, 340, 80, 21);
-		panel_BCTable.add(STtextField);
-		STtextField.setColumns(10);
-		STtextField.setDocument(new TextLimit(8));
-		
-		JTextField PftextField = new JTextField();
-		PftextField.setBounds(1135, 91, 80, 21);
-		panel_BCTable.add(PftextField);
-		PftextField.setColumns(10);
-		
-		JButton PfaddButton = new JButton("교수 추가");
-		PfaddButton.setBounds(1070, 190, 70, 23);
-		PfaddButton.setActionCommand("Pfadd");//버튼에 대한 액션함수 이름추가
-		panel_BCTable.add(PfaddButton);		
-		BCAddFunc BCAddbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
-		PfaddButton.addActionListener(BCAddbtn);
-		PftextField.registerKeyboardAction(BCAddbtn, "Pfadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
-		//PftextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
-
-		JButton PfdelButton = new JButton("교수 삭제");
-		PfdelButton.setBounds(1155, 190, 70, 23);
-		PfdelButton.setActionCommand("Pfdel");//버튼에 대한 액션함수 이름추가
-		panel_BCTable.add(PfdelButton);
-		BCDelFunc BCDelbtn = new BCDelFunc(table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
-		PfdelButton.addActionListener(BCDelbtn);
-
-		JButton STaddButton = new JButton("학생 추가");
-		STaddButton.setBounds(1070, 430, 70, 23);
-		STaddButton.setActionCommand("STadd");//버튼에 대한 액션함수 이름추가
-		panel_BCTable.add(STaddButton);		
-		STaddButton.addActionListener(BCAddbtn);
-		STtextField.registerKeyboardAction(BCAddbtn, "STadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
-		//STtextField에서 다 입력후 엔터 치면 바로 추가하기 버튼으로 넘어가도록 설정
-		
-		JButton STdelButton = new JButton("학생 삭제");
-		STdelButton.setBounds(1155, 430, 70, 23);
-		panel_BCTable.add(STdelButton);		
-		STdelButton.addActionListener(BCDelbtn);
-
-		JButton FindButton = new JButton("공강찾기");
-		FindButton.setBounds(1100, 550, 97, 23);
-		panel_BCTable.add(FindButton);	
-		BCSearchFunc bsSearchBtn = new BCSearchFunc(con,CheckIsTable);
-		FindButton.addActionListener(bsSearchBtn);
-
-		JLabel INPfNewLabel = new JLabel("성함   :");
-		INPfNewLabel.setBounds(1075, 94, 57, 15);
-		panel_BCTable.add(INPfNewLabel);
-
-		JLabel INSTNewLabel = new JLabel("학번  :");
-		INSTNewLabel.setBounds(1075, 344, 57, 15);
-		panel_BCTable.add(INSTNewLabel);
 
 		// ------------------------------
 		// ------------------------------
@@ -410,7 +411,7 @@ public class AddClassFrame extends JFrame {
 		btnBCTable.setBorderPainted(false); // 투명 버튼
 		btnBCTable.setFocusPainted(false); // 투명 버튼
 		btnBCTable.setContentAreaFilled(false); // 투명 버튼
-		btnBCTable.setBounds(215, 53, 201, 65);
+		btnBCTable.setBounds(217, 53, 201, 65);
 		contentPane.add(btnBCTable);
 
 		JPanel panel = new JPanel();
@@ -418,6 +419,56 @@ public class AddClassFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
+		
+		JDesktopPane desktopPane = new JDesktopPane();
+		desktopPane.setBounds(0, 0, 1, 1);
+		contentPane.add(desktopPane);
+		
+		JButton PfaddButton =new JButton(new ImageIcon("img/small_add.png"));
+		BCAddFunc BCAddbtn = new BCAddFunc(con,table_1,table_2,table_3,table_4,PftextField,STtextField,CheckIsTable);
+		PfaddButton.setBorderPainted(false); // 투명 버튼
+		PfaddButton.setFocusPainted(false); // 투명 버튼
+		PfaddButton.setContentAreaFilled(false);
+		PfaddButton.setBounds(17, 105, 78, 29);
+		Pfpanel.add(PfaddButton);
+		
+		JButton PfdelButton = new JButton(new ImageIcon("img/small_del.png"));
+		PfdelButton.setBorderPainted(false); // 투명 버튼
+		PfdelButton.setFocusPainted(false); // 투명 버튼
+		PfdelButton.setContentAreaFilled(false);
+		PfdelButton.setBounds(123, 105, 64, 29);
+		Pfpanel.add(PfdelButton);
+		
+		JLabel INPfNewLabel = new JLabel("\uC131\uD568 :");
+		INPfNewLabel.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
+		INPfNewLabel.setBounds(17, 44, 78, 21);
+		Pfpanel.add(INPfNewLabel);
+		STpanel.setLayout(null);
+		
+		STtextField = new JTextField();
+		STtextField.setBounds(80, 31, 113, 27);
+		STpanel.add(STtextField);
+		STtextField.setColumns(10);
+		
+		JButton STdelButton = new JButton(new ImageIcon("img/small_add.png"));
+		STdelButton.setBorderPainted(false); // 투명 버튼
+		STdelButton.setFocusPainted(false); // 투명 버튼
+		STdelButton.setContentAreaFilled(false);
+		STdelButton.setBounds(17, 94, 78, 29);
+		STpanel.add(STdelButton);
+		
+				
+		JButton STaddButton = new JButton(new ImageIcon("img/small_del.png"));
+		STaddButton.setBorderPainted(false); // 투명 버튼
+		STaddButton.setFocusPainted(false); // 투명 버튼
+		STaddButton.setContentAreaFilled(false);
+		STaddButton.setBounds(112, 94, 86, 29);
+		STpanel.add(STaddButton);
+		STaddButton.setActionCommand("STadd");//버튼에 대한 액션함수 이름추가
+		STaddButton.addActionListener(BCAddbtn);
+		STtextField.registerKeyboardAction(BCAddbtn, "STadd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		
+
 		
 
 		btnBCTable.addActionListener(new ActionListener() {
