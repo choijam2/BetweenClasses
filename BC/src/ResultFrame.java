@@ -127,7 +127,7 @@ public class ResultFrame extends JFrame {
 
 		table.setModel(new DefaultTableModel(defTableTime, defDays));
 
-		table.setDefaultRenderer(Object.class, new MyRenderer());
+		table.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table.setIntercellSpacing(new Dimension(1, 0));
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
@@ -236,6 +236,8 @@ public class ResultFrame extends JFrame {
 				}
 
 				for (int j = startIndex; j <= lastIndex; j++) {
+					if(j==25)
+						break;
 					BetweenClasses[j][col - 1]++;
 				}
 
@@ -303,19 +305,5 @@ public class ResultFrame extends JFrame {
 
 		// token(time);
 		token(mytime);
-	}
-
-	class MyRenderer extends DefaultTableCellRenderer {
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-					column);
-			if (table.getValueAt(row, column) != null && column != 0) {
-				cellComponent.setBackground(Color.YELLOW);
-				// cellComponent.setForeground(Color.YELLOW);
-			} else
-				cellComponent.setBackground(Color.WHITE);
-			return cellComponent;
-		}
-	}
+	}	
 }

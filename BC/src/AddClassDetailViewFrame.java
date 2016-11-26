@@ -38,7 +38,7 @@ public class AddClassDetailViewFrame extends JFrame {
 		this.table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		this.table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));
 		this.table.setModel(table);
-		this.table.setDefaultRenderer(Object.class, new MyRenderer());	
+		this.table.setDefaultRenderer(Object.class, new ResultFrame_Renderer());	
 		this.table.setIntercellSpacing(new Dimension(1, 0));
 		this.table.setRowHeight(28);
 		//this.table.getColumn("Time").setPreferredWidth(20);

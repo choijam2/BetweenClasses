@@ -146,7 +146,7 @@ public class AddClassFrame extends JFrame {
 		mockTable.setRowHeight(28);
 		mockTable.setModel(new DefaultTableModel(defTableTime, defDays));
 
-		mockTable.setDefaultRenderer(Object.class, new MyRenderer());
+		mockTable.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		mockTable.setIntercellSpacing(new Dimension(1, 0));
 
 		// 가운데 정렬
@@ -213,7 +213,7 @@ public class AddClassFrame extends JFrame {
 		table_4.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_4.setRowHeight(19);
 		table_4.setModel(new DefaultTableModel(defTableTime, defDays));
-		table_4.setDefaultRenderer(Object.class, new MyRenderer());
+		table_4.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_4.setIntercellSpacing(new Dimension(1, 0));
 		table_4.getColumn("Time").setCellRenderer(celAlignCenter);
 		scrollTime4.setViewportView(table_4);
@@ -226,7 +226,7 @@ public class AddClassFrame extends JFrame {
 		table_3.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_3.setRowHeight(19);
 		table_3.setModel(new DefaultTableModel(defTableTime, defDays));
-		table_3.setDefaultRenderer(Object.class, new MyRenderer());
+		table_3.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_3.setIntercellSpacing(new Dimension(1, 0));
 		table_3.getColumn("Time").setCellRenderer(celAlignCenter);
 		scrollTime3.setViewportView(table_3);
@@ -239,7 +239,7 @@ public class AddClassFrame extends JFrame {
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_2.setRowHeight(19);
 		table_2.setModel(new DefaultTableModel(defTableTime, defDays));
-		table_2.setDefaultRenderer(Object.class, new MyRenderer());
+		table_2.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_2.setIntercellSpacing(new Dimension(1, 0));
 		table_2.getColumn("Time").setCellRenderer(celAlignCenter);
 		scrollTime2.setViewportView(table_2);
@@ -252,7 +252,7 @@ public class AddClassFrame extends JFrame {
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table_1.setRowHeight(19);
 		table_1.setModel(new DefaultTableModel(defTableTime, defDays));
-		table_1.setDefaultRenderer(Object.class, new MyRenderer());
+		table_1.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_1.setIntercellSpacing(new Dimension(1, 0));
 		table_1.getColumn("Time").setCellRenderer(celAlignCenter);
 		scrollTime1.setViewportView(table_1);
@@ -551,21 +551,7 @@ public class AddClassFrame extends JFrame {
 		}
 	}
 }
-class MyRenderer extends DefaultTableCellRenderer {
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
-		Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-				column);
-		setHorizontalAlignment(JLabel.CENTER);//
-		if(column==0)
-			cellComponent.setBackground(Color.WHITE);
-		else if ((table.getValueAt(row, column) != null)) {
-			cellComponent.setBackground(Color.YELLOW);
-		} else
-			cellComponent.setBackground(Color.WHITE);
-		return cellComponent;
-	}
-}
+
 class TableClick extends MouseAdapter{
 	private JPopupMenu popupM;
 	private JTable table;	;
