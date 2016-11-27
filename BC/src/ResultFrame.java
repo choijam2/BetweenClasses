@@ -30,6 +30,8 @@ import javax.swing.table.TableColumnModel;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+
 import javax.swing.JButton;
 import javax.swing.Icon;
 
@@ -51,6 +53,7 @@ public class ResultFrame extends JFrame {
 	private JButton btn_save;
 
 	public ResultFrame(Connection con, String s1, String s2, String s3, String s4, String s5) throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setTitle("공강 찾기 결과");
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 6; j++) {

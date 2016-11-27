@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ public class PassFindFrame extends JFrame {
 	private JTextField nameField;
 
 	PassFindFrame(Connection con) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setResizable(false);
 		setSize(320, 250);
 		setVisible(true);

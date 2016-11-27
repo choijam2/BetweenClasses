@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +25,7 @@ public class AddClassDetailViewFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AddClassDetailViewFrame(TableModel table) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setBounds(100, 100, 1118, 820);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

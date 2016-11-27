@@ -41,6 +41,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -67,6 +68,7 @@ public class AddClassFrame extends JFrame {
 	private JTextField STtextField;
 	private JTextField PftextField;
 	AddClassFrame(Connection con,User user, JFrame frame) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		frame.dispose();
 		student = new Student(user.getSid());
 		setResizable(false);

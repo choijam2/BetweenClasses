@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 
 import javax.swing.JFrame;
@@ -11,6 +12,7 @@ import javax.swing.SwingConstants;
 public class RandomSelcetedFrame extends JFrame {
 	private JPanel contentPane;
 	RandomSelcetedFrame(String day,String Time) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setResizable(false);
 		setSize(320, 250);
 		setVisible(true);

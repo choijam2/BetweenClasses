@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -28,6 +29,7 @@ public class RegisterFrame extends JFrame {
 	private JTextField questField;
 
 	RegisterFrame(Connection con) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		this.con = con;
 		setResizable(false);
 		setSize(320, 400);

@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -51,6 +52,7 @@ public class LoginFrame extends JFrame {
 	}
 
 	public LoginFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setVisible(true);
 		setResizable(false);
 		con = startMysql();
