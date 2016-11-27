@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -29,8 +30,12 @@ public class BCDelFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getActionCommand().equals("Pfdel")) {
+		if(e.getActionCommand().equals("menuDel")){
+		//	this.actionPerformed(new ActionEvent(Object.class,ActionEvent.ACTION_PERFORMED,null));
+			JMenuItem aa = (JMenuItem)e.getSource();
+			System.out.println("아~~ : ");
+		}
+		else if (e.getActionCommand().equals("Pfdel")) {
 			
 			Del(PftextField.getText());// 삭제함수
 			
@@ -48,10 +53,9 @@ public class BCDelFunc implements ActionListener {
 		// }
 	}
 
-	void Del(String ID) {// 삭제함수
-		System.out.println("====="+ID+"=====\n");
+	void Del(String ID) {// 삭제함수		
 		if (ID.equals(""))
-			JOptionPane.showMessageDialog(null, "다시 입력하세요");
+			JOptionPane.showMessageDialog(null, "다시 입력하세요");	
 		else if (!CheckSame(CheckIsTable, ID))
 			JOptionPane.showMessageDialog(null, "삭제할  시간표가 없습니다");
 		else {
@@ -86,7 +90,9 @@ public class BCDelFunc implements ActionListener {
 				table.setValueAt(null, i, j);// 해당 테이블의 값을 모두 NULL로 바꿈
 			}
 		}
+		System.out.println("셋 하기전: "+CheckIsTable.set(num, "-1"));
 		CheckIsTable.set(num, "-1");// 해당 배열리스트의 값을 -1로 초기화
+		System.out.println("\n셋 한후: "+CheckIsTable.set(num, "-1"));
 	}
 
 	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {// 해당 시간표가 있는지

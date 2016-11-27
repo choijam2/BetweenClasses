@@ -273,6 +273,7 @@ public class AddClassFrame extends JFrame {
 		
 		popupM = new JPopupMenu();
 		menu1 = new JMenuItem("삭제");
+		menu1.setActionCommand("menuDel");
 		popupM.add(menu1);
 		
 		table_4 = new JTable();
@@ -348,7 +349,7 @@ public class AddClassFrame extends JFrame {
 		btn_Search.setContentAreaFilled(false);
 		btn_Search.setBounds(1129, 428, 81, 42);
 		panel_TimeTable.add(btn_Search);
-		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con);
+		TimeTableSearchClasses mockSearchBtn = new TimeTableSearchClasses(con,mockTable,student);
 		btn_Search.addActionListener(mockSearchBtn);
 
 		// 모의시간표 삭제버튼
@@ -479,6 +480,9 @@ public class AddClassFrame extends JFrame {
 		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
 		FindButton.addActionListener(BCSearchbtn);
 
+		//우클릭 삭제 리스너 추가
+				menu1.addActionListener(BCDelbtn);
+		
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ParentPanel.removeAll();
@@ -622,6 +626,13 @@ class TableClick extends MouseAdapter{
 	public void mouseClicked(MouseEvent e) {
 		if((e.getClickCount()==2)&&(e.getModifiers()==MouseEvent.BUTTON1_MASK)){
 			AddClassDetailViewFrame frame = new AddClassDetailViewFrame(table.getModel());
+		}
+	}
+	@Override
+	public void mouseReleased(MouseEvent e){
+		 if(e.getModifiers()==MouseEvent.BUTTON3_MASK){
+			popupM.show(e.getComponent(),e.getX(), e.getY());
+			//table.get
 		}
 	}
 }

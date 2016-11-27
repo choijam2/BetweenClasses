@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ public class TimeTableSearchClassesFrame extends JFrame {
 	private JTextField txt_lname;
 	private JTable table;
 
-	TimeTableSearchClassesFrame(Connection con) {
+	TimeTableSearchClassesFrame(Connection con,JTable mockTable,Student student) {
 		setResizable(false);
 		setVisible(true);
 		setTitle("SearchClasses");
@@ -146,11 +148,17 @@ public class TimeTableSearchClassesFrame extends JFrame {
 		contentPane.add(scrollPane);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		String title[] = {"수강번호", "학년", "이수구분", "과목", "학점", "교수", "강의시간", "강의장소", "개설학과", "비고"};
-		DefaultTableModel model = new DefaultTableModel(title, 0);
+		DefaultTableModel model = new DefaultTableModel(title, 0){
+			public boolean isCellEditable(int row,int column){
+				return false;
+			}
+		};
 		table = new JTable(model);
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(true);			
 		TableRowSorter Tsorter = new TableRowSorter(table.getModel());
 		table.setRowSorter(Tsorter);
+		table.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		scrollPane.setViewportView(table);
 		table.getTableHeader().setBackground(Color.WHITE);
 		table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
@@ -164,7 +172,20 @@ public class TimeTableSearchClassesFrame extends JFrame {
 		table.getColumn("강의장소").setPreferredWidth(80);
 		table.getColumn("개설학과").setPreferredWidth(50);
 		table.getColumn("비고").setPreferredWidth(90);
-		
+		if(student.getSid()==""){}
+		else{
+		table.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if((e.getClickCount()==2)&&(e.getModifiers()==MouseEvent.BUTTON1_MASK)){
+					 JTable jt = (JTable)e.getSource();
+					 JTextField jf = new JTextField(table.getValueAt((int)jt.getSelectedRow(), 0).toString()); 
+					TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(jf, con, mockTable, student);
+					mockAddBtn.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,null));
+				}
+			}
+		});
+		}
 		table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18 ));
 		txt_lname = new JTextField();
 		txt_lname.setBounds(637, 11, 173, 26);

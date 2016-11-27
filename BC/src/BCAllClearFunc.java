@@ -21,10 +21,10 @@ public class BCAllClearFunc implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub//시간표 4개 모두 클리어
-		Cleartable(table1, CheckIsTable, 0);
-		Cleartable(table2, CheckIsTable, 1);
-		Cleartable(table3, CheckIsTable, 2);
-		Cleartable(table4, CheckIsTable, 3);
+		Cleartable(table1, CheckIsTable, 1);
+		Cleartable(table2, CheckIsTable, 2);
+		Cleartable(table3, CheckIsTable, 3);
+		Cleartable(table4, CheckIsTable, 4);
 
 	}
 
