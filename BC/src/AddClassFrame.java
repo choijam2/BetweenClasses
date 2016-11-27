@@ -386,7 +386,7 @@ public class AddClassFrame extends JFrame {
 		btn_AllClear.addActionListener(allClear);
 		
 		// 로그아웃 버튼
-		JButton btn_Logout = new JButton(new ImageIcon("img/Logout.png"));
+		JButton btn_Logout = new JButton(new ImageIcon("img/logout_s.png"));
 		btn_Logout.setBorderPainted(false); // 투명 버튼
 		btn_Logout.setFocusPainted(false); // 투명 버튼
 		btn_Logout.setContentAreaFilled(false); // 투명 버튼
