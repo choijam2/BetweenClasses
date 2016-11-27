@@ -152,7 +152,7 @@ public class AddClassFrame extends JFrame {
 		mockTable.setRowHeight(28);
 		mockTable.setModel(new DefaultTableModel(defTableTime, defDays));
 		JTableHeader header = mockTable.getTableHeader(); 
-	    header.setBackground(Color.PINK);
+	    header.setBackground(Color.WHITE);
 
 		mockTable.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		mockTable.setIntercellSpacing(new Dimension(1, 0));
