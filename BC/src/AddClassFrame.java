@@ -28,6 +28,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.text.AttributeSet;
@@ -148,6 +149,8 @@ public class AddClassFrame extends JFrame {
 		mockTable.setBounds(37, 35, 400, 600);
 		mockTable.setRowHeight(28);
 		mockTable.setModel(new DefaultTableModel(defTableTime, defDays));
+		JTableHeader header = mockTable.getTableHeader(); 
+	    header.setBackground(Color.PINK);
 
 		mockTable.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		mockTable.setIntercellSpacing(new Dimension(1, 0));
@@ -282,6 +285,8 @@ public class AddClassFrame extends JFrame {
 		table_4.setRowSelectionAllowed(false);
 		table_4.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_4.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
+		JTableHeader header_4 = table_4.getTableHeader(); 
+		header_4.setBackground(Color.white);
 		table_4.setRowHeight(19);
 		table_4.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_4.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
@@ -295,6 +300,8 @@ public class AddClassFrame extends JFrame {
 		table_3.setEnabled(false);
 		table_3.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_3.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
+		JTableHeader header_3= table_3.getTableHeader(); 
+		header_3.setBackground(Color.WHITE);
 		table_3.setRowHeight(19);
 		table_3.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_3.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
@@ -308,6 +315,8 @@ public class AddClassFrame extends JFrame {
 		table_2.setEnabled(false);
 		table_2.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
+		JTableHeader header_2 = table_2.getTableHeader(); 
+		header_2.setBackground(Color.white);
 		table_2.setRowHeight(19);
 		table_2.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_2.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
@@ -321,6 +330,8 @@ public class AddClassFrame extends JFrame {
 		table_1.setEnabled(false);
 		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
+		JTableHeader header_1 = table_1.getTableHeader(); 
+		header_1.setBackground(Color.white);
 		table_1.setRowHeight(19);
 		table_1.setModel(new DefaultTableModel(defTableTime, defDays));
 		table_1.setDefaultRenderer(Object.class, new ResultFrame_Renderer());

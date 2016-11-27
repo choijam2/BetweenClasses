@@ -10,7 +10,7 @@ class ResultFrame_Renderer extends DefaultTableCellRenderer {
 		Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 				column);
 		if (table.getValueAt(row, column) != null && column != 0) {
-			cellComponent.setBackground(Color.YELLOW);
+			cellComponent.setBackground(Color.PINK);
 			// cellComponent.setForeground(Color.YELLOW);
 		} else
 			cellComponent.setBackground(Color.WHITE);
