@@ -281,8 +281,7 @@ public class AddClassFrame extends JFrame {
 		menu1.setActionCommand("menuDel");
 		popupM.add(menu1);
 		
-		table_4 = new JTable();
-		table_4.addMouseListener(new TableClick(popupM,table_4));
+		table_4 = new JTable();		
 		table_4.setEnabled(false);
 		table_4.setRowSelectionAllowed(false);
 		table_4.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -294,10 +293,10 @@ public class AddClassFrame extends JFrame {
 		table_4.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_4.setIntercellSpacing(new Dimension(1, 0));
 		table_4.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_4.setName("4");	
 		scrollTime4.setViewportView(table_4);
 		
-		table_3 = new JTable();
-		table_3.addMouseListener(new TableClick(popupM,table_3));	
+		table_3 = new JTable();		
 		table_3.setRowSelectionAllowed(false);
 		table_3.setEnabled(false);
 		table_3.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -309,11 +308,11 @@ public class AddClassFrame extends JFrame {
 		table_3.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_3.setIntercellSpacing(new Dimension(1, 0));
 		table_3.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_3.setName("3");	
 		scrollTime3.setViewportView(table_3);
 
 		table_2 = new JTable();
 		table_2.setRowSelectionAllowed(false);
-		table_2.addMouseListener(new TableClick(popupM,table_2));
 		table_2.setEnabled(false);
 		table_2.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
@@ -324,10 +323,10 @@ public class AddClassFrame extends JFrame {
 		table_2.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_2.setIntercellSpacing(new Dimension(1, 0));
 		table_2.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_2.setName("2");	
 		scrollTime2.setViewportView(table_2);
 
-		table_1 = new JTable();
-		table_1.addMouseListener(new TableClick(popupM,table_1));
+		table_1 = new JTable();		
 		table_1.setRowSelectionAllowed(false);
 		table_1.setEnabled(false);
 		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
@@ -339,6 +338,7 @@ public class AddClassFrame extends JFrame {
 		table_1.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		table_1.setIntercellSpacing(new Dimension(1, 0));
 		table_1.getColumn("Time").setCellRenderer(celAlignCenter);
+		table_1.setName("1");	
 		scrollTime1.setViewportView(table_1);
 		
 		panel_BCTable.setLayout(gl_panel_BCTable);
@@ -493,8 +493,13 @@ public class AddClassFrame extends JFrame {
 		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
 		FindButton.addActionListener(BCSearchbtn);
 
-		//우클릭 삭제 리스너 추가
-				menu1.addActionListener(BCDelbtn);
+		TableClick TC = new TableClick(CheckIsTable,table_1,table_2,table_3,table_4,popupM);
+		menu1.addActionListener(TC); // 우클릭 삭제 리스너 추가
+		table_1.addMouseListener(TC);//테이블 1 마우스 리스너 추가
+		table_2.addMouseListener(TC);//테이블 2 마우스 리스너 추가 
+		table_3.addMouseListener(TC);//테이블 3 마우스 리스너 추가
+		table_4.addMouseListener(TC);//테이블 4 마우스 리스너 추가
+		
 		
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -589,7 +594,7 @@ public class AddClassFrame extends JFrame {
 		}
 		if(rowcol.size()==2){////수정
 			mockTable.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
-			mockTable.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
+			mockTable.setValueAt(ptemp+ "/" + lecId, rowcol.get(1)+1, rowcol.get(0));
 			for(int i=rowcol.get(1)+2;i<25;i++){
 				mockTable.setValueAt("", i, rowcol.get(0));
 			}	
@@ -597,18 +602,18 @@ public class AddClassFrame extends JFrame {
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				mockTable.setValueAt(lecName + " " + lecId, i, rowcol.get(0));
+				mockTable.setValueAt(lecName, i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				mockTable.setValueAt(ptemp, i, rowcol.get(0));
+				mockTable.setValueAt(ptemp+ " " + lecId, i, rowcol.get(0));
 			else
 				mockTable.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					mockTable.setValueAt(lecName + " " + lecId, i, rowcol.get(3));
+					mockTable.setValueAt(lecName, i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					mockTable.setValueAt(ptemp, i, rowcol.get(3));
+					mockTable.setValueAt(ptemp+ " " + lecId, i, rowcol.get(3));
 				else
 					mockTable.setValueAt("", i, rowcol.get(3));
 			}
@@ -628,24 +633,63 @@ public class AddClassFrame extends JFrame {
 	}
 }
 
-class TableClick extends MouseAdapter{
+class TableClick extends MouseAdapter implements ActionListener {
 	private JPopupMenu popupM;
-	private JTable table;	;
-	TableClick(JPopupMenu popupM,JTable table){
+	private JTable table;
+	private ArrayList<String> CheckIsTable;
+	JTable table1, table2, table3, table4;
+	private String num;	
+	TableClick(ArrayList<String> CheckIsTable,JTable table1, JTable table2, JTable table3, JTable table4,JPopupMenu popupM){
+		this.CheckIsTable = CheckIsTable;
+		this.table1 = table1;
+		this.table2 = table2;
+		this.table3 = table3;
+		this.table4 = table4;
 		this.popupM = popupM;
-		this.table = table;			
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if((e.getClickCount()==2)&&(e.getModifiers()==MouseEvent.BUTTON1_MASK)){
+		if ((e.getClickCount() == 2) && (e.getModifiers() == MouseEvent.BUTTON1_MASK)) {
 			AddClassDetailViewFrame frame = new AddClassDetailViewFrame(table.getModel());
+			System.out.println(e.getComponent().getName());
+		}	
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
+			num = e.getComponent().getName();			
+			popupM.show(e.getComponent(), e.getX(), e.getY());			
 		}
 	}
+
 	@Override
-	public void mouseReleased(MouseEvent e){
-		 if(e.getModifiers()==MouseEvent.BUTTON3_MASK){
-			popupM.show(e.getComponent(),e.getX(), e.getY());
-			//table.get
-		}
+	public void actionPerformed(ActionEvent e) {
+		//System.out.println("되나~");
+		//System.out.println(num);
+		if(e.getActionCommand().equals("menuDel")){
+			//System.out.println("되나~");
+			switch(num){
+			case "1":
+				//System.out.println("되나~1");
+				BCDelFunc BCDelbtn1 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(1));
+				BCDelbtn1.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				break;
+			case "2":
+				//System.out.println("되나~2");
+				BCDelFunc BCDelbtn2 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(2));
+				BCDelbtn2.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				break;
+			case "3":
+				//System.out.println("되나~3");
+				BCDelFunc BCDelbtn3 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(3));
+				BCDelbtn3.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				break;
+			case "4":
+				//System.out.println("되나~4");
+				BCDelFunc BCDelbtn4 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(4));
+				BCDelbtn4.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));				
+			}
+		}		
 	}
 }

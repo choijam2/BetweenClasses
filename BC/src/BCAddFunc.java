@@ -40,12 +40,14 @@ public class BCAddFunc implements ActionListener {
 		if (e.getActionCommand().equals("Pfadd")) {
 
 			PFadd(PftextField);// 교수 추가함수
+			PftextField.setText("");
 
 		} else {			
 			if (CheckIsTable.get(0).equals(STtextField.getText())) {
 				JOptionPane.showMessageDialog(null, "자신의 시간표는 추가할 수 없습니다");
 			} else {
 				STadd(STtextField);// 학생 추가 함수
+				STtextField.setText("");
 			}
 		}
 		// TODO Auto-generated method stub
