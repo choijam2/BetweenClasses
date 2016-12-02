@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -493,14 +494,32 @@ public class AddClassFrame extends JFrame {
 		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
 		FindButton.addActionListener(BCSearchbtn);
 
-		TableClick TC = new TableClick(CheckIsTable,table_1,table_2,table_3,table_4,popupM);
+		TableClick TC = new TableClick(CheckIsTable, table_1, table_2, table_3, table_4, popupM, BCDelbtn);
 		menu1.addActionListener(TC); // 우클릭 삭제 리스너 추가
-		table_1.addMouseListener(TC);//테이블 1 마우스 리스너 추가
-		table_2.addMouseListener(TC);//테이블 2 마우스 리스너 추가 
-		table_3.addMouseListener(TC);//테이블 3 마우스 리스너 추가
-		table_4.addMouseListener(TC);//테이블 4 마우스 리스너 추가
-		
-		
+		table_1.addMouseListener(TC);// 테이블 1 마우스 리스너 추가
+		table_2.addMouseListener(TC);// 테이블 2 마우스 리스너 추가
+		table_3.addMouseListener(TC);// 테이블 3 마우스 리스너 추가
+		table_4.addMouseListener(TC);// 테이블 4 마우스 리스너 추가
+		// 교수칸에서 탭키 누르면 바로 학생칸으로 감
+		PftextField.setFocusTraversalKeysEnabled(false);
+		PftextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_TAB) {
+					STtextField.requestFocus();
+				}
+			}
+		});
+		// 학생칸에서 탭키 누르면 바로 교수칸으로 감
+		STtextField.setFocusTraversalKeysEnabled(false);
+		STtextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_TAB) {
+					PftextField.requestFocus();
+				}
+			}
+		});
 		btnBCTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ParentPanel.removeAll();
@@ -592,28 +611,32 @@ public class AddClassFrame extends JFrame {
 					t += 70;
 			}
 		}
-		if(rowcol.size()==2){////수정
+		if (rowcol.size() == 2) {//// 수정
 			mockTable.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
-			mockTable.setValueAt(ptemp+ "/" + lecId, rowcol.get(1)+1, rowcol.get(0));
-			for(int i=rowcol.get(1)+2;i<25;i++){
+			mockTable.setValueAt(ptemp+ "   /   " + lecId, rowcol.get(1) + 1, rowcol.get(0));
+			for (int i = rowcol.get(1) + 2; i < 25; i++) {
 				mockTable.setValueAt("", i, rowcol.get(0));
-			}	
+			}
 			return true;
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				mockTable.setValueAt(lecName, i, rowcol.get(0));
+				mockTable.setValueAt(lecName , i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				mockTable.setValueAt(ptemp+ " " + lecId, i, rowcol.get(0));
+				mockTable.setValueAt(ptemp, i, rowcol.get(0));
+			else if (i == rowcol.get(1) + 2)
+				mockTable.setValueAt(lecId, i, rowcol.get(0));
 			else
 				mockTable.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					mockTable.setValueAt(lecName, i, rowcol.get(3));
+					mockTable.setValueAt(lecName , i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					mockTable.setValueAt(ptemp+ " " + lecId, i, rowcol.get(3));
+					mockTable.setValueAt(ptemp , i, rowcol.get(3));
+				else if (i == rowcol.get(4) + 2)
+					mockTable.setValueAt(lecId, i, rowcol.get(3));
 				else
 					mockTable.setValueAt("", i, rowcol.get(3));
 			}
@@ -638,58 +661,77 @@ class TableClick extends MouseAdapter implements ActionListener {
 	private JTable table;
 	private ArrayList<String> CheckIsTable;
 	JTable table1, table2, table3, table4;
-	private String num;	
-	TableClick(ArrayList<String> CheckIsTable,JTable table1, JTable table2, JTable table3, JTable table4,JPopupMenu popupM){
+	BCDelFunc BCDelbtn;
+	private String num;
+
+	TableClick(ArrayList<String> CheckIsTable, JTable table1, JTable table2, JTable table3, JTable table4,
+			JPopupMenu popupM, BCDelFunc BCDelbtn) {
 		this.CheckIsTable = CheckIsTable;
 		this.table1 = table1;
 		this.table2 = table2;
 		this.table3 = table3;
 		this.table4 = table4;
 		this.popupM = popupM;
+		this.BCDelbtn = BCDelbtn;
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if ((e.getClickCount() == 2) && (e.getModifiers() == MouseEvent.BUTTON1_MASK)) {
-			AddClassDetailViewFrame frame = new AddClassDetailViewFrame(table.getModel());
-			System.out.println(e.getComponent().getName());
-		}	
+			String tablename = e.getComponent().getName();
+			AddClassDetailViewFrame frame = new AddClassDetailViewFrame();
+			switch (tablename) {
+			case "1":
+				frame.setTableModel(table1.getModel());
+				break;
+			case "2":
+				frame.setTableModel(table2.getModel());
+				break;
+			case "3":
+				frame.setTableModel(table3.getModel());
+				break;
+			case "4":
+				frame.setTableModel(table4.getModel());
+				break;
+			}
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (e.getModifiers() == MouseEvent.BUTTON3_MASK) {
-			num = e.getComponent().getName();			
-			popupM.show(e.getComponent(), e.getX(), e.getY());			
+			num = e.getComponent().getName();
+			popupM.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println("되나~");
-		//System.out.println(num);
-		if(e.getActionCommand().equals("menuDel")){
-			//System.out.println("되나~");
-			switch(num){
+		// System.out.println("되나~");
+		// System.out.println(num);
+		if (e.getActionCommand().equals("menuDel")) {
+			// System.out.println("되나~");
+			switch (num) {
 			case "1":
-				//System.out.println("되나~1");
-				BCDelFunc BCDelbtn1 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(1));
-				BCDelbtn1.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				// System.out.println("되나~1");
+				BCDelbtn.setnum(1);
+				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "2":
-				//System.out.println("되나~2");
-				BCDelFunc BCDelbtn2 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(2));
-				BCDelbtn2.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				// System.out.println("되나~2");
+				BCDelbtn.setnum(2);
+				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "3":
-				//System.out.println("되나~3");
-				BCDelFunc BCDelbtn3 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(3));
-				BCDelbtn3.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));
+				// System.out.println("되나~3");
+				BCDelbtn.setnum(3);
+				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "4":
-				//System.out.println("되나~4");
-				BCDelFunc BCDelbtn4 = new BCDelFunc(table1,table2,table3,table4,CheckIsTable,CheckIsTable.get(4));
-				BCDelbtn4.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"menuDel"));				
+				// System.out.println("되나~4");
+				BCDelbtn.setnum(4);
+				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 			}
-		}		
+		}
 	}
 }

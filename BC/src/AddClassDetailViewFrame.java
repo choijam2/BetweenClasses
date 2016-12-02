@@ -20,11 +20,11 @@ public class AddClassDetailViewFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-
+	private TableModel tableM;
 	/**
 	 * Create the frame.
 	 */
-	public AddClassDetailViewFrame(TableModel table) {
+	public AddClassDetailViewFrame() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
 		setBounds(100, 100, 1118, 820);
 		setVisible(true);
@@ -38,12 +38,10 @@ public class AddClassDetailViewFrame extends JFrame {
 		this.table.setEnabled(false);
 		this.table.setRowSelectionAllowed(false);
 		this.table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
-		this.table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));
-		this.table.setModel(table);
+		this.table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));		
 		this.table.setDefaultRenderer(Object.class, new ResultFrame_Renderer());	
 		this.table.setIntercellSpacing(new Dimension(1, 0));
-		this.table.setRowHeight(28);
-		//this.table.getColumn("Time").setPreferredWidth(20);
+		this.table.setRowHeight(28);		
 		contentPane.add(this.table);
 
 		JScrollPane scrollPane = new JScrollPane(this.table);
@@ -59,5 +57,8 @@ public class AddClassDetailViewFrame extends JFrame {
 			}
 		});
 		
+	}
+	void setTableModel(TableModel tableM){
+		this.table.setModel(tableM);
 	}
 }

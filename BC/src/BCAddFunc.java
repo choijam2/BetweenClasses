@@ -42,7 +42,7 @@ public class BCAddFunc implements ActionListener {
 			PFadd(PftextField);// 교수 추가함수
 			PftextField.setText("");
 
-		} else {			
+		} else {
 			if (CheckIsTable.get(0).equals(STtextField.getText())) {
 				JOptionPane.showMessageDialog(null, "자신의 시간표는 추가할 수 없습니다");
 			} else {
@@ -53,7 +53,7 @@ public class BCAddFunc implements ActionListener {
 		// TODO Auto-generated method stub
 	}
 
-	void PFadd(JTextField field) {		
+	void PFadd(JTextField field) {
 		String ID = field.getText();
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
@@ -68,21 +68,21 @@ public class BCAddFunc implements ActionListener {
 
 				query.setString(1, ID);
 				ResultSet rs = query.executeQuery();
-				if (CheckGetEmptyResult(rs, lidlist)) {					
-					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+				if (CheckGetEmptyResult(rs, lidlist)) {
+					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다1");
 				} else {
 					Getlib(rs, lidlist, query, ID);// 입력받은 값에 대한 수강번호를 가져오고 시간표를
 													// 뿌려주는 함수
 				}
 			} catch (SQLException sqex) {
-				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다2");
 			}
 		}
 	}
 
 	/////////////////////////////////////////////
 	void STadd(JTextField field) {// 학생추가함수
-		String ID = field.getText();		
+		String ID = field.getText();
 		ArrayList<String> lidlist = new ArrayList<String>();
 		if (ID.equals(""))
 			JOptionPane.showMessageDialog(null, "학번을 입력하세요");
@@ -100,13 +100,13 @@ public class BCAddFunc implements ActionListener {
 				ResultSet rs = query.executeQuery();
 
 				if (CheckGetEmptyResult(rs, lidlist)) {
-					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+					JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다3");
 				} else {
 					Getlib(rs, lidlist, query, ID);// 입력받은 값에 대한 수강번호를 가져오고 시간표를
 													// 뿌려주는 함수
 				}
 			} catch (SQLException sqex) {
-				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+				JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다4");
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class BCAddFunc implements ActionListener {
 			if (rs.next() == false) {
 				rs.previous();
 				return true;
-			}	
+			}
 			rs.previous();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -191,24 +191,25 @@ public class BCAddFunc implements ActionListener {
 				query.setString(1, lidlist.get(i));
 				rs = query.executeQuery();
 				if (rs.next()) {
+					String lecId = lidlist.get(i);
 					String lecTime = rs.getString("ltime");
 					String lecName = rs.getString("lname");
 					String lecPlace = rs.getString("place");
-					stringToken(lecTime, lecName, lecPlace, table);
+					stringToken(lecId, lecTime, lecName, lecPlace, table);
 				}
 			}
 		} catch (SQLException sqex) {
-			JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다");
+			JOptionPane.showMessageDialog(null, "시간표가 존재하지 않습니다5");
 		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
-	public boolean stringToken(String lecTime, String lecName, String lecPlace, JTable table) {
+	public boolean stringToken(String lecId, String lecTime, String lecName, String lecPlace, JTable table) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
-		StringTokenizer tk2 =new StringTokenizer(lecPlace);
+		StringTokenizer tk2 = new StringTokenizer(lecPlace);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
 		String ptemp = null;
-		
+
 		while (tk.hasMoreTokens() && tk2.hasMoreTokens()) {
 			String temp = tk.nextToken();
 			ptemp = tk2.nextToken();
@@ -255,20 +256,22 @@ public class BCAddFunc implements ActionListener {
 					t += 70;
 			}
 		}
-		if(rowcol.size()==2){///수정
+		if (rowcol.size() == 2) {/// 수정
 			table.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
-			table.setValueAt(ptemp, rowcol.get(1)+1, rowcol.get(0));
-			for(int i=rowcol.get(1)+2;i<25;i++){
+			table.setValueAt(ptemp + "      " + lecId, rowcol.get(1) + 1, rowcol.get(0));
+			for (int i = rowcol.get(1) + 2; i < 25; i++) {
 				table.setValueAt("", i, rowcol.get(0));
 			}
 			return true;
 		}
-		
+
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
 				table.setValueAt(lecName, i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				table.setValueAt(ptemp, i, rowcol.get(0));
+				table.setValueAt(ptemp , i, rowcol.get(0));
+			else if (i == rowcol.get(1) + 2)
+				table.setValueAt(lecId, i, rowcol.get(0));
 			else
 				table.setValueAt("", i, rowcol.get(0));
 		}
@@ -278,6 +281,8 @@ public class BCAddFunc implements ActionListener {
 					table.setValueAt(lecName, i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
 					table.setValueAt(ptemp, i, rowcol.get(3));
+				else if (i == rowcol.get(4) + 2)
+					table.setValueAt(lecId, i, rowcol.get(3));
 				else
 					table.setValueAt("", i, rowcol.get(3));
 			}

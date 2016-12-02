@@ -15,19 +15,9 @@ public class BCDelFunc implements ActionListener {
 	JTextField PftextField, STtextField;
 	JTable table1, table2, table3, table4;
 	ArrayList<String> CheckIsTable;
-	String s;
+	int num;
 	
-	BCDelFunc(JTable table1, JTable table2, JTable table3, JTable table4, ArrayList<String> CheckIsTable,
-			String s) {
-		this.table1 = table1;
-		this.table2 = table2;
-		this.table3 = table3;
-		this.table4 = table4;
-		this.CheckIsTable = CheckIsTable;
-		this.s = s;
-	}
-	
-	BCDelFunc(JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
+	public BCDelFunc(JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
 			JTextField STtextField, ArrayList<String> CheckIsTable) {
 		// TODO Auto-generated constructor stub
 		this.PftextField = PftextField;
@@ -36,13 +26,13 @@ public class BCDelFunc implements ActionListener {
 		this.table2 = table2;
 		this.table3 = table3;
 		this.table4 = table4;
-		this.CheckIsTable = CheckIsTable;
+		this.CheckIsTable = CheckIsTable;	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Pfdel")) {
-			//System.out.println("교수삭제~~\n");
+			System.out.println("교수삭제~~\n");
 			Del(PftextField.getText());// 삭제함수
 			PftextField.setText("");
 
@@ -55,21 +45,22 @@ public class BCDelFunc implements ActionListener {
 				STtextField.setText("");
 			}
 		} else {
-			if (s.equals("-1")){
+			if (CheckIsTable.get(num).equals("-1")){
 				JOptionPane.showMessageDialog(null, "삭제할  시간표가  없습니다");
 				}
 			else{
-				//System.out.println("메뉴삭제~~\n");
-				Del(s);
+				System.out.println("메뉴삭제~~\n");
+				Del(CheckIsTable.get(num));
 			}
 		}
 
 		// TODO Auto-generated method stub
 	}
 
-	void Del(String ID) {// 삭제함수		
+	void Del(String ID) {// 삭제함수
+		System.out.println(ID);
 		if (ID.equals(""))
-			JOptionPane.showMessageDialog(null, "다시 입력하세요");	
+			JOptionPane.showMessageDialog(null, "다시 입력하세요");
 		else if (!CheckSame(CheckIsTable, ID))
 			JOptionPane.showMessageDialog(null, "삭제할  시간표가 없습니다");
 		else {
@@ -104,9 +95,9 @@ public class BCDelFunc implements ActionListener {
 				table.setValueAt(null, i, j);// 해당 테이블의 값을 모두 NULL로 바꿈
 			}
 		}
-		//System.out.println("셋 하기전: "+CheckIsTable.set(num, "-1"));
+		System.out.println("셋 하기전: " + CheckIsTable.set(num, "-1"));
 		CheckIsTable.set(num, "-1");// 해당 배열리스트의 값을 -1로 초기화
-		//System.out.println("\n셋 한후: "+CheckIsTable.set(num, "-1"));
+		System.out.println("\n셋 한후: " + CheckIsTable.set(num, "-1"));
 	}
 
 	boolean CheckSame(ArrayList<String> CheckIsTable, String ID) {// 해당 시간표가 있는지
@@ -116,5 +107,8 @@ public class BCDelFunc implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+	void setnum(int num){
+		this.num =num;
 	}
 }
