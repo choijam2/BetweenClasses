@@ -1,9 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JTable;
-import javax.swing.JTextField;
 
 public class BCAllClearFunc implements ActionListener {
 	JTable table1, table2, table3, table4;

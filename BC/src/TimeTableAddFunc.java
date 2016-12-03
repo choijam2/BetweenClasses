@@ -16,7 +16,7 @@ public class TimeTableAddFunc implements ActionListener {
 	JTextField lid;
 	Connection con;
 	JTable table;
-
+	String lectureId;
 	public TimeTableAddFunc(JTextField lid, Connection con, JTable table, Student student) {
 		this.lid = lid;
 		this.con = con;
@@ -26,8 +26,9 @@ public class TimeTableAddFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent a) {
-		String lectureId = lid.getText();
-
+		lectureId = lid.getText();
+		lid.setText("");
+		
 		if (lectureId.equals(""))
 			JOptionPane.showMessageDialog(null, "수강번호를 입력하세요.");
 		else {
@@ -49,7 +50,7 @@ public class TimeTableAddFunc implements ActionListener {
 
 						query.setString(1, student.getSid());
 						query.setString(2, lectureId);
-						int cnt = query.executeUpdate();
+						query.executeUpdate();
 
 						student.addLid(lectureId);
 					}
@@ -63,6 +64,8 @@ public class TimeTableAddFunc implements ActionListener {
 	}
 
 	public boolean stringToken(String lecTime, String lecName, String lecPlace) {
+		if(lecTime.equals(""))
+			return false;
 		StringTokenizer tk = new StringTokenizer(lecTime);
 		StringTokenizer tk2 = new StringTokenizer(lecPlace);
 		ArrayList<Integer> rowcol = new ArrayList<Integer>();
@@ -89,6 +92,8 @@ public class TimeTableAddFunc implements ActionListener {
 			int fHour = Integer.parseInt(temp.substring(7, 9));
 			int fMin = Integer.parseInt(temp.substring(10));
 			int fTime = fHour * 100 + fMin;
+			if(fTime > 2100)
+				fTime = 2100;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
 			for (int i = 0; i < 25; i++) {
@@ -128,18 +133,18 @@ public class TimeTableAddFunc implements ActionListener {
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				table.setValueAt(lecName + " " + lid.getText(), i, rowcol.get(0));
+				table.setValueAt(lecName, i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				table.setValueAt(ptemp, i, rowcol.get(0));
+				table.setValueAt(ptemp + " (" + lectureId + ")", i, rowcol.get(0));
 			else
 				table.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					table.setValueAt(lecName + " " + lid.getText(), i, rowcol.get(3));
+					table.setValueAt(lecName, i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					table.setValueAt(ptemp, i, rowcol.get(3));
+					table.setValueAt(ptemp + " (" + lectureId + ")", i, rowcol.get(3));
 				else
 					table.setValueAt("", i, rowcol.get(3));
 			}

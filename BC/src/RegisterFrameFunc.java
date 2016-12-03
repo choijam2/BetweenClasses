@@ -9,6 +9,6 @@ public class RegisterFrameFunc implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		RegisterFrame rFrame = new RegisterFrame(con);
+		new RegisterFrame(con);
 	}
 }

@@ -42,7 +42,7 @@ public class TimeTableAllClearFunc implements ActionListener {
 				query = con.prepareStatement("delete from course where sid = ?");
 
 				query.setString(1, student.getSid());
-				int cnt = query.executeUpdate();
+				query.executeUpdate();
 
 				student.allDelLid();
 				JOptionPane.showMessageDialog(null, "시간표 전체 삭제 완료!");
@@ -77,6 +77,8 @@ public class TimeTableAllClearFunc implements ActionListener {
 			int fHour = Integer.parseInt(temp.substring(7, 9));
 			int fMin = Integer.parseInt(temp.substring(10));
 			int fTime = fHour * 100 + fMin;
+			if(fTime > 2100)
+				fTime = 2100;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
 			for (int i = 0; i < 26; i++) {

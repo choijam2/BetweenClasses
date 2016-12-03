@@ -4,10 +4,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.sql.Connection;
-import java.util.jar.Attributes;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -52,7 +49,7 @@ public class LoginFrame extends JFrame {
 	}
 
 	public LoginFrame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setVisible(true);
 		setResizable(false);
 		con = startMysql();

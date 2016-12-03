@@ -24,9 +24,10 @@ public class TimeTableDelFunc implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String lectureId = this.lectureId.getText();
-
-		if (lectureId.equals(""))
+		String lecId = lectureId.getText();
+		lectureId.setText("");
+		
+		if (lecId.equals(""))
 			JOptionPane.showMessageDialog(null, "수강번호를 입력하세요.");
 		else {
 			try {
@@ -34,7 +35,7 @@ public class TimeTableDelFunc implements ActionListener{
 				PreparedStatement query = con.prepareStatement("select ltime from course c, lecture l where sid = ? and l.lid = ?");
 
 				query.setString(1, student.getSid());
-				query.setString(2, lectureId);
+				query.setString(2, lecId);
 				rs = query.executeQuery();
 
 				if(rs.next()) {
@@ -45,11 +46,14 @@ public class TimeTableDelFunc implements ActionListener{
 						query = con.prepareStatement("delete from course where sid = ? and lid = ?");
 							
 						query.setString(1, student.getSid()); 
-						query.setString(2, lectureId); 
-						int cnt = query.executeUpdate();
-							
-						student.delLid(lectureId);
-						JOptionPane.showMessageDialog(null, lectureId + "과목 삭제 완료!");
+						query.setString(2, lecId); 
+						int c = query.executeUpdate();
+						if(c == 1){
+							student.delLid(lecId);
+							JOptionPane.showMessageDialog(null, lecId + "과목 삭제 완료!");
+						}
+						else
+							JOptionPane.showMessageDialog(null, "과목이 존재하지 않습니다.");
 					}
 				}else rs.getBoolean(1);
 				
@@ -84,9 +88,11 @@ public class TimeTableDelFunc implements ActionListener{
 			int fHour = Integer.parseInt(temp.substring(7, 9));
 			int fMin = Integer.parseInt(temp.substring(10));
 			int fTime = fHour * 100 + fMin;
+			if(fTime > 2100)
+				fTime = 2100;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
-			for (int i = 0; i < 26; i++) {
+			for (int i = 0; i < 25; i++) {
 				if (sTime >= t && sTime < t + 30) rowcol.add(i);
 				if (fTime >= t && fTime < t + 30) rowcol.add(i);
 				if (i % 2 == 0) t += 30;

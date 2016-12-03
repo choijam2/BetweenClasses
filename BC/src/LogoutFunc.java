@@ -13,7 +13,7 @@ public class LogoutFunc implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		frame.dispose();
-		LoginFrame lframe = new LoginFrame();
+		new LoginFrame();
 	}
 	
 }

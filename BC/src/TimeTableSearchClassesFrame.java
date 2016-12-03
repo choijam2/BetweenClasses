@@ -1,7 +1,6 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,10 +13,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLayeredPane;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -28,6 +27,7 @@ public class TimeTableSearchClassesFrame extends JFrame {
 	private JTable table;
 
 	TimeTableSearchClassesFrame(Connection con,JTable mockTable,Student student) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setResizable(false);
 		setVisible(true);
 		setTitle("SearchClasses");
@@ -43,20 +43,20 @@ public class TimeTableSearchClassesFrame extends JFrame {
 		
 		JComboBox<String> gradeComboBox = new JComboBox<String>();
 		gradeComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"전체", "1학년", "2학년", "3학년", "4학년"}));
-		gradeComboBox.setBounds(475, 10, 60, 26);
-		gradeComboBox.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
+		gradeComboBox.setBounds(461, 10, 74, 26);
+		gradeComboBox.setFont(new Font("맑은 고딕", Font.BOLD, 16 ));
 		contentPane.add(gradeComboBox);
 		
 		JComboBox<String> collegeComboBox = new JComboBox<String>();
 		collegeComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"전체", "교양학부", "대학", "문과대학", "이과대학", "공과대학", "법과대학", "정치행정대학", "상경대학","경영대학","의과대학","약학대학","자연자원대학","생명응용과학대학","생활과학대학","사범대학","디자인미술대학","음악대학","섬유패션학부","생명공학부","중국언어문화학부","건축학부","기초교육대학","국제학부","연계전공","야간강좌개설부"}));
-		collegeComboBox.setBounds(22, 10, 150, 26);
-		collegeComboBox.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
+		collegeComboBox.setBounds(22, 10, 190, 26);
+		collegeComboBox.setFont(new Font("맑은 고딕", Font.BOLD, 16 ));
 		contentPane.add(collegeComboBox);
 		
 		JComboBox<String> deptComboBox = new JComboBox<String>();
-		deptComboBox.setBounds(227, 10, 190, 26);
+		deptComboBox.setBounds(239, 10, 190, 26);
 		deptComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"선택"}));
-		deptComboBox.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
+		deptComboBox.setFont(new Font("맑은 고딕", Font.BOLD, 16 ));
 		collegeComboBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -65,7 +65,7 @@ public class TimeTableSearchClassesFrame extends JFrame {
 					deptComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"선택"}));
 					break;
 				case 1:
-					deptComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"핵심교양","자유교양","인문과학","사회과학","자연과학","예술체육","세계문화와외국어"}));
+					deptComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"교양학부"}));
 					break;
 				case 2:
 					deptComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"대학"}));
@@ -155,13 +155,13 @@ public class TimeTableSearchClassesFrame extends JFrame {
 		};
 		table = new JTable(model);
 		table.setAutoCreateRowSorter(true);			
-		TableRowSorter Tsorter = new TableRowSorter(table.getModel());
+		TableRowSorter<TableModel> Tsorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(Tsorter);
 		table.getTableHeader().setReorderingAllowed(false); // 이동 불가 
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		scrollPane.setViewportView(table);
 		table.getTableHeader().setBackground(Color.WHITE);
-		table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
+		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		table.getColumn("수강번호").setPreferredWidth(30);
 		table.getColumn("학년").setPreferredWidth(5);
 		table.getColumn("이수구분").setPreferredWidth(30);
@@ -186,20 +186,20 @@ public class TimeTableSearchClassesFrame extends JFrame {
 			}
 		});
 		}
-		table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18 ));
+		table.setFont(new Font("맑은 고딕", Font.PLAIN, 14 ));
 		txt_lname = new JTextField();
-		txt_lname.setBounds(637, 11, 173, 26);
+		txt_lname.setBounds(637, 11, 198, 26);
 		contentPane.add(txt_lname);
 		txt_lname.setColumns(10);
 		
 		JLabel label = new JLabel("과목명 : ");
-		label.setBounds(577, 16, 48, 15);
-		label.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
+		label.setBounds(565, 13, 70, 21);
+		label.setFont(new Font("맑은 고딕", Font.BOLD, 16 ));
 		contentPane.add(label);
 		
 		JButton btn_FindClass = new JButton("조 회");
-		btn_FindClass.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18 ));
-		btn_FindClass.setBounds(847, 10, 135, 26);
+		btn_FindClass.setFont(new Font("맑은 고딕", Font.BOLD, 16 ));
+		btn_FindClass.setBounds(874, 10, 135, 26);
 		TimeTableSearchClassesFunc find = new TimeTableSearchClassesFunc(gradeComboBox, collegeComboBox, deptComboBox, txt_lname, con, table, model);
 		btn_FindClass.addActionListener(find);
 		contentPane.add(btn_FindClass);

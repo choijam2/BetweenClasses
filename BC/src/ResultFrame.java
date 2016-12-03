@@ -1,39 +1,24 @@
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-
 import javax.swing.JButton;
-import javax.swing.Icon;
 
 public class ResultFrame extends JFrame {
 
@@ -53,7 +38,7 @@ public class ResultFrame extends JFrame {
 	private JButton btn_save;
 
 	public ResultFrame(Connection con, String s1, String s2, String s3, String s4, String s5) throws SQLException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setTitle("공강 찾기 결과");
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 6; j++) {

@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
@@ -26,16 +25,12 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
@@ -47,11 +42,8 @@ import java.awt.Toolkit;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JTextArea;
 import javax.swing.JDesktopPane;
 
 public class AddClassFrame extends JFrame {
@@ -69,7 +61,7 @@ public class AddClassFrame extends JFrame {
 	private JTextField STtextField;
 	private JTextField PftextField;
 	AddClassFrame(Connection con,User user, JFrame frame) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		frame.dispose();
 		student = new Student(user.getSid());
 		setResizable(false);
@@ -138,7 +130,7 @@ public class AddClassFrame extends JFrame {
 		txt_ClassNum = new JTextField();
 		txt_ClassNum.setBounds(1085, 207, 164, 40);
 		txt_ClassNum.setColumns(10);
-
+		
 		// 셀 글자 정렬
 		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
 		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
@@ -208,24 +200,24 @@ public class AddClassFrame extends JFrame {
 			gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_BCTable.createSequentialGroup()
 					.addGap(42)
-					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollTime1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollTime3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollTime2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollTime4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(scrollTime3)
+						.addComponent(scrollTime1, GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(scrollTime4)
+						.addComponent(scrollTime2, GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
 					.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_BCTable.createSequentialGroup()
-							.addGap(26)
+							.addGap(18)
 							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(STpanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(Pfpanel, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
 						.addGroup(gl_panel_BCTable.createSequentialGroup()
-							.addGap(74)
+							.addGap(65)
 							.addGroup(gl_panel_BCTable.createParallelGroup(Alignment.LEADING)
-								.addComponent(FindButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-								.addComponent(AllClearButton, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(AllClearButton, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addComponent(FindButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(37, Short.MAX_VALUE))
 		);
 		gl_panel_BCTable.setVerticalGroup(
@@ -246,9 +238,9 @@ public class AddClassFrame extends JFrame {
 							.addComponent(Pfpanel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
 							.addGap(88)
 							.addComponent(STpanel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-							.addGap(28)
+							.addGap(36)
 							.addComponent(AllClearButton, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
+							.addGap(34)
 							.addComponent(FindButton, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(17, Short.MAX_VALUE))
 		);
@@ -344,16 +336,17 @@ public class AddClassFrame extends JFrame {
 		
 		panel_BCTable.setLayout(gl_panel_BCTable);
 		// 모의시간표 추가버튼
+		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con, mockTable, student);
 		JButton btn_Add = new JButton(new ImageIcon("img/add.png"));
 		btn_Add.setBorderPainted(false); // 투명 버튼
 		btn_Add.setFocusPainted(false); // 투명 버튼
 		btn_Add.setContentAreaFilled(false);
 		btn_Add.setBounds(1129, 272, 81, 42);
 		btn_Add.setActionCommand("TimeTableAdd");//모의시간표 추가하기에 대한 액션 이름 추가
-		panel_TimeTable.add(btn_Add);
-		TimeTableAddFunc mockAddBtn = new TimeTableAddFunc(txt_ClassNum, con, mockTable, student);
-		btn_Add.addActionListener(mockAddBtn);
+		btn_Add.addActionListener(mockAddBtn);		
 		txt_ClassNum.registerKeyboardAction(mockAddBtn, "TimeTableAdd", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		panel_TimeTable.add(btn_Add);
+		
 		//수강번호 입력후 엔터칠 경우 추가하기 버튼으로 이어줌
 
 		// 모의시간표 조회버튼
@@ -409,7 +402,6 @@ public class AddClassFrame extends JFrame {
 		contentPane.add(btn_Logout);
 		LogoutFunc logout = new LogoutFunc(this);
 		btn_Logout.addActionListener(logout);
-		TitledBorder pfborder = new TitledBorder("교수");
 
 		// ------------------------------
 		// ------------------------------
@@ -494,7 +486,7 @@ public class AddClassFrame extends JFrame {
 		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
 		FindButton.addActionListener(BCSearchbtn);
 
-		TableClick TC = new TableClick(CheckIsTable, table_1, table_2, table_3, table_4, popupM, BCDelbtn);
+		TableClick TC = new TableClick(table_1, table_2, table_3, table_4, popupM, BCDelbtn);
 		menu1.addActionListener(TC); // 우클릭 삭제 리스너 추가
 		table_1.addMouseListener(TC);// 테이블 1 마우스 리스너 추가
 		table_2.addMouseListener(TC);// 테이블 2 마우스 리스너 추가
@@ -561,7 +553,8 @@ public class AddClassFrame extends JFrame {
 				String lecTime = rs.getString("ltime");
 				String lecName = rs.getString("lname");
 				String lecPlace = rs.getString("place");
-
+				
+				student.addLid(lecId);
 				stringToken(lecId, lecTime, lecName, lecPlace);
 			}
 
@@ -598,6 +591,8 @@ public class AddClassFrame extends JFrame {
 			int fHour = Integer.parseInt(temp.substring(7, 9));
 			int fMin = Integer.parseInt(temp.substring(10));
 			int fTime = fHour * 100 + fMin;
+			if(fTime > 2100)
+				fTime = 2100;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
 			for (int i = 0; i < 26; i++) {
@@ -613,7 +608,7 @@ public class AddClassFrame extends JFrame {
 		}
 		if (rowcol.size() == 2) {//// 수정
 			mockTable.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
-			mockTable.setValueAt(ptemp+ "   /   " + lecId, rowcol.get(1) + 1, rowcol.get(0));
+			mockTable.setValueAt(ptemp + " (" + lecId + ")", rowcol.get(1) + 1, rowcol.get(0));
 			for (int i = rowcol.get(1) + 2; i < 25; i++) {
 				mockTable.setValueAt("", i, rowcol.get(0));
 			}
@@ -621,22 +616,18 @@ public class AddClassFrame extends JFrame {
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++) {
 			if (i == rowcol.get(1))
-				mockTable.setValueAt(lecName , i, rowcol.get(0));
+				mockTable.setValueAt(lecName, i, rowcol.get(0));
 			else if (i == rowcol.get(1) + 1)
-				mockTable.setValueAt(ptemp, i, rowcol.get(0));
-			else if (i == rowcol.get(1) + 2)
-				mockTable.setValueAt(lecId, i, rowcol.get(0));
+				mockTable.setValueAt(ptemp + " (" + lecId + ")", i, rowcol.get(0));
 			else
 				mockTable.setValueAt("", i, rowcol.get(0));
 		}
 		if (rowcol.size() > 5) {
 			for (int i = rowcol.get(4); i <= rowcol.get(5); i++) {
 				if (i == rowcol.get(4))
-					mockTable.setValueAt(lecName , i, rowcol.get(3));
+					mockTable.setValueAt(lecName, i, rowcol.get(3));
 				else if (i == rowcol.get(4) + 1)
-					mockTable.setValueAt(ptemp , i, rowcol.get(3));
-				else if (i == rowcol.get(4) + 2)
-					mockTable.setValueAt(lecId, i, rowcol.get(3));
+					mockTable.setValueAt(ptemp + " (" + lecId + ")", i, rowcol.get(3));
 				else
 					mockTable.setValueAt("", i, rowcol.get(3));
 			}
@@ -658,15 +649,12 @@ public class AddClassFrame extends JFrame {
 
 class TableClick extends MouseAdapter implements ActionListener {
 	private JPopupMenu popupM;
-	private JTable table;
-	private ArrayList<String> CheckIsTable;
 	JTable table1, table2, table3, table4;
 	BCDelFunc BCDelbtn;
 	private String num;
 
-	TableClick(ArrayList<String> CheckIsTable, JTable table1, JTable table2, JTable table3, JTable table4,
+	TableClick(JTable table1, JTable table2, JTable table3, JTable table4,
 			JPopupMenu popupM, BCDelFunc BCDelbtn) {
-		this.CheckIsTable = CheckIsTable;
 		this.table1 = table1;
 		this.table2 = table2;
 		this.table3 = table3;
@@ -707,28 +695,22 @@ class TableClick extends MouseAdapter implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// System.out.println("되나~");
-		// System.out.println(num);
+
 		if (e.getActionCommand().equals("menuDel")) {
-			// System.out.println("되나~");
 			switch (num) {
 			case "1":
-				// System.out.println("되나~1");
 				BCDelbtn.setnum(1);
 				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "2":
-				// System.out.println("되나~2");
 				BCDelbtn.setnum(2);
 				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "3":
-				// System.out.println("되나~3");
 				BCDelbtn.setnum(3);
 				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 				break;
 			case "4":
-				// System.out.println("되나~4");
 				BCDelbtn.setnum(4);
 				BCDelbtn.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "menuDel"));
 			}

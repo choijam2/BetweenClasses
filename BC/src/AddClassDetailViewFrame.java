@@ -3,29 +3,19 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 public class AddClassDetailViewFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private TableModel tableM;
-	/**
-	 * Create the frame.
-	 */
 	public AddClassDetailViewFrame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setBounds(100, 100, 1118, 820);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

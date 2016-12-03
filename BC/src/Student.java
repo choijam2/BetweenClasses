@@ -10,7 +10,7 @@ public class Student extends User{
 		lid = new ArrayList<String>();
 	}
 	public ArrayList<String> getLid() {		
-		return lid;
+		return this.lid;
 	}
 	public void addLid(String lid) {
 		this.lid.add(lid);

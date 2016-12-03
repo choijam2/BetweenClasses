@@ -9,7 +9,7 @@ public class PassFindFrameFunc implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PassFindFrame pFrame = new PassFindFrame(con);
+		new PassFindFrame(con);
 	}
 	
 }

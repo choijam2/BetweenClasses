@@ -1,12 +1,10 @@
-import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,13 +14,12 @@ import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelcetMaster extends JFrame {
+	private JFrame frame = this;
 	private JPanel contentPane;
 	private final ButtonGroup set = new ButtonGroup();
 	public SelcetMaster(Connection con, ArrayList<String> ck) {
@@ -37,6 +34,7 @@ public class SelcetMaster extends JFrame {
 				k++;
 			}
 		}
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setResizable(false);
 		setSize(363, 275);
 		setVisible(true);
@@ -124,14 +122,16 @@ public class SelcetMaster extends JFrame {
 				 }
 				 try {
 					 if(sd==null){
-						 JOptionPane.showMessageDialog(null, "조장을선택해주세요");
+						 JOptionPane.showMessageDialog(null, "조장을 선택해주세요");
 					 }
 					 else if(sd=="0"){
 						 new ResultFrame(con,ck.get(0),ck.get(1),ck.get(2),ck.get(3),ck.get(4));
+						 frame.dispose();
 					 } 
 					 else{
 						 StudentMaster st = new StudentMaster(sd);
 						 new ResultFrame(con,ck.get(0),ck.get(1),ck.get(2),ck.get(3),ck.get(4));
+						 frame.dispose();
 					 }
 				 }
 				 catch (SQLException e1) {

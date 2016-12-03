@@ -17,7 +17,7 @@ public class PassFindFrame extends JFrame {
 	private JTextField nameField;
 
 	PassFindFrame(Connection con) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setResizable(false);
 		setSize(320, 250);
 		setVisible(true);

@@ -29,7 +29,7 @@ public class RegisterFrame extends JFrame {
 	private JTextField questField;
 
 	RegisterFrame(Connection con) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		this.con = con;
 		setResizable(false);
 		setSize(320, 400);
