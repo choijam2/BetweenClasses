@@ -270,8 +270,9 @@ public class AddClassFrame extends JFrame {
 		CheckIsTable.add("-1");
 		
 		popupM = new JPopupMenu();
-		menu1 = new JMenuItem("ªË¡¶");
+		menu1 = new JMenuItem(" ªË¡¶");
 		menu1.setActionCommand("menuDel");
+		menu1.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 13));
 		popupM.add(menu1);
 		
 		table_4 = new JTable();		
@@ -465,6 +466,7 @@ public class AddClassFrame extends JFrame {
 		STdelButton.setContentAreaFilled(false);
 		STdelButton.setBounds(112, 94, 86, 29);
 		STdelButton.addActionListener(BCDelbtn);
+		STdelButton.setActionCommand("STdel");
 		STpanel.add(STdelButton);
 		
 				
