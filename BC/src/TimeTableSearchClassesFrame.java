@@ -32,7 +32,7 @@ public class TimeTableSearchClassesFrame extends JFrame {
 		setVisible(true);
 		setTitle("SearchClasses");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1100, 400);
+		setBounds(100, 100, 1100, 421);
 		contentPane = new JPanel();
 		contentPane.setOpaque(true);
 		contentPane.setBackground(Color.WHITE);
