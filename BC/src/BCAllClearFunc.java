@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class BCAllClearFunc implements ActionListener {
@@ -19,11 +21,19 @@ public class BCAllClearFunc implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub//시간표 4개 모두 클리어
-		Cleartable(table1, CheckIsTable, 1);
-		Cleartable(table2, CheckIsTable, 2);
-		Cleartable(table3, CheckIsTable, 3);
-		Cleartable(table4, CheckIsTable, 4);
-
+		int i = 1;
+		for (; i < 5; i++) {
+			if (CheckIsTable.get(i).equals("-1"))
+				i++;
+		}
+		if (i == 5)
+			JOptionPane.showMessageDialog(null, "삭제할 시간표가 없습니다");
+		else {
+			Cleartable(table1, CheckIsTable, 1);
+			Cleartable(table2, CheckIsTable, 2);
+			Cleartable(table3, CheckIsTable, 3);
+			Cleartable(table4, CheckIsTable, 4);
+		}
 	}
 
 	void Cleartable(JTable table, ArrayList<String> CheckIsTable, int num) {//

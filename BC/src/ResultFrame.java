@@ -109,6 +109,8 @@ public class ResultFrame extends JFrame {
 
 		table = new JTable();
 		table.setEnabled(false);
+		table.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 24));
 		table.setRowHeight(30);

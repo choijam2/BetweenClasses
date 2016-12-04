@@ -26,6 +26,8 @@ public class AddClassDetailViewFrame extends JFrame {
 		this.table = new JTable();
 		this.table.setBounds(26, 24, 1033, 735);
 		this.table.setEnabled(false);
+		this.table.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		this.table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		this.table.setRowSelectionAllowed(false);
 		this.table.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		this.table.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));		

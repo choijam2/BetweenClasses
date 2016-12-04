@@ -32,20 +32,25 @@ public class TimeTableAllClearFunc implements ActionListener {
 
 			query.setString(1, student.getSid());
 			rs = query.executeQuery();
+			if (rs.next() == false) {
+				rs.previous();
+				JOptionPane.showMessageDialog(null, "과목이 존재하지 않습니다.");
+			} else {
+				rs.previous();
+				while (rs.next()) {
+					String ltime = rs.getString("ltime");
 
-			while (rs.next()) {
-				String ltime = rs.getString("ltime");
+					ck = stringToken(ltime);
+				}
+				if (ck == true) {
+					query = con.prepareStatement("delete from course where sid = ?");
 
-				ck = stringToken(ltime);
-			}
-			if (ck == true) {
-				query = con.prepareStatement("delete from course where sid = ?");
+					query.setString(1, student.getSid());
+					query.executeUpdate();
 
-				query.setString(1, student.getSid());
-				query.executeUpdate();
-
-				student.allDelLid();
-				JOptionPane.showMessageDialog(null, "시간표 전체 삭제 완료!");
+					student.allDelLid();
+					JOptionPane.showMessageDialog(null, "시간표 전체 삭제 완료!");
+				}
 			}
 		} catch (SQLException sqex) {
 			JOptionPane.showMessageDialog(null, "과목이 존재하지 않습니다.");
@@ -61,12 +66,23 @@ public class TimeTableAllClearFunc implements ActionListener {
 			char day = temp.charAt(0);
 
 			switch (day) { // 요일 지정
-			case '월': rowcol.add(1); break;
-			case '화': rowcol.add(2); break;
-			case '수': rowcol.add(3); break;
-			case '목': rowcol.add(4); break;
-			case '금': rowcol.add(5); break;
-			case '토': rowcol.add(6);
+			case '월':
+				rowcol.add(1);
+				break;
+			case '화':
+				rowcol.add(2);
+				break;
+			case '수':
+				rowcol.add(3);
+				break;
+			case '목':
+				rowcol.add(4);
+				break;
+			case '금':
+				rowcol.add(5);
+				break;
+			case '토':
+				rowcol.add(6);
 			}
 
 			// 시작 시간
@@ -77,15 +93,19 @@ public class TimeTableAllClearFunc implements ActionListener {
 			int fHour = Integer.parseInt(temp.substring(7, 9));
 			int fMin = Integer.parseInt(temp.substring(10));
 			int fTime = fHour * 100 + fMin;
-			if(fTime > 2100)
+			if (fTime > 2100)
 				fTime = 2100;
 			// 시간 해당되는 행, 열 위치
 			int t = 900;
 			for (int i = 0; i < 26; i++) {
-				if (sTime >= t && sTime < t + 30) rowcol.add(i);
-				if (fTime >= t && fTime < t + 30) rowcol.add(i);
-				if (i % 2 == 0) t += 30;
-				else t += 70;
+				if (sTime >= t && sTime < t + 30)
+					rowcol.add(i);
+				if (fTime >= t && fTime < t + 30)
+					rowcol.add(i);
+				if (i % 2 == 0)
+					t += 30;
+				else
+					t += 70;
 			}
 		}
 		for (int i = rowcol.get(1); i <= rowcol.get(2); i++)

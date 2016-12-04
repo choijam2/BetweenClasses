@@ -1,17 +1,10 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.border.EmptyBorder;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-
-import java.awt.CardLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -23,28 +16,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.awt.event.ActionEvent;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.JDesktopPane;
 
 public class AddClassFrame extends JFrame {
 	private Student student;
@@ -133,11 +131,12 @@ public class AddClassFrame extends JFrame {
 		
 		// 셀 글자 정렬
 		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
-		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
-
+		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);	
+		
 		mockTable = new JTable();
 		mockTable.setEnabled(false);
-		mockTable.setRowSelectionAllowed(false);
+		mockTable.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		mockTable.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 
 		mockTable.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 25));
 		mockTable.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 25));
@@ -149,12 +148,12 @@ public class AddClassFrame extends JFrame {
 
 		mockTable.setDefaultRenderer(Object.class, new ResultFrame_Renderer());
 		mockTable.setIntercellSpacing(new Dimension(1, 0));
-
+		
 		// 가운데 정렬
 		mockTable.getColumn("Time").setCellRenderer(celAlignCenter);
 		mockTable.getColumn("Time").setPreferredWidth(20);
 		panel_TimeTable.setLayout(null);
-
+		
 		scrollPane.setViewportView(mockTable);
 		panel_TimeTable.add(scrollPane);
 		panel_TimeTable.add(txt_ClassNum);
@@ -277,6 +276,8 @@ public class AddClassFrame extends JFrame {
 		
 		table_4 = new JTable();		
 		table_4.setEnabled(false);
+		table_4.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table_4.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table_4.setRowSelectionAllowed(false);
 		table_4.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_4.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
@@ -293,6 +294,8 @@ public class AddClassFrame extends JFrame {
 		table_3 = new JTable();		
 		table_3.setRowSelectionAllowed(false);
 		table_3.setEnabled(false);
+		table_3.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table_3.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table_3.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_3.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		JTableHeader header_3= table_3.getTableHeader(); 
@@ -308,6 +311,8 @@ public class AddClassFrame extends JFrame {
 		table_2 = new JTable();
 		table_2.setRowSelectionAllowed(false);
 		table_2.setEnabled(false);
+		table_2.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table_2.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table_2.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_2.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		JTableHeader header_2 = table_2.getTableHeader(); 
@@ -323,6 +328,8 @@ public class AddClassFrame extends JFrame {
 		table_1 = new JTable();		
 		table_1.setRowSelectionAllowed(false);
 		table_1.setEnabled(false);
+		table_1.getTableHeader().setReorderingAllowed(false); // 이동 불가 
+		table_1.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table_1.getTableHeader().setFont(new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 18));
 		table_1.setFont(new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 18));
 		JTableHeader header_1 = table_1.getTableHeader(); 
@@ -369,7 +376,7 @@ public class AddClassFrame extends JFrame {
 		panel_TimeTable.add(btn_Del);
 		TimeTableDelFunc mockDelBtn = new TimeTableDelFunc(txt_ClassNum, mockTable, con, student);
 		btn_Del.addActionListener(mockDelBtn);
-
+		
 		// 모의시간표 저장버튼
 		JButton btn_Save = new JButton(new ImageIcon("img/save.png"));
 		btn_Save.setBorderPainted(false); // 투명 버튼
@@ -651,10 +658,9 @@ public class AddClassFrame extends JFrame {
 
 class TableClick extends MouseAdapter implements ActionListener {
 	private JPopupMenu popupM;
-	JTable table1, table2, table3, table4;
-	BCDelFunc BCDelbtn;
-	private String num;
-
+	private JTable table1, table2, table3, table4;
+	private BCDelFunc BCDelbtn;
+	private String num;	
 	TableClick(JTable table1, JTable table2, JTable table3, JTable table4,
 			JPopupMenu popupM, BCDelFunc BCDelbtn) {
 		this.table1 = table1;
@@ -664,7 +670,6 @@ class TableClick extends MouseAdapter implements ActionListener {
 		this.popupM = popupM;
 		this.BCDelbtn = BCDelbtn;
 	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if ((e.getClickCount() == 2) && (e.getModifiers() == MouseEvent.BUTTON1_MASK)) {
