@@ -59,9 +59,7 @@ public class ReadExelFile {
 				query.setString(9, dept);
 				query.setString(10, note);
 				
-				int cnt = query.executeUpdate();
-				if(cnt == 1)
-					System.out.println("수강번호 = " + number + " 등록 완료");
+				int cnt = query.executeUpdate();				
 			}
 
 		} catch (BiffException e) {
@@ -78,8 +76,7 @@ public class ReadExelFile {
 			String url = "jdbc:mysql://dbs.yu.ac.kr:3306/seproject?useSSL=true&verifyServerCertificate=false&useUnicode=true&characterEncoding=utf8";
 
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(url, "seproject", "rhdrkd1!@");
-			System.out.println("Mysql Connect!");
+			con = DriverManager.getConnection(url, "seproject", "rhdrkd1!@");			
 		} catch (SQLException sqex) {
 			System.out.println(sqex.getMessage());
 			System.out.println(sqex.getSQLState());

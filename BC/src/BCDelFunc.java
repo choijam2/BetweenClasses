@@ -13,8 +13,7 @@ public class BCDelFunc implements ActionListener {
 	int num;
 	
 	public BCDelFunc(JTable table1, JTable table2, JTable table3, JTable table4, JTextField PftextField,
-			JTextField STtextField, ArrayList<String> CheckIsTable) {
-		// TODO Auto-generated constructor stub
+			JTextField STtextField, ArrayList<String> CheckIsTable) {	
 		this.PftextField = PftextField;
 		this.STtextField = STtextField;
 		this.table1 = table1;
@@ -45,8 +44,6 @@ public class BCDelFunc implements ActionListener {
 				Del(CheckIsTable.get(num));
 			}
 		}
-
-		// TODO Auto-generated method stub
 	}
 
 	void Del(String ID) {// 삭제함수		

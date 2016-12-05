@@ -411,9 +411,6 @@ public class AddClassFrame extends JFrame {
 		LogoutFunc logout = new LogoutFunc(this);
 		btn_Logout.addActionListener(logout);
 
-		// ------------------------------
-		// ------------------------------
-
 		// 모의시간표 버튼
 		JButton btnTimeTableTable = new JButton(new ImageIcon("img/timetable.png"));
 		btnTimeTableTable.setBorderPainted(false); // 투명 버튼

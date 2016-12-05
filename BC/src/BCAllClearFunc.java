@@ -9,8 +9,7 @@ public class BCAllClearFunc implements ActionListener {
 	JTable table1, table2, table3, table4;
 	ArrayList<String> CheckIsTable;
 
-	public BCAllClearFunc(JTable table1, JTable table2, JTable table3, JTable table4, ArrayList<String> CheckIsTable) {
-		// TODO Auto-generated constructor stub
+	public BCAllClearFunc(JTable table1, JTable table2, JTable table3, JTable table4, ArrayList<String> CheckIsTable) {	
 		this.table1 = table1;
 		this.table2 = table2;
 		this.table3 = table3;
@@ -20,13 +19,13 @@ public class BCAllClearFunc implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub//시간표 4개 모두 클리어
-		int i = 1;
-		for (; i < 5; i++) {
+		//시간표 4개 모두 클리어
+		int j = 0;
+		for (int i=1; i < 5; i++) {
 			if (CheckIsTable.get(i).equals("-1"))
-				i++;
+				j++;
 		}
-		if (i == 5)
+		if (j == 4)
 			JOptionPane.showMessageDialog(null, "삭제할 시간표가 없습니다");
 		else {
 			Cleartable(table1, CheckIsTable, 1);

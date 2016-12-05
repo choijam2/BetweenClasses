@@ -21,7 +21,7 @@ public class BtnSaveFunc implements ActionListener {
 		var_table = savetable; // 받은 테이블을 저장
 		ExFilechooser = new JFileChooser(); // JFileChooser 객체 생성
 	}
-
+	
 	// Table -> BufferedImage
 
 	public static BufferedImage getSaveSnapShot(JTable table, JTableHeader header) throws Exception {
@@ -39,8 +39,7 @@ public class BtnSaveFunc implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {	
 		try {
 			File saveFile;
 			String savePath;
@@ -65,11 +64,8 @@ public class BtnSaveFunc implements ActionListener {
 				ex.printStackTrace();
 			}
 
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {			
 			e1.printStackTrace();
 		}
-
 	}
-
 }

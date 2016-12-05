@@ -15,8 +15,7 @@ public class TimeTableAllClearFunc implements ActionListener {
 	JTable table;
 	Connection con;
 
-	public TimeTableAllClearFunc(JTable table, Connection con, Student student) {
-		// TODO Auto-generated constructor stub
+	public TimeTableAllClearFunc(JTable table, Connection con, Student student) {		
 		this.table = table;
 		this.con = con;
 		this.student = student;

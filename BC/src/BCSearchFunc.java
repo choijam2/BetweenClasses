@@ -20,8 +20,7 @@ public class BCSearchFunc implements ActionListener{
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {		
 		try {
 			int ck = 1;
 			for(int i =0;i<CheckIsTable.size();i++)
@@ -37,8 +36,7 @@ public class BCSearchFunc implements ActionListener{
 			}
 			else
 				new ResultFrame(con,st,CheckIsTable);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e1) {		
 			e1.printStackTrace();
 		}
 	}

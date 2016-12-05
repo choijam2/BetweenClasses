@@ -42,8 +42,15 @@ public class RegisterFunc implements ActionListener{
 				query.setString(6, quest);
 				int cnt = query.executeUpdate();
 				
-				if(cnt==1)
+				if(cnt==1){
 					JOptionPane.showMessageDialog(null, "회원가입 완료!!");
+					rFrame.getSidField().setText("");
+					rFrame.getPasswordField().setText("");
+					rFrame.getNameField().setText("");
+					rFrame.getCollegeComboBox().setSelectedIndex(0);
+					rFrame.getDetpComboBox().setSelectedIndex(0);
+					rFrame.getQuestField().setText("");
+				}
 			} catch (SQLException sqex) {
 				if(sqex.getSQLState().equals("23000"))
 					JOptionPane.showMessageDialog(null, "아이디 중복!!");

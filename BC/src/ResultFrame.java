@@ -91,9 +91,7 @@ public class ResultFrame extends JFrame {
 				{ "19:30 ~ 20:00", null, null, null, null, null, null },
 				{ "20:00 ~ 20:30", null, null, null, null, null, null },
 				{ "20:30 ~ 21:00", null, null, null, null, null, null },
-				{ "21:00 ~", null, null, null, null, null, null } };
-
-		// defTableTime[2][3] ="OK";
+				{ "21:00 ~", null, null, null, null, null, null } };	
 
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 6; j++) {
@@ -135,14 +133,6 @@ public class ResultFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
 
-		// // 셀 내용 가운데 정렬하기
-		// DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-		// dtcr.setHorizontalAlignment(SwingConstants.CENTER);
-		// TableColumnModel tcm = table.getColumnModel();
-		// for (int i = 0; i < tcm.getColumnCount(); i++) {
-		// tcm.getColumn(i).setCellRenderer(dtcr);
-		// }
-
 		JPanel pnl_title = new JPanel() {
 			ImageIcon mainicon = new ImageIcon("img/result.png");
 
@@ -163,8 +153,7 @@ public class ResultFrame extends JFrame {
 		contentPane.add(btn_save);
 		try {
 			btn_save.addActionListener(new BtnSaveFunc(table));
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {			
 			e1.printStackTrace();
 		}
 
@@ -185,11 +174,9 @@ public class ResultFrame extends JFrame {
 		String temp;
 		char day = '\0';
 		int sHour, sMin, sTime, fHour, fMin, fTime, startIndex = 0, lastIndex = 0, col = 0;
-		int capa = time.capacity();
-		System.out.println("capacity " + capa);
+		int capa = time.capacity();		
 
-		for (int i = 0; i < time.size(); i++) {
-			// String time2=
+		for (int i = 0; i < time.size(); i++) {			
 			tk = new StringTokenizer(time.get(i));
 
 			while (tk.hasMoreTokens()) {
@@ -221,11 +208,11 @@ public class ResultFrame extends JFrame {
 
 				sHour = Integer.parseInt(temp.substring(1, 3));
 				sMin = Integer.parseInt(temp.substring(4, 6));
-				sTime = sHour * 100 + sMin; // 1630이 저장됨
+				sTime = sHour * 100 + sMin;
 
 				fHour = Integer.parseInt(temp.substring(7, 9));
 				fMin = Integer.parseInt(temp.substring(10));
-				fTime = fHour * 100 + fMin; // 1745가 저장됨.
+				fTime = fHour * 100 + fMin;
 
 				// 해당되는 시간의 index를 찾는다.
 				startIndex = (sHour - 9) * 2;
@@ -242,26 +229,21 @@ public class ResultFrame extends JFrame {
 					if(j==25)
 						break;
 					BetweenClasses[j][col - 1]++;
-				}
-
-				System.out.println((col - 1) + " " + sTime + " " + fTime + " " + startIndex + " " + lastIndex);
+				}			
 			}
 		}
 
 	}
 	void token(Vector<String> time,Boolean s) {
 		if(s==false)
-			return;
-		System.out.println("동작");
+			return;		
 		StringTokenizer tk;
 		String temp;
 		char day = '\0';
 		int sHour, sMin, sTime, fHour, fMin, fTime, startIndex = 0, lastIndex = 0, col = 0;
-		int capa = time.capacity();
-		System.out.println("capacity " + capa);
+		int capa = time.capacity();		
 
-		for (int i = 0; i < time.size(); i++) {
-			// String time2=
+		for (int i = 0; i < time.size(); i++) {			
 			tk = new StringTokenizer(time.get(i));
 
 			while (tk.hasMoreTokens()) {
@@ -293,11 +275,11 @@ public class ResultFrame extends JFrame {
 
 				sHour = Integer.parseInt(temp.substring(1, 3));
 				sMin = Integer.parseInt(temp.substring(4, 6));
-				sTime = sHour * 100 + sMin; // 1630이 저장됨
+				sTime = sHour * 100 + sMin; 
 
 				fHour = Integer.parseInt(temp.substring(7, 9));
 				fMin = Integer.parseInt(temp.substring(10));
-				fTime = fHour * 100 + fMin; // 1745가 저장됨.
+				fTime = fHour * 100 + fMin;
 
 				// 해당되는 시간의 index를 찾는다.
 				startIndex = (sHour - 9) * 2;
@@ -314,9 +296,7 @@ public class ResultFrame extends JFrame {
 					if(j==25)
 						break;
 					master[j][col - 1]++;
-				}
-
-				System.out.println((col - 1) + " " + sTime + " " + fTime + " " + startIndex + " " + lastIndex);
+				}			
 			}
 		}
 
@@ -350,39 +330,28 @@ public class ResultFrame extends JFrame {
 
 				query.setString(1, People[i]);
 				rs = query.executeQuery();
-				while (rs.next()) {
-					// time[i]=rs.getString("l.ltime");
+				while (rs.next()) {					
 					mytime.add(rs.getString("l.ltime"));
 					if(People[i]==st.getSid()){
 						mstime.add(rs.getString("l.ltime"));
 					}
-				}
-				System.out.println("ResultFrame내 학생 이름 : " + People[i] + "강의시간 : " + time[i]);
+				}				
 				continue;
 			}
 
 			else {
 				ResultSet rs;
 				PreparedStatement query;
-				query = con.prepareStatement("select ltime from lecture where pname = ?");
-				System.out.println("ResultFrame내 교수님 성함 : " + People[i]);
+				query = con.prepareStatement("select ltime from lecture where pname = ?");				
 				query.setString(1, People[i]);
 				rs = query.executeQuery();
-				while (rs.next()) {
-					// time[i]=rs.getString("ltime");
-					mytime.add(rs.getString("ltime"));
-					
+				while (rs.next()) {				
+					mytime.add(rs.getString("ltime"));					
 				}
 				continue;
 			}
-			// while (rs.next()) {
-			// //System.out.println(student[i] + " " + rs.getString("l.ltime"));
-			// token(rs.getString("l.ltime"));
-			// }
-
 		}
-
-		// token(time);
+		
 		token(mytime);
 		token(mstime,st.isMaster());
 	}	

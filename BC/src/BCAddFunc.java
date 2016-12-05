@@ -45,8 +45,7 @@ public class BCAddFunc implements ActionListener {
 				STadd(STtextField);// 학생 추가 함수
 				STtextField.setText("");
 			}
-		}
-		// TODO Auto-generated method stub
+		}		
 	}
 
 	void PFadd(JTextField field) {
@@ -138,15 +137,13 @@ public class BCAddFunc implements ActionListener {
 				return true;
 			}
 			rs.previous();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
 		return false;
 	}
-
-	////////////////////////////////////////////////////////////////////////////////////
-	void Getlib(ResultSet rs, ArrayList<String> lidlist, PreparedStatement query, String ID) {//
+	
+	void Getlib(ResultSet rs, ArrayList<String> lidlist, PreparedStatement query, String ID) {
 		try {
 			while(rs.next()) {// 받아온 수강번호를 배열리스트에 입력!
 				lidlist.add(rs.getString("lid"));
@@ -171,13 +168,11 @@ public class BCAddFunc implements ActionListener {
 					break;
 				}
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
 	}
-
-	///////////////////////////////////////////////////////////////////////////////////
+	
 	void AddTable(ArrayList<String> lidlist, ResultSet rs, PreparedStatement query, JTable table) {// 수강번호를
 																									// 시간표에
 																									// 뿌려주는과정
@@ -199,7 +194,6 @@ public class BCAddFunc implements ActionListener {
 		}
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////
 	public boolean stringToken(String lecId, String lecTime, String lecName, String lecPlace, JTable table) {
 		StringTokenizer tk = new StringTokenizer(lecTime);
 		StringTokenizer tk2 = new StringTokenizer(lecPlace);
@@ -254,7 +248,7 @@ public class BCAddFunc implements ActionListener {
 					t += 70;
 			}
 		}
-		if (rowcol.size() == 2) {/// 수정
+		if (rowcol.size() == 2) {
 			table.setValueAt(lecName, rowcol.get(1), rowcol.get(0));
 			table.setValueAt(ptemp + " " + lecId, rowcol.get(1) + 1, rowcol.get(0));
 			for (int i = rowcol.get(1) + 2; i < 25; i++) {

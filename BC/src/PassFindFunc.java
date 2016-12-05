@@ -38,9 +38,12 @@ public class PassFindFunc implements ActionListener {
 					String password = rs.getString("password");
 					String questCheck = rs.getString("question");
 
-					if (name.equals(nameCheck) && quest.equals(questCheck))
+					if (name.equals(nameCheck) && quest.equals(questCheck)) {
 						JOptionPane.showMessageDialog(null, "비밀번호 : " + password);
-					else
+						pframe.getSidField().setText("");
+						pframe.getNameField().setText("");
+						pframe.getQuestField().setText("");
+					} else
 						JOptionPane.showMessageDialog(null, "정보가 일치하지 않습니다.");
 				} else {
 					JOptionPane.showMessageDialog(null, "아이디가 없습니다.");

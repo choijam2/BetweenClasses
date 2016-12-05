@@ -103,7 +103,7 @@ public class TimeTableAddFunc implements ActionListener {
 				else t += 70;
 			}
 		}
-		if(rowcol.size()==2){////수정
+		if(rowcol.size()==2){
 			if (table.getValueAt(rowcol.get(1), rowcol.get(0)) != null) {
 				JOptionPane.showMessageDialog(null, lecName + " 시간이 중복됩니다.");
 				return false;

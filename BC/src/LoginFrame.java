@@ -30,10 +30,7 @@ public class LoginFrame extends JFrame {
 	private Font f1 = new Font("ZESSTYPE 비가온다 PT02", Font.BOLD, 35);
 	private Font f2 = new Font("ZESSTYPE 비가온다 PT02", Font.PLAIN, 30);
 	Color myColor = Color.decode("#383838");
-
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
