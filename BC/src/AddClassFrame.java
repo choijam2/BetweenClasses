@@ -492,7 +492,8 @@ public class AddClassFrame extends JFrame {
 		AllClearButton.addActionListener(AllClearbtn);
 		
 		//공강찾기 버튼 리스너 추가
-		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable);
+		StudentMaster st = new StudentMaster("");
+		BCSearchFunc BCSearchbtn = new BCSearchFunc(con,CheckIsTable,st);
 		FindButton.addActionListener(BCSearchbtn);
 
 		TableClick TC = new TableClick(table_1, table_2, table_3, table_4, popupM, BCDelbtn);

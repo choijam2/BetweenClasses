@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFrame;
@@ -29,31 +30,43 @@ public class ResultFrame extends JFrame {
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
+	private static int[][] master = { { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
 
 	private JPanel contentPane;
 	private Connection con;
 	private JTable table;
-	private String s1, s2, s3, s4, s5;
+	private String[] s = new String[5];
 	private int studentNumber;
 	private JButton btn_save;
 
-	public ResultFrame(Connection con, String s1, String s2, String s3, String s4, String s5) throws SQLException {
+	public ResultFrame(Connection con,StudentMaster st,ArrayList<String> ck) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setTitle("공강 찾기 결과");
 		for (int i = 0; i < 25; i++) {
 			for (int j = 0; j < 6; j++) {
 				BetweenClasses[i][j] = 0;
+				master[i][j] = 0;
 			}
 		}
-		this.s1 = s1;
-		this.s2 = s2;
-		this.s3 = s3;
-		this.s4 = s4;
-		this.s5 = s5;
+		for(int i = 0;i<5;i++){
+			s[i] = "-1";
+		}
+		int k = 0;
+		for(int i=0;i<ck.size();i++){
+			if(ck.get(i)!="-1"){
+				s[k]=ck.get(i);
+				k++;
+			}
+		}
 		this.con = con;
-
-		FindBC();
-
+		FindBC(st);
+		
 		Object[][] defTableTime = new Object[][] { { "9:00 ~ 9:30", null, null, null, null, null, null },
 				{ "9:30 ~ 10:00", null, null, null, null, null, null },
 				{ "10:00 ~ 10:30", null, null, null, null, null, null },
@@ -161,7 +174,7 @@ public class ResultFrame extends JFrame {
 		btn_Random.setBorderPainted(false);
 		btn_Random.setBounds(685, 699, 174, 49);
 		contentPane.add(btn_Random);
-		RandomRecommend random = new RandomRecommend(BetweenClasses);
+		RandomRecommend random = new RandomRecommend(BetweenClasses,master);
 		btn_Random.addActionListener(random);
 
 	}
@@ -236,18 +249,90 @@ public class ResultFrame extends JFrame {
 		}
 
 	}
+	void token(Vector<String> time,Boolean s) {
+		if(s==false)
+			return;
+		System.out.println("동작");
+		StringTokenizer tk;
+		String temp;
+		char day = '\0';
+		int sHour, sMin, sTime, fHour, fMin, fTime, startIndex = 0, lastIndex = 0, col = 0;
+		int capa = time.capacity();
+		System.out.println("capacity " + capa);
 
-	void FindBC() throws SQLException {
+		for (int i = 0; i < time.size(); i++) {
+			// String time2=
+			tk = new StringTokenizer(time.get(i));
+
+			while (tk.hasMoreTokens()) {
+				temp = tk.nextToken();
+				day = temp.charAt(0);
+
+				switch (day) {
+				case '월':
+					col = 1;
+					break;
+				case '화':
+					col = 2;
+					break;
+				case '수':
+					col = 3;
+					break;
+				case '목':
+					col = 4;
+					break;
+				case '금':
+					col = 5;
+					break;
+				case '토':
+					col = 6;
+					break;
+				default:
+					break;
+				}
+
+				sHour = Integer.parseInt(temp.substring(1, 3));
+				sMin = Integer.parseInt(temp.substring(4, 6));
+				sTime = sHour * 100 + sMin; // 1630이 저장됨
+
+				fHour = Integer.parseInt(temp.substring(7, 9));
+				fMin = Integer.parseInt(temp.substring(10));
+				fTime = fHour * 100 + fMin; // 1745가 저장됨.
+
+				// 해당되는 시간의 index를 찾는다.
+				startIndex = (sHour - 9) * 2;
+				if (sMin > 0) {
+					startIndex++;
+				}
+
+				lastIndex = (fHour - 9) * 2;
+				if (fMin > 30) {
+					lastIndex++;
+				}
+
+				for (int j = startIndex; j <= lastIndex; j++) {
+					if(j==25)
+						break;
+					master[j][col - 1]++;
+				}
+
+				System.out.println((col - 1) + " " + sTime + " " + fTime + " " + startIndex + " " + lastIndex);
+			}
+		}
+
+	}
+	void FindBC(StudentMaster st) throws SQLException {
 
 		// 학생의 아이디를 저장한다.
 		String[] People = new String[6];
 		String[] time = new String[5];
 		Vector<String> mytime = new Vector<String>();
-		People[0] = s1;
-		People[1] = s2;
-		People[2] = s3;
-		People[3] = s4;
-		People[4] = s5;
+		Vector<String> mstime = new Vector<String>();
+		People[0] = s[0];
+		People[1] = s[1];
+		People[2] = s[2];
+		People[3] = s[3];
+		People[4] = s[4];
 		People[5]="-1";
 
 		// 공강 찾기 버튼에서 몇명의 학생 시간표를 비교하기 원하는지 찾는다.
@@ -268,6 +353,9 @@ public class ResultFrame extends JFrame {
 				while (rs.next()) {
 					// time[i]=rs.getString("l.ltime");
 					mytime.add(rs.getString("l.ltime"));
+					if(People[i]==st.getSid()){
+						mstime.add(rs.getString("l.ltime"));
+					}
 				}
 				System.out.println("ResultFrame내 학생 이름 : " + People[i] + "강의시간 : " + time[i]);
 				continue;
@@ -283,6 +371,7 @@ public class ResultFrame extends JFrame {
 				while (rs.next()) {
 					// time[i]=rs.getString("ltime");
 					mytime.add(rs.getString("ltime"));
+					
 				}
 				continue;
 			}
@@ -295,5 +384,6 @@ public class ResultFrame extends JFrame {
 
 		// token(time);
 		token(mytime);
+		token(mstime,st.isMaster());
 	}	
 }

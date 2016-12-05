@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 public class RandomSelcetedFrame extends JFrame {
 	private JPanel contentPane;
 	RandomSelcetedFrame(String day,String Time) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.PNG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setResizable(false);
 		setSize(320, 250);
 		setVisible(true);

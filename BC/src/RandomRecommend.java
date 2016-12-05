@@ -11,12 +11,20 @@ public class RandomRecommend implements ActionListener{
 			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0} };
-	public RandomRecommend(int[][] BC6table) {
+	int[][] master = { { 0, 0, 0, 0, 0}, 
+			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0},{ 0, 0, 0, 0, 0} };
+	public RandomRecommend(int[][] BC6table,int[][] master6) {
 	
 		for(int i = 0;i<25;i++)
 		{
-			for(int j=0;j<5;j++)
+			for(int j=0;j<5;j++){
 				BCtable[i][j] = BC6table[i][j];
+				master[i][j] = master6[i][j];
+			}
 		}
 		
 	}
@@ -31,10 +39,10 @@ public class RandomRecommend implements ActionListener{
 		BCTime bct = new BCTime();
 		ArrayList <BCTime> bclist = new ArrayList<BCTime>();
 		int ck = 0;
-		while(ck !=-1||ck<5){			//참여하지못하는 사람의 명수
+		while(ck<5){			//참여하지못하는 사람의 명수
 			for(int i=0;i<5;i++){		// 요일
 				for(int j=0;j<25;j++){	// 시간
-					if(BCtable[j][i] == ck){	
+					if(BCtable[j][i] == ck && master[j][i]==0){	
 						if(bct.notmem==-1){		//명수 시작시간 요일 저장
 							bct.Setnot(ck);
 							bct.Setstart(j);
@@ -55,10 +63,13 @@ public class RandomRecommend implements ActionListener{
 						}
 						bct.Reset();			//1시간 미만일경우 초기화
 					}
+				
 				}
+				;
 			}
 			if(bclist.size()!=0)				//명수에 따라 있을경우 탈출
 				break;
+			
 			ck++;								//명수 증가
 		}
 		if(ck==5){

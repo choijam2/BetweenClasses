@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class BCSearchFunc implements ActionListener{
 	Connection con;
 	ArrayList<String> CheckIsTable;
-	public BCSearchFunc(Connection con,	ArrayList<String> CheckIsTable) {
+	StudentMaster st;
+	public BCSearchFunc(Connection con,	ArrayList<String> CheckIsTable,StudentMaster st) {
 		this.con=con;
 		this.CheckIsTable = CheckIsTable;
+		this.st = st;
 	}
 	
 	
@@ -31,10 +33,10 @@ public class BCSearchFunc implements ActionListener{
 			}
 			if(ck==1){
 				
-				new SelcetMaster(con,CheckIsTable);
+				new SelcetMaster(con,CheckIsTable,st);
 			}
 			else
-				new ResultFrame(con,CheckIsTable.get(0),CheckIsTable.get(1),CheckIsTable.get(2),CheckIsTable.get(3),CheckIsTable.get(4));
+				new ResultFrame(con,st,CheckIsTable);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

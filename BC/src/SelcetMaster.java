@@ -22,7 +22,7 @@ public class SelcetMaster extends JFrame {
 	private JFrame frame = this;
 	private JPanel contentPane;
 	private final ButtonGroup set = new ButtonGroup();
-	public SelcetMaster(Connection con, ArrayList<String> ck) {
+	public SelcetMaster(Connection con, ArrayList<String> ck,StudentMaster st) {
 		String[] sid = new String[ck.size()];
 		int k =0;
 		for(int i=0;i<ck.size();i++)
@@ -33,6 +33,10 @@ public class SelcetMaster extends JFrame {
 				sid[k] = ck.get(i);
 				k++;
 			}
+		}
+		if(sid[1]==null){
+			JOptionPane.showMessageDialog(null, "시간표가 존재하지않습니다.");
+			return;
 		}
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.PNG"));
 		setResizable(false);
@@ -125,12 +129,13 @@ public class SelcetMaster extends JFrame {
 						 JOptionPane.showMessageDialog(null, "조장을 선택해주세요");
 					 }
 					 else if(sd=="0"){
-						 new ResultFrame(con,ck.get(0),ck.get(1),ck.get(2),ck.get(3),ck.get(4));
+						 new ResultFrame(con,st,ck);
 						 frame.dispose();
 					 } 
 					 else{
-						 StudentMaster st = new StudentMaster(sd);
-						 new ResultFrame(con,ck.get(0),ck.get(1),ck.get(2),ck.get(3),ck.get(4));
+						 st.setSid(sd);
+						 st.setMaster(true);
+						 new ResultFrame(con,st,ck);
 						 frame.dispose();
 					 }
 				 }
